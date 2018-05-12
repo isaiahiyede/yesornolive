@@ -1,0 +1,70 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load custom_filters %}
+
+{% block add_event %}
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+
+            <h3 class="box-title"></h3>
+            <div class="table-responsive">
+                        <table id="activeusersDatatable" class="display" cellspacing="0" width="100%">
+                            <thead>
+                            <style>
+                                th,td{font-size: 10px; width:10px;}
+                            </style>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>DJP Count</th>
+                                    <th>DJP Won</th>
+                                    <th>DJP Grand Prize Won (₦10,000)</th>
+                                    <th>DJP Consolation Prize Won (₦5,000)</th>
+                                    <th>WJP Won</th>
+                                    <th>WJP Grand Prize Won (₦100,000)</th>
+                                    <th>WJP Consolation Prize Won (₦10,000)</th>
+                                    <th>Category Games</th>
+                                    <th>Wallet Balance</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for user in users %}
+
+                                <tr>
+                                    <td>{{user.user__username}}</td>
+                                    <td>{{user.total_djp_played}}</td>
+                                    <td>{{user.total_djp_won}}</td>
+                                    <td>{{user.total_djp_grand_prize_won}}</td>
+                                    <td>{{user.total_djp_consolation_prize_won}}</td>
+                                    <td>{{user.total_wjp_won}}</td>
+                                    <td>{{user.total_wjp_grand_prize_won}}</td>
+                                    <td>{{user.total_wjp_consolation_prize_won}}</td>
+                                    <td>{{user.total_cat_games_played}}</td>
+
+                                    <td>{{ user.wallet_balance }}</td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock transactions %}
+
+{% block modals %}
+{% endblock modals %}

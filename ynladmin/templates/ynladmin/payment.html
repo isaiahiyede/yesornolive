@@ -1,0 +1,231 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block add_event %}
+<form action="{% url 'ynladmin:admin_pages' page_to %}" method="GET">
+    <div>
+		
+        <!--<h4> Filter by Date Range</h4>-->
+        <input name="q" class="hidden" value="search">
+        <input required style="border-radius: 5px;" id="from-date-daily" type="text" class="report" name="from-date-daily" placeholder="From" /> &nbsp;&nbsp;
+        <input required style="border-radius: 5px;" id="to-date-daily" type="text" class="report" name="to-date-daily" placeholder="To" /> &nbsp;&nbsp;
+        <button type="submit">Submit</button>        
+    </div><br>
+	<!--<div>
+		 
+	</div>-->
+
+    
+
+</form>
+{% endblock add_event %}
+
+{% block events_won %}
+<!--<div class="dropdown pull-right" style="position: relative;bottom: 10px;">
+    <button class="btn btn-primary dropdown-toggle" style="background: #449f07!important;" type="button" data-toggle="dropdown">Filter By:
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'ynladmin:payment_filter' 'successful' %}">Successful</a></li>
+      <li><a href="{% url 'ynladmin:payment_filter' 'declined' %}">Declined</a></li>
+      <li><a href="{% url 'ynladmin:payment_filter' 'transfer' %}">Transfer</a></li>
+    </ul>
+  </div>-->
+{% endblock events_won %}
+
+{% block transactions %}
+
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title">Payment Manager</h3>
+            <div class="table-responsive">
+                <table id="paymentDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <!--<th>User ID</th>-->
+                            <th>S/N</th>
+							<th>Date</th>
+                            <th>Ref No</th>
+							<th>Name</th>
+                            <th>Txn channel</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for payment in payments %}
+                        <tr>
+                            <!--<td>{user.pk}}</td>-->
+                            <td>{{forloop.counter}}</td>
+							<!-- <td>payment.created_at|date:"SHORT_DATE_FORMAT"</td> -->
+                            <td>{{payment.created_at}}</td>
+                            <td>{{payment.ref_no}}</td>
+							<td>{{payment.user__first_name}} {{payment.user__last_name}} </td>
+                            <td>{{payment.bank}}</td>
+                            <td>{{payment.message}}</td>
+                            <td>₦{{payment.amount|floatformat:2|intcomma}}</td>
+                            <td>{{payment.status}}</td>
+                            
+                            <td>
+                                {% if payment.status == "Pending Approval" and payment.bank == "BANK DEPOSIT" %}
+                                <span><a id="bank" user_id="{{payment.pk}}"><i class="fa fa-university" aria-hidden="true"></i></a></span>
+                                {% elif payment.status == "Transfer" %}
+                                <span><a id="transfer" user_id="{{payment.pk}}"><i class="fa fa-money" aria-hidden="true"  
+                                style="cursor: pointer;"></i></a></span>&nbsp;
+                                <span><a style="cursor: pointer;" user_pk="{{payment.user__pk}}"><i class="fa fa-eye"></i></a></span>
+                                {% else %}
+                                <span><a style="cursor: pointer;"><i class="fa fa-columns"></i></a></span>
+                                {% endif %}
+
+                            </td>
+                            
+                        </tr>
+                    {% empty %}
+                        <p>No Payment Record found!!!!</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+	<!--<div class="loader hidden"></div>-->
+{% endblock transactions %}
+
+{% block modals %}
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">OTP</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container be-detail-container" id="otp">
+        
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock modals %}
+
+{% block customscripts %}
+
+<script>
+    $('body').on('click','#transfer', function(){
+        $('.loader').removeClass('hidden');
+        var pk = $(this).attr('user_id');
+        console.log(pk);
+        $.ajax({
+            url: "{% url 'wallet:initiate_transfer' %}",
+            type: 'GET',
+            data: {'pk': pk, 'check':'check'},
+            success: function(data){
+				if (data.status == "failed"){
+					$('.loader').addClass('hidden');
+					alert("This user does not have sufficient money in his wallet to carry out the transaction");
+					location.reload();
+				} else if(data.check == "True"){
+					$('.loader').addClass('hidden');
+					console.log(data.account_name)
+					var confirmed = confirm("pls confirm that you are about to make a transfer to "+data.account_name+" Bank Account");
+					if (confirmed == true) {
+						$.ajax({
+							url: "{% url 'wallet:initiate_transfer' %}",
+							type: 'GET',
+							data: {'pk': pk, 'confirmed':'True'},
+							success: function(data){
+								$('.loader').addClass('hidden');
+								$('#otp').replaceWith(data);
+								$('#myModal').modal('show');
+							},
+							error: function(data){
+								console.log('not working');
+							},
+						});
+					}else{
+						location.reload();
+					}
+				}else{
+					console.log('not working');
+					location.reload();
+				}
+            },
+			error: function(data){
+				console.log('not working');
+				
+			},
+            
+        });
+    });
+
+    $('body').on('click', '.div_loader', function(){
+		$('.loader').removeClass('hidden');
+	});
+
+</script>
+
+<script>
+    $('body').on('click','#resend_otp', function(){
+        //$('.loader').removeClass('hidden');
+        var code = $('#transfer_code').val();
+        //console.log(pk);
+        $.ajax({
+            url: "{% url 'wallet:resend_otp' %}",
+            type: 'GET',
+            data: {'code': code},
+            success: function(data){
+                alert('OTP has been resent');
+                //$('.loader').addClass('hidden');
+                //$('#otp').replaceWith(data);
+                //$('#myModal').modal('show')*/;
+                 },
+            error: function(data){
+                console.log('not working');
+            }
+        });
+        })
+</script>
+
+<script>
+	$('body').on('click','#bank', function(){
+        //$('.loader').removeClass('hidden');
+		var confirmed = confirm("Do you want to approve this bank payment");
+		var pk = $(this).attr('user_id');
+		if (confirmed == true) {
+		alert("am true");
+		$.ajax({
+			url: "{% url 'wallet:approve_bankpay' %}",
+			type: 'GET',
+			data: {'pk':pk},
+			success: function(data){
+				location.reload();
+			},
+			error: function(data){
+				console.log('not working');
+			}
+		});
+		} else {
+			location.reload();
+		}        
+//				
+//			},
+//		});
+	});
+</script>
+
+{% endblock customscripts %}

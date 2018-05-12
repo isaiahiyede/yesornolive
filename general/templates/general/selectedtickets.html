@@ -1,0 +1,109 @@
+{% load humanize %}
+{% load custom_filters %}
+{% load staticfiles %}
+
+<head>
+  <title>Player Ticket</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'user/plugins/images/favicon2.png' %}">
+  
+    <style type="text/css">
+        div.Body {
+            width: 400px;
+            float: center;
+        }
+        div.Label {
+            width: 350px;
+            height: 550px;
+            float: center;
+            font-size: smaller;
+        }
+        div.closeButton {
+            float: right;
+            /*padding-left: 50px;*/
+        }
+        body{
+            font-family: Arial;
+            width: 500px;
+            height: 600px;
+            
+        }
+    </style>
+
+    <script>
+    function myFunction() {
+        window.print();
+      }
+    </script>
+
+    <script type="text/javascript">
+        function autoPrint()
+        {
+            try
+            {
+                jsPrintSetup.setPrinter("DYMO Labelwriter 4XL");
+                jsPrintSetup.setPaperSizeUnit(jsPrintSetup.kPaperSizeMillimeters);
+                jsPrintSetup.definePaperSize(251,251,'nordgen_seedlabel_1','nordgen_seedlabel_100x150mm','nordgen normal seed label',100,150,jsPrintSetup.kPaperSizeMillimeters);
+                jsPrintSetup.setOption('paperSizeType',jsPrintSetup.kPaperSizeNativeData);
+                jsPrintSetup.setPaperSizeData(251);
+
+                jsPrintSetup.setOption('printRange',jsPrintSetup.kRangeSpecifiedPageRange);
+                jsPrintSetup.setOption('startPageRange', 1);
+                jsPrintSetup.setOption('endPageRange', 1);
+
+                jsPrintSetup.setSilentPrint(1);
+                jsPrintSetup.print();
+                //setTimeout("showButton()",1000);
+            }
+            catch(err)
+            {
+                alert(err);
+                //alert("Please provide a DYMO Labelwriter 4XL printer");
+            }
+        }
+    </script>
+
+</head>
+<body onload="javascript:autoPrint()">
+    <div class="Body">
+        <div class="closeButton">
+            <a href="{{ request.path }}"><img src="" width="15px" height="15px"/></a>&nbsp; &nbsp;
+            <a href="JavaScript:window.close()"><img src="" width="15px" height="15px"/></a>
+            <button onclick="myFunction()">Print</button>
+        </div>
+        <div class= "label">
+            <div id="labelHeader">
+              <h1>
+                  <img src="{% static 'img/logo_sideways.png' %}" width="57%" height="" alt=""> 
+              </h1>
+            </div>
+            <hr/>
+            <p></p>
+
+            {% block labelBody %}
+	            {% for ticket in game %}
+		            <div>
+		              <span><strong>DATE:</strong> {{ticket.date}}</span><br>
+		              <span><strong>Phone Number:</strong> {{ticket.telephone_no}}</span><br>
+		              <span><strong>AMOUNT:</strong> ₦25</span><br> 
+		              <span><strong>CHOICE:</strong> {{ticket.choice}}</span><br>
+		              <span><strong>Ticket Number:</strong> {{ticket.ticket_no}}</span><br>     
+		            </div>
+		            <hr>
+	            {% endfor %}
+            <p></p>
+            <div id="shipmentDetails" style="font-size: large;">
+                <img src="" style="max-height: 100px; max-width: 150px;"/><br/>
+            </div>
+            {% endblock labelBody %}
+            <hr/>
+            
+            <div id="labelfooter">
+                <p style="line-height:35px;">© YesOrNoLive {% current_year %}.</p>
+            </div>
+
+            {% block labelFooter %}
+            {% endblock labelFooter %}
+        </div>
+
+    </div>
+</body>

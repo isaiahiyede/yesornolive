@@ -1,0 +1,57 @@
+<div class="entry-comments mt-20" style="overflow-y: scroll;" id="comments_view">
+	<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
+
+	{% if event.get_comments_count == 0 %}
+		No comment
+	{% else %}
+		{{event.get_comments_count}} comment(s)
+	{% endif %}
+	</h3>
+
+	<ul class="comment-list">
+		<li>
+			{% for comment in event.get_comments %}
+			<div class="comment-body">
+			
+				<img src="{% static 'img/blog/comment_1.jpg' %}" class="comment-avatar" alt="">
+				
+				<div class="comment-content">
+					<span class="comment-author">{{comment.username}}</span>
+					<span><a href="#">{{comment.created_on}}</a></span>		
+					<p>{{comment.text}}</p>
+				</div>
+
+			</div>
+			{% endfor %}
+
+
+			<!-- <ul class="comment-reply">
+				<li>
+					<div class="comment-body">
+						<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+						<div class="comment-content">
+							<span class="comment-author">Alexander Samokhin</span>
+							<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
+							<p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
+							<a href="#">Reply</a>
+						</div>
+					</div>
+				</li>
+			</ul> -->
+
+		</li> <!-- end 1-2 comment -->
+
+		<!-- <li>
+			<div class="comment-body">
+				<img src="{% static 'img/blog/comment_3.jpg' %}" class="comment-avatar" alt="">
+				<div class="comment-content">
+					<span class="comment-author">Christopher Robins</span>
+					<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
+					<p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
+					<a href="#">Reply</a>
+				</div>
+			</div>
+		</li> --> <!-- end 3 comment -->
+
+	</ul>					
+</div>

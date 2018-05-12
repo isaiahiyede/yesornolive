@@ -1,0 +1,161 @@
+<div class="modal fade" id="eventForm" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+		            <!-- Modal Header -->
+		            <div class="modal-header" style="background-color: azure;">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                    Create a new Event
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body" style="background-color: azure;">
+		                
+		                <form name="create_new_event" id="create_new_event" method="POST" 
+		                    action="{% url 'ynladmin:create_new_event' %}" enctype="multipart/form-data">
+							{% csrf_token %}
+
+						  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
+
+								<div class="form-group">
+								<label class="label-controller">Title</label>
+									{{event_form.title}}
+								</div>
+
+								<div class="form-group">
+								<label class="label-controller">Category</label>
+									{{event_form.category}}
+								</div>
+
+								<div class="form-group">
+								<label class="label-controller">Question</label>
+									{{event_form.bet_question}}
+								</div>
+
+								<div class="form-group col-md-6">
+								<label class="label-controller">End Date</label>
+									{{event_form.end_date}}
+								</div>
+								
+								<div class="form-group col-md-6">
+								<label class="label-controller">End Time</label>
+									{{event_form.end_time}}
+								</div>
+
+								<!-- <div class="form-group">
+									{{event_form.publish}}
+									<label>Publish</label>
+								</div> -->
+
+								<div class="form-group">
+								<label class="label-controller">Description</label>
+									{{event_form.event_msg_body}}
+								</div>
+
+								<div class="form-group">
+								<label>Upload Event Image(770x400)</label>
+									{{event_form.event_image}}
+								</div>
+																
+						    <button type="submit" id="submit-form-events" onclick='return checkTinymce();' class="btn btn-success pull-right">Submit</button><br />
+
+
+							</form>         
+		        	</div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer" style="background-color: azure;">
+		               
+		            </div>
+
+		        </div>
+		    </div>
+</div>
+
+
+<div class="modal fade" id="eventFormEdit"  tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="event_edit">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="viewFormEdit"  tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="event_view">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="userFormEdit"  tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="user_edit">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="adminmessageToComment"  tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="adminmessageComment">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="adminviewMessage"  tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="adminmessageView">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="winnings_cummulative"  tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="winning">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="vendorPlay" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content" id="playVendor">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="vendorPlayDjp" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content" id="playVendorDjp">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="viewVendorDJPModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+

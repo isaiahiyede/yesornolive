@@ -1,0 +1,128 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load custom_filters %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+<div class="row">
+
+	<div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Games Played</h4>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-users text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter"> {{count}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Games Played Today</h4>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-users text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter"> {{allDjpPlayed}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Clients</h4>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-users text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter"> {{allVendorClients}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+	<div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Amount in Wallet</h4>
+            <ul class="list-inline two-part">
+                <li><i class="ti-wallet text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter"> {{balance}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+
+	<div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Amount Played Today</h4>
+            <ul class="list-inline two-part">
+                <li><i class="ti-wallet text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter"> {{amount_played}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Amount Played</h4>
+            <ul class="list-inline two-part">
+            	<li><i class="ti-wallet text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter">{{total_amount_played}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+	
+<div class="col-md-12 view-events">
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title">Daily JackPot Played Log</h3>
+            <div class="table-responsive">
+                <table id="vendorgameDJPDatatable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Question</th>
+                            <th>Number of Entries</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for game in games %}
+                        <tr>
+                        	<td>{{game.created_on_date}}</td>
+                        	<td>{{game.question}}</td>
+                        	<td>{% getVendorPlayers request game %}</td>
+                            <td>
+                            	{% if game.created_on_date == today %}
+                                <a style="cursor: pointer;" class="play_djp_game" event_id="{{game.pk}}">
+                                	<i class="fa fa-play fa-2x" aria-hidden="true">&nbsp;Play</i></a>  
+                            	{% else %}
+                            		<a><i class="fa fa-lock fa-2x" aria-hidden="true">&nbsp;</i></a>
+                                    <a class="vendor_djp_view" djp_id="{{game.id}}"><i class="fa fa-eye fa-2x" title="View" 
+                                        style="cursor: pointer;"></i>
+                                    </a>
+                                    
+                            	{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+	
+{% endblock transactions %}
+

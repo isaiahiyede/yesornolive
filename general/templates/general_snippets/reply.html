@@ -1,0 +1,19 @@
+    
+<div id="commentsection">
+	{% if comment.get_all_replies %}
+	{% for reply in comment.get_all_replies %}
+	<div class="comment-reply">
+		<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+		<div class="comment-content">
+			<span class="comment-author">{{ reply.user }}</span>
+			<span><a href="#">{{ reply.created_on }}</a></span>		
+			<p>{{ reply.reply }}</p>
+		</div>
+
+	</div>
+	{% endfor %}
+	{% endif %}
+		
+
+	{% endfor %}
+</div>

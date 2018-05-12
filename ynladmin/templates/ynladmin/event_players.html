@@ -1,0 +1,67 @@
+<div class="modal fade" id="eventPlayers" style="left:50%;" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="event_players">
+        
+    <!-- Modal Header -->
+    <div class="modal-header" style="background-color: azure;">
+        <button type="button" class="close" 
+           data-dismiss="modal">
+               <span aria-hidden="true">&times;</span>
+               <span class="sr-only">Close</span>
+        </button>
+        
+        <h5 class="modal-title" id="myModalLabel">
+             Question: {{event.bet_question}}
+        </h5>
+    </div>
+    
+    <!-- Modal Body -->
+    <div class="modal-body" style="background-color: azure;">
+
+        <div class="table-responsive">
+            <h5 class="modal-title" id="myModalLabel">
+             <b>Player Details</b><br/>
+        </h5>
+                <table id="gameplay" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <!--<th>Start</th>-->
+                            <th>Last Name</th>
+							<th>Amount Played</th>
+                            <th>Choice</th>
+							<th>Amount Won</th>
+                            <th>Date Played</th>
+                        </tr>
+                    </thead>
+					<tbody>
+						{% for game in gameplay %}
+						<tr>
+							<td>{{ game.user.user.first_name}}</td>
+							<td>{{ game.user.user.last_name}}</td>
+							<td>₦{{ game.amount}}</td>
+							<td>{{ game.choice}}</td>
+							<td>₦{{ game.amount_won}}</td>
+							<td>{{ game.date|date:"SHORT_DATE_FORMAT"}}</td>
+						</tr>
+						{% empty %}
+							<p>No Player found</p>
+						{% endfor %}
+					</tbody>
+				</table>
+		</div>
+                    
+              
+	</div>
+    
+    <!-- Modal Footer -->
+    <div class="modal-footer" style="background-color: azure;">
+       
+    </div>
+
+</div>
+</div>
+    </div>
+</div>
+		

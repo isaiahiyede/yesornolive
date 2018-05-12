@@ -1,0 +1,246 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+
+{% block add_event %}
+    {% if news %}
+        {% if request.user.useraccount.special_user or request.user.useraccount.content_provider %}
+        <h4 class="pull-right"  style="cursor: pointer; color: #449f07;" id="add_event"><i class="fa fa-plus" >&nbsp;ADD EVENT</i></h4>
+
+        {% endif %}
+    {% endif %}
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+{% if news %}
+
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <!--<h3 style="margin:15px 0px 5px 0px;">
+
+                % for msg in messages %}
+                    <script>
+                        function show_alert(){
+                        var alert = '<p style="color:red;" class="text-{ msg.tags }} bg-{{ msg.tags }}">{{ msg }}</p>';
+                        document.write(alert);
+                        }
+                        display = window.setTimeout(show_alert(), 1000);
+                        window.clearTimeout(display);
+                    </script>
+                % endfor %}
+            </h3>-->
+            <h3 class="box-title">Event Manager</h3>
+            <div class="table-responsive">
+
+            {% with request.user.useraccount.special_user as special_user %}
+              
+
+                <table id="eventDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Event Id</th>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Category</th>              
+                            <th>End Date</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in all_events %}
+                        <tr>
+                            <td class="winnings" style="cursor: pointer;" event_id="{{event.pk}}"><a>{{event.event_id}}</a></td>
+                            <td>{{event.date_created}}</td>
+                            <td>{{event.title|truncatechars:50}}</td>
+                            <td>{{event.category}}</td>
+                            <td style="width:100px;">{{event.end_date}}</td>
+                           <td>
+                                <span><a class="view_event" identifier="view" event_track_num="{{event.event_id}}"><i class="fa fa-eye"  title="View"
+                                style="cursor: pointer;"></i></a>
+                                </span>
+
+                                
+                                {% if not event.closed %}
+                                
+                                    {% if not event.publish %}
+                                        <span><a style="cursor: pointer;" href="{% url 'ynladmin:delete_event' event.id %}" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa fa-trash" title="Delete"></i></a>
+                                        </span>                              
+                                    {% endif %}
+
+                                    <span><a class="edit_event" identifier="edit" event_track_num="{{event.event_id}}"><i class="fa fa-pencil" title="Edit" 
+                                        style="cursor: pointer;"></i></a>
+                                        </span>
+
+                                {% endif %}
+                                
+                                
+                                    {% if not event.validated and event.not_validated_reason %}
+                                    
+                                    <span><i class="fa fa-times" aria-hidden="true" title="Validation Failed" style="cursor: pointer; color: red;"></i></span>
+
+                                    {% elif not event.publish and event.validated %}
+                                    <span><i class="fa fa-check" aria-hidden="true" title="Event Validated" style="cursor: pointer; color: green;"></i></span>
+
+                                    {% elif event.publish and event.validated %}
+                                    <span><i class="fa fa-file-text" aria-hidden="true" title="Event Published" style="cursor: pointer; color: blue;"></i></span>
+
+                                    {% else %}
+                                      <span></span>
+                                    {% endif %}
+                               
+                                
+                                {% if special_user %}
+                                    <span><a href="{% url 'ynladmin:ban_event' event.id %}" class=" stop_event" identifier="stop" event_track_num="{{event.id}}" onclick="return confirm('Are you sure you want to STOP this Event?')"><i class="fa fa-ban" aria-hidden="true"  title="Shut Down Event"
+                                    style="cursor: pointer; color: red;"></i></a>
+                                    </span>
+                                {% endif %}
+                                
+                            </td>
+                            <td>{% if event.closed %}
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                {% elif not event.closed and event.decided %}<span>
+                                    <a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}"
+                            onclick="return confirm('Are you sure you want to CLOSE this Event?')"><i class="fa fa-unlock-alt" aria-hidden="true"></i>{% endif %}</a></span></td>
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                        </table>
+
+                    
+             
+           {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ {% endif %}
+ 
+{% if decider %}
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            
+            <h3 class="box-title">Decision Manager</h3>
+            <div class="table-responsive">
+                    {% with request.user.useraccount.special_user as special_user %}
+                        <table id="eventDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Event Id</th>
+                            <th>Title</th>
+                            <th>Category</th>              
+                            <th>End Date</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in all_events %}
+                        <tr>
+
+                            <td class="winnings" style="cursor: pointer;" event_id="{{event.pk}}"><a>{{event.event_id}}</a></td>
+                            <td>{{event.title|truncatechars:50}}</td>
+                            <td>{{event.category}}</td>
+                            <td style="width:100px;">{{event.end_date}}</td>
+                           <td>
+                                <span><a class="view_event" identifier="view" event_track_num="{{event.event_id}}"><i class="fa fa-eye"  title="View"
+                                style="cursor: pointer;"></i></a>
+                                </span>
+
+                                <span><a class="decision" event_track_num="{{event.id}}"><i class="fa fa-gavel" aria-hidden="true"
+                                style="cursor: pointer;"></i></a></span>
+                                
+                                {% if special_user %}
+                                <span><a href="{% url 'ynladmin:ban_event' event.id %}" class=" stop_event" identifier="stop" event_track_num="{{event.id}}" onclick="return confirm('Are you sure you want to STOP this Event?')"><i class="fa fa-ban" aria-hidden="true"  title="Shut Down Event"
+                                style="cursor: pointer; color: red;"></i></a>
+                                </span>
+
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                        </table>
+
+            {% endwith %}
+                  
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}
+
+{% if validator %}
+ <div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            
+            <h3 class="box-title">Validation Manager</h3>
+            <div class="table-responsive">
+                    {% with request.user.useraccount.special_user as special_user %}
+                        <table id="eventDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Event Id</th>
+                            <th>Title</th>
+                            <th>Category</th>              
+                            <th>End Date</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in all_events %}
+                        <tr>
+                            <td class="winnings" style="cursor: pointer;" event_id="{{event.pk}}"><a>{{event.event_id}}</a></td>
+                            <td>{{event.title|truncatechars:50}}</td>
+                            <td>{{event.category}}</td>
+                            <td style="width:100px;">{{event.end_date}}</td>
+                           <td>
+                                <span><a class="view_event" identifier="view" event_track_num="{{event.event_id}}"><i class="fa fa-eye"  title="View"
+                                style="cursor: pointer;"></i></a>
+                                </span>
+                                
+                                {% if special_user %}
+                                <span><a href="{% url 'ynladmin:ban_event' event.id %}" class=" stop_event" identifier="stop" event_track_num="{{event.id}}" onclick="return confirm('Are you sure you want to STOP this Event?')"><i class="fa fa-ban" aria-hidden="true"  title="Shut Down Event"
+                                style="cursor: pointer; color: red;"></i></a>
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                        </table>
+
+            {% endwith %}
+                  
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}
+
+{% endblock transactions %}

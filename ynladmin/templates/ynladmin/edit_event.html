@@ -1,0 +1,113 @@
+<div class="modal fade" id="eventForm" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+    <!-- Modal Header -->
+    <div class="modal-header" style="background-color: azure;">
+        <button type="button" class="close" 
+           data-dismiss="modal">
+               <span aria-hidden="true">&times;</span>
+               <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+           {% if create_event %} Add an Event {% else %} Edit an Event {% endif %}
+        </h4>
+    </div>
+    
+    <!-- Modal Body -->
+    <div class="modal-body" style="background-color: azure;">
+        
+        <form name="edit_event" id="edit_event" method="POST" 
+        	action="{% url 'ynladmin:create_new_event' %}" enctype="multipart/form-data">
+		  {% csrf_token %}
+
+		  		<p>NB: Fields with <b style="color:red">*</b> are required</p>
+
+				<div class="form-group">
+				<label class="label-controller">Title</label>
+					{{event_form.title}}
+				</div>
+				{% if not create_event %}
+				<input type="hidden" name="edit_event" id="edit_event" value="edit">
+				<input type="hidden" name="event_track_num" id="event_track_num" value="{{event_track_num}}">
+				{% endif %}
+
+				<div class="form-group">
+				<label class="label-controller">Category</label>
+					{{event_form.category}}
+				</div>
+
+				<div class="form-group">
+				<label class="label-controller">Question</label>
+					{{event_form.bet_question}}
+				</div>
+
+				<div class="form-group col-md-6">
+				<label class="label-controller">End Date</label>
+					{{event_form.end_date}}
+				</div>
+				
+				<div class="form-group col-md-6">
+				<label class="label-controller">End Time</label>
+					{{event_form.end_time}}
+				</div>
+
+				{% if event_validated %}
+				<div class="form-group">
+					{{event_form.publish}}
+					<label>Publish</label>
+				</div>
+				{% endif %}
+
+				<div class="form-group col-md-6">
+				<label class="label-controller">Estimated Winning</label>
+					{{event_form.estimated_wining}}
+				</div>
+
+				<div class="form-group col-md-6">
+				<label class="label-controller">Game Ratio</label>
+					{{event_form.game_ratio}}
+				</div>
+				
+				{% autoescape off %}
+				<div class="form-group">
+				<label class="label-controller">Description</label>
+					{{event_form.event_msg_body|safe}}
+				</div>
+				{% endautoescape %}
+
+				<div class="form-group">
+				<label>Upload Event Image(770x400)</label>
+					{{event_form.event_image}}
+				</div>
+				<div class="form-group hidden">
+				<label class="label-controller">Event Decision</label>
+					{{event_form.event_decision}}
+				</div>
+
+				<div class="form-group col-md-6">
+					{{event_form.realityTV}}
+					<label class="label-controller">Reality TV</label>
+				</div>
+
+			    <button type="submit" id="submit-edit-events" onclick='return checkTinymce();' class="btn btn-success pull-right">Submit</button><br />
+
+			</form>         
+	</div>
+    
+    <!-- Modal Footer -->
+    <div class="modal-footer" style="background-color: azure;">
+       
+    </div>
+
+</div>
+<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>			 
+<script>
+	$('.id_date').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: "yy-mm-dd",
+		minDate:     0
+	});
+</script>-->

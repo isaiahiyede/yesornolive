@@ -1,0 +1,175 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+
+{% block add_event %}
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+	
+ <div class="col-md-12 view-messages">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                    <a href="#t1" aria-controls="t1" role="tab" data-toggle="tab">New&nbsp;<span class="badge">
+                    {{new_count}}</span></a></li>
+                    <li role="presentation">
+                    <a href="#t2" aria-controls="t2" role="tab" data-toggle="tab">Replied &nbsp;<span class="badge">
+                    {{replied_count}}</span></a></li>
+                    <li role="presentation">
+                    <a href="#t3" aria-controls="t3" role="tab" data-toggle="tab">Archive &nbsp;<span class="badge">
+                    {{archived_count}}</span></a></li>
+                    <li role="presentation">
+                    <a href="#t4" aria-controls="t4" role="tab" data-toggle="tab">Deleted &nbsp;<span class="badge">
+                    {{deleted_count}}</span></a></li>
+                </ul>
+
+              <div class="tab-content">
+
+                <div role="tabpanel" class="tab-pane active" id="t1">
+                    <table border="0" class="table table-striped">
+                        <tr>
+                            <th>S/N</th>
+                            <th>User</th>
+                            <th>Subject</th>
+                            <th>Date Created</th>
+                            <th>No of Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for m in new_messages %}
+                        <tr>
+                            <td style="text-align:left;">
+                                <span class="badge">{{forloop.counter}}</span>
+                            </td>
+                            <td>{{ m.user }}</td>
+                            <td>{{ m.subject }}</td>
+                            <td>{{ m.created_on }}</td>
+                            <td>{% check_last_comment_admin request m.pk %}</td>
+
+                            <td>
+                                <span><a class="admin_msg" identifier="view" msg_id="{{m.pk}}"><i class="fa fa-eye"  
+                                style="cursor: pointer;" title="view"></i></a>
+                                </span>&nbsp;&nbsp;
+                                <span><a class="admin_cmt" identifier="comment" msg_id="{{m.pk}}"><i class="fa fa-pencil" title="comment"
+                                style="cursor: pointer;"></i></a>
+                                </span> 
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                    
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="t2">
+                    <table border="0" class="table table-striped">
+                        <tr>
+                            <th>S/N</th>
+                            <th>User</th>
+                            <th>Subject</th>
+                            <th>Date Created</th>
+                            <th>No of Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for m in replied_messages %}
+                        <tr>
+                            <td style="text-align:left;">
+                                <span class="badge">{{forloop.counter}}</span>
+                            </td>
+                            <td>{{ m.user }}</td>
+                            <td>{{ m.subject }}</td>
+                            <td>{{ m.created_on }}</td>
+                            <td>{% check_last_comment_admin request m.pk %}</td>
+
+                            <td>
+                                <span><a class="admin_msg" identifier="view" msg_id="{{m.pk}}"><i class="fa fa-eye"  
+                                style="cursor: pointer;" title="view"></i></a>
+                                </span>&nbsp;&nbsp;
+                                <span><a class="admin_cmt" identifier="comment" msg_id="{{m.pk}}"><i class="fa fa-pencil"  
+                                style="cursor: pointer;" title="comment"></i></a>
+                                </span>  
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                    
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="t3">
+                    <table border="0" class="table table-striped">
+                        <tr>
+                            <th>S/N</th>
+                            <th>User</th>
+                            <th>Subject</th>
+                            <th>Date Created</th>
+                            <th>No of Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for m in archived_messages %}
+                        <tr>
+                            <td style="text-align:left;">
+                                <span class="badge">{{forloop.counter}}</span>
+                            </td>
+                            <td>{{ m.user }}</td>
+                            <td>{{ m.subject }}</td>
+                            <td>{{ m.created_on }}</td>
+                            <td>{% check_last_comment_admin request m.pk %}</td>
+
+                            <td>
+                                <span><a class="admin_msg" identifier="view" msg_id="{{m.pk}}"><i class="fa fa-eye"  
+                                style="cursor: pointer;" title="view"></i></a>
+                                </span>&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                    
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="t4">
+                    <table border="0" class="table table-striped">
+                        <tr>
+                            <th>S/N</th>
+                            <th>User</th>
+                            <th>Subject</th>
+                            <th>Date Created</th>
+                            <th>No of Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for m in deleted_messages %}
+                        <tr>
+                            <td style="text-align:left;">
+                                <span class="badge">{{forloop.counter}}</span>
+                            </td>
+                            <td>{{ m.user }}</td>
+                            <td>{{ m.subject }}</td>
+                            <td>{{ m.created_on }}</td>
+                            <td>{{ m.get_comments_count }}</td>
+
+                            <td>
+                                <span><a class="admin_msg" identifier="view" msg_id="{{m.pk}}"><i class="fa fa-eye"  
+                                style="cursor: pointer;" title="view"></i></a>
+                                </span>&nbsp;&nbsp;
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                    
+                </div>
+
+              </div>
+            </div>
+        </div>
+    </div>
+	
+{% endblock transactions %}
+
+

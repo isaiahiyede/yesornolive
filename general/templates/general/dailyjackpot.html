@@ -1,0 +1,399 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+
+
+{% block creatives %}
+
+<meta property="og:title" content="Daily Jackpot/₦25,000 up for grabs" />
+<meta property="og:description" content="{{event.question}}" />
+<meta property="og:url" content="https://www.yesornolive.com/game/dailyjkp/" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_GB" />
+
+<meta property="og:image" content="{% static 'img/dailyjackpotlogo.jpg' %}"/>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="YesOrNoLive" />
+<meta name="twitter:title" content="Daily Jackpot/₦25,000 up for grabs" />
+<meta name="twitter:description" content="{{event.question}}" />
+
+<meta name="twitter:image" content="{% static 'img/dailyjackpotlogo.jpg' %}" />
+<meta property="fb:app_id" content="2352656298293778" />
+<meta name="twitter:site" content="https://www.yesornolive.com/" />
+
+{% endblock creatives %}
+
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block title %}
+    <title> {{event.question}} </title>
+    <meta name="description" content="Stand a chance to win 25,000 Naira everyday in the 
+    YesOrNoLive.com daily jackpot">
+{% endblock title %}
+
+{% block trending %}
+	<!-- form with html validation from bootstrap  -->
+	<div class="container">
+    <br><br><br>
+    <div class="row">
+      <!-- column that will hold row containing grid of events -->
+
+      <div class="col-12 col-md-9">
+      	{% for message in messages %}
+			  {% if message.tags == 'error' %}
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% elif message.tags == 'success' %}
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% else %}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% endif %}	
+			{% endfor %}
+      	<img src="{% static 'img/new_YNL_DJP_banner.jpg' %}" height="50" class="img-fluid" alt="Daily Jackpot">
+        <!-- this is the row block actually holding the detail item -->
+        <div class="row">
+
+          <div class="col-12 col-md-12 card-col">
+			
+            <div class="media d-flex flex-column flex-lg-row">
+              
+              <div class="media-body">
+							 <h5 class="mt-2">Question for the Day ({{event.created_on_date}}):</h5>
+							 <h5 style="font-style: italic; color: #007bff;" class="mt-2">{{event.question}}</h5>
+
+	            <div class="row">
+				  	<div class="col-11" style="top: 15px;">
+					</div>
+	              	<div class="col-11">
+	              	</div>
+					<div class="col-11">
+					</div>
+	            </div>
+
+                <!-- this row handles the illustrations and form submition to place predictions -->
+                <div class="row">
+                  <div class="col-11">                 
+                  </div>
+                  
+                {% if not request.user.is_staff %}
+                    {% if not event.closed %}
+				  	   {% if djp %}
+					
+						<div class="col-11">
+							<form method="POST" action="" class="form-inline" id="user_play_choice3">
+								{% csrf_token %}
+								<div class="form-group">
+									<input type="hidden" id="event-id" value="{{event.id}}" name="event">
+									<input type="hidden" id="choice3" name="user-choice" value="">
+									<input type="hidden" id="entry_amt" name="entry_amt" 
+										value="{{event.entry_amount}}">
+									<input type="hidden" name="date" id="date" 
+									value="{{event.created_on_date}}">
+									<input type="hidden" name="time" id="time" 
+									value="{{event.stop_time|time:"H:i"}}">
+									<select class="form-control rounded-0" id="num_of_entries" name="no_of_entries">
+										<option value="">Number of Tickets</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+									<a class="btn btn-outline-success rounded-0 bet bet_yes3"  play_type="YES" role="button" aria-pressed="true">YES</a>
+									<a class="btn btn-outline-danger rounded-0 bet bet_no3"  play_type="NO" role="button" aria-pressed="true">NO</a>
+									<input type="hidden" name="bot_catcher" id="bot_catcher" value="">
+									<button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserAmount()" type="submit" role="button" 
+										aria-pressed="true">PLAY
+									</button>
+								</div>
+							</form><br>
+						</div>
+						
+					   {% else %}
+						   <div class="col-11"><p style="font-style: italic;">
+							   Daily Jackpot for today has ended.</p>
+						   </div>
+					   {% endif %}
+					{% else %}
+						<div class="col-11"><p style="font-style: italic;">
+							Daily Jackpot for today is closed.</p>
+						</div>
+					{% endif %}
+				{% else %}
+						<div class="col-11"><p style="font-style: italic;">
+							Staff are not allowed to participate in jackpots.</p>
+						</div>
+				{% endif %}
+                </div>
+              
+                {% if event.closed %}
+
+            		<h5 class="mt-2">Answer: <span style="font-style: italic; color: #007bff;">{{event.decision}}</span></h5>
+        			<h5 class="mt-2">More Info: <span style="font-style: italic; color: #007bff;"><a href="{{event.answer}}" target="_blank">{{event.answer}}</a></span></h5><br>
+        			
+            	{% endif %}
+
+            		<h6 class="mt-2">Yesterday's Question & Answer ({{yesterday_event.created_on_date}}): <span style="font-style: italic; color: #007bff;"></span></h6>
+            		<h6 class="mt-2">Question: <span style="font-style: italic; color: #007bff;">{{yesterday_event.question}}</span></h6>
+            		<h6 class="mt-2">Answer: <span style="font-style: italic; color: #007bff;">{{yesterday_event.decision}}</span></h6>
+        			<h6 class="mt-2">More Info: <span style="font-style: italic; color: #007bff;"><a href="{{yesterday_event.answer}}" target="_blank">{{yesterday_event.answer}}</a></span></h6><br> 
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        
+			
+		
+        <!-- this row holds the news content for the above question -->
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <br>
+            {% autoescape off %}
+            <h3>{{event.title}}</h3>
+				
+            <p>
+              {{event.event_msg_body}}
+            </p>
+			{% endautoescape %}
+          </div>
+
+          <!-- prediction components at the bottom of the contents -->
+          <div class="col-12"><br>
+          </div>
+
+          <!-- comment section -->
+        </div>
+
+
+
+
+      </div>
+
+      <!-- column for the sidebar holding filter options and ads -->
+      <div class="col-12 col-md-3">
+        <!-- row for filter components. will be developed later since it wasnt in the mvp -->
+        <!-- <div class="row">
+
+        </div> -->
+
+        <!-- row holding categories and their counts -->
+        <div class="row" style="max-height: 300px; overflow: scroll;">
+          <div class="col-12">
+            <div class="list-group">
+              <a href="#" class=" disabled" style="font-style: italic;"><b>Jackpot Winners</b></a>
+			  {% for jackpot in jackpots %}
+			  <li style="font-style: italic; font-size:12px;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+			  	<b>{{jackpot.created_on_date}}</b><br>
+			  	<table>
+		  			<tr>
+		  				<th>Ticket Number</th>
+		  				<th>Amount (₦)</th>
+		  			</tr>
+			  		{% for winners in jackpot.get_winners %}
+			  			<tr>
+			  				<td>{{winners.ticket_no}}</td>
+			  				<td class="text-right">{{winners.amount}}</td>
+			  			</tr>
+			  		{% endfor %}
+			  	</table>			  	
+			  </li>
+
+              
+
+			  {% empty %}
+				<li style="font-style: italic; font-size:12px;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+			  		<b>Winners will be displayed here before midnight</b><br> 				  	
+			  	</li>
+			  {% endfor %}
+              </div>
+          </div>
+        </div>
+
+        <br>
+        <!-- row holding ad barner -->
+        
+
+        <div class="row">
+          <div class="col-12">
+            <div class="">
+              {% if djp %}
+              <a href="#" class=" disabled" style="font-style: italic;"><b>Time left for today's Jackpot</b></a>
+              <br>
+              <hr><br>
+              	<button id="hours" type="button" class="btn btn-outline-info"></button>&nbsp;:
+				<button id="minutes" type="button" class="btn btn-outline-info"></button>&nbsp;:
+				<button id="seconds" type="button" class="btn btn-outline-info"></button>
+              {% else %}
+              <a href="#" class=" disabled" style="font-style: italic;"><b>Daily Jackpot for today has ended.</b></a><br>
+              <hr><br>
+              	<button id="hours" type="button" class="btn btn-outline-info">00</button>&nbsp;:
+				<button id="minutes" type="button" class="btn btn-outline-info">00</button>&nbsp;:
+				<button id="time" type="button" class="btn btn-outline-info">00</button>
+              {% endif %}
+			  	
+			  	
+              </div>
+          </div>
+        </div>	
+
+      </div>
+
+
+        <!-- comment section -->
+          <div class="col-12">
+            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+              <div class="entry-comments mt-20 hidden" style="overflow-y: scroll;" id="comments_view">
+                					
+			  </div>
+          
+          </div>
+    </div>
+  </div>
+
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+<script>
+		  $(document).ready(function(){
+
+					var event_date = $('#date').val();
+					var event_time = $('#time').val();
+					// console.log(event_time);
+					
+					// var mins = Number(event_time.match(/:(\d+)/)[1]);
+					// console.log(event_time, event_date, minutes);
+					var new_date = event_date.replace('.','');
+
+					new_time = event_time
+					// if (event_time.indexOf(' a.m.') >= 0) {
+					// 	new_time = event_time.replace(' a.m.',':00');
+					// }else{
+					// 	//new_time = event_time.replace(' p.m.',':00');
+					// 	new_time = (parseInt(event_time.replace(' p.m.','')) + 12).toString() + ":" + mins
+					// }
+
+					//alert(new_time);
+					// alert(new_date + " " + new_time);
+
+					// Set the date we're counting down to
+					var countDownDate = new Date(new_date + " " +  new_time).getTime();
+					var countDown = new Date(new_date + " " +  new_time);
+					// console.log(countDown);
+					// var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
+					// console.log(countDownDate);
+					// Update the count down every 1 second
+					var x = setInterval(function() {
+
+					// Get todays date and time
+					var now = calcTime();
+					//console.log(now);
+					// Find the distance between now an the count down date
+					var distance = countDownDate - now.getTime();
+					// console.log(distance);
+					// Time calculations for days, hours, minutes and seconds
+					var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+					// Display the result in the element with id="demo"
+					document.getElementById("hours").innerHTML = hours + "h"
+					document.getElementById("minutes").innerHTML = minutes + "m"
+					document.getElementById("seconds").innerHTML = seconds + "s"
+
+					// If the count down is finished, write some text
+					//console.log( hours, minutes, seconds);
+					if (hours == 0 && minutes == 0 && seconds == 0){
+						// alert("YAY");
+						var event_id = $('#event-id').val();
+						$.ajax({
+								url: "{% url 'general:close_djp_client' %}",
+								type: 'GET',
+								data: {'event_id':event_id},
+								success: function(data){
+									console.log('success');
+								},
+								error: function(data) {
+									console.log('not working');
+								}
+						});
+					} else if (hours <= 0 && minutes <= 0 && seconds <= 0){
+						document.getElementById("hours").innerHTML = 0 + "h"
+						document.getElementById("minutes").innerHTML = 0 + "m"
+						document.getElementById("seconds").innerHTML = 0 + "s"
+					
+					} else {
+						console.log("not there yet");
+					}
+					if (distance < 0) {
+						clearInterval(x);
+						//alert("countdown is done");
+						document.getElementById("demo").innerHTML = "JACKPOT HAS ENDED";
+					}
+				}, 1000);
+
+		});
+	</script>
+	
+<script>
+// function to calculate local time
+// in a different city
+// given the city's UTC offset
+function calcTime() {
+
+    // create Date object for current location
+    d = new Date();
+    
+    // convert to msec
+    // add local time zone offset 
+    // get UTC time in msec
+    utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    // console.log(utc)
+    // create new Date object for different city
+    // using supplied offset
+    nd = new Date(utc + (3600000*1));
+		// console.log(nd);
+    //console.log("The local time in  Lagos is " + nd.toLocaleString());
+    // return time as a string
+    return nd;
+
+}
+	</script>
+
+	{% include 'general/customscripts.html' %}
+
+{% endblock customscripts %}
+
+
+

@@ -1,0 +1,25 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+
+{% block transactions %}
+<form action="{% url 'ynladmin:admin_pages' 'settings' %}" method="post">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+             <label class="control-label">Stakeholders Amount(%):</label>
+                    {{ form.amount}}
+        </div>
+        <div class="form-group">
+             <label class="control-label">NewsPaper Vendor Amount(%):</label>
+                    {{ form.agent_percentage}}
+        </div>
+        <div class="form-group">
+             <label class="control-label">Weekly Jackpot Amount(%):</label>
+                    {{ form.referal_percentage}}
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Update</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

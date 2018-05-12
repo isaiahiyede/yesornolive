@@ -1,0 +1,265 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+{% block add_event %}
+    
+    <button class="pull-right"  style="cursor: pointer; color: #449f07;" id="djp_form" ><i class="fa fa-plus" >&nbsp;CREATE DAILY JACKPOT</i></button>
+    
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+  
+<div class="row">
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Entries Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-users text-info"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">{{ entries }}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total DAILY Prize Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="ti-wallet text-purple"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{ total_prize|floatformat:2|intcomma }}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Winners Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-trophy text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">{{total_amount_won|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Amount in wallets Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{total_amt_wallet|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Amount staked Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{total_amount_staked|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Refunds</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{users_refund|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Stakeholder's Amount</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{total_amount_stakeholder|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Payouts Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{users_payouts|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+                
+ 
+ <div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            
+            <h3 class="box-title"></h3>
+            <div class="table-responsive">
+                    {% with request.user.useraccount.special_user as special_user %}
+                        <table id="wjpDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Question</th>
+                            <th>DJP Amount</th>
+                            <th>Grand Prize</th>
+                            <th>Consolation Prize</th>
+                            <!--<th>Consolation Prize</th>-->
+                            <th>Number of Entries</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for djp in daily_jackpot %}
+                        <tr>
+                            <td>{{djp.created_on_date}}</td>
+                            <td>{{djp.question}}</td>
+                            <td>₦{{djp.amount}}</td>
+                            <td>₦{{djp.grand_prize}}</td>
+                            <td>{{djp.consolation_prize}}</td>
+                            <td>{% djpCount djp.id %}</td>
+                            <!--<td>₦{{djp.amount}}</td>-->
+                            <td>      
+                                {% if djp.closed == True %}
+                                    <i class='fa fa-lock fa-2x'></i>
+                                    <span><a class="view_djp" id="djp_view" djp_id="{{djp.id}}"><i class="fa fa-eye fa-2x" title="View" 
+                                        style="cursor: pointer;"></i></a>
+                                    </span>
+                                {% elif now > djp.end_time %}
+                                    <span><a class="edit_djp" id="djp_edit" djp_id="{{djp.id}}"><i class="fa fa-pencil fa-2x" title="Edit"
+                                        style="cursor: pointer;"></i></a>
+                                        </span>
+                                    <a href = "{% url 'ynladmin:close_djp' djp.id %}" onclick="return confirm('You are about to close the Daily Jackpot, Do you want to Proceed ?')">
+                                        <i class='fa fa-unlock fa-2x'></i>
+                                    </a>
+                                    
+                                {% endif %}
+                            </td>
+                           
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                        </table>
+
+            {% endwith %}
+                  
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock transactions %}
+
+{% block modals %}
+<div class="modal fade" id="djpModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+		            <!-- Modal Header -->
+		            <div class="modal-header" style="background-color: azure;">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                    Create The DailyJackpot for TODAY.
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body" style="background-color: azure;">
+		                
+		                <form name="wjpform" id="" method="POST" 
+		                    action="{% url 'ynladmin:create_djp' %}">
+							{% csrf_token %}
+
+						  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
+                                <!--<h4>Select a Date Range</h4>-->
+                                <!--<input style="border-radius: 5px;" id="from-date" type="text" class="report" name="start_date" placeholder="From" /> &nbsp;&nbsp;-->
+                                <!--<input style="border-radius: 5px;" id="to-date" type="text" class="report" name="end_date" placeholder="To" />-->
+                                
+                                <br>
+                                
+								<div class="form-group">
+								<label class="label-controller">Question of the Day</label><br>
+									{{form.question}}
+								</div>
+
+                                <div class="form-group">
+								<label class="label-controller">Total Jackpot Amount</label><br>
+									{{form.amount}}
+								</div>
+                                
+								<div class="form-group">
+								<label class="label-controller">Number of Winner(s)</label><br>
+									{{form.top_winner}}
+								</div>
+                                
+                                <div class="form-group">
+								<label class="label-controller">Winner's Prize</label><br>
+									{{form.grand_prize}}
+								</div>
+
+                                <div class="form-group">
+                                <label class="label-controller">Consolation Prize</label><br>
+                                    {{form.consolation_prize}}
+                                </div>
+                                
+                                <div class="form-group">
+								<label class="label-controller">Number of Consolation Winners</label><br>
+									{{form.consolation_winners}}
+								</div>
+
+
+								<div class="form-group">
+                                    <label class="label-controller">Open for All players</label><br>
+                                    {{form.all_players}}
+								</div>
+																
+						    <button type="submit" id="djp_submit" class="btn btn-success pull-right">Submit</button><br />
+
+
+						</form>         
+		        	</div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer" style="background-color: azure;">
+		               
+		            </div>
+                </div>
+
+		    </div>
+</div>
+
+<div class="modal fade" id="djp_editModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="djp_viewModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+</div>
+
+{% endblock modals %}

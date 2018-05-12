@@ -1,0 +1,4 @@
+.label-controller:after {
+  content:"*";
+  color:red;
+}

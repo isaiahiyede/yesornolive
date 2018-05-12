@@ -1,0 +1,234 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+{% block add_event %}
+    
+    <button class="pull-right"  style="cursor: pointer; color: #449f07;" id="wjp_form" ><i class="fa fa-plus" >&nbsp;START WEEKLY JACKPOT</i></button>
+    
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+  
+<div class="row">
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Entries Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-users text-info"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">{{ users }}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Weekly Prize Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="ti-wallet text-purple"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{ users_add_funds|floatformat:2|intcomma }}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Winners Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-trophy text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{total_amount_won|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Amount in wallets Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{total_amt_wallet|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Amount staked Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{total_amount_staked|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Refunds</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{users_refund|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Stakeholder's Amount</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{total_amount_stakeholder|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Payouts Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{users_payouts|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+                
+ 
+ <div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            
+            <h3 class="box-title"></h3>
+            <div class="table-responsive">
+                    {% with request.user.useraccount.special_user as special_user %}
+                        <table id="wjpDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>From - To</th>
+                            <th>Weekly Prize</th>
+                            <th>Winner</th>
+                            <th>Consolation</th>              
+                            <th>Grand Prize</th>
+                            <th>Consolation Prize</th>      
+                            <th>Date</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for wjp in weekly_jackpot %}
+                        <tr>
+                            <td>{{wjp.start_date}}-{{wjp.end_date}}</td>
+                            <td>{{wjp.weekly_prize}}</td>
+                            <td>{{wjp.top_winner}}</td>
+                            <td>{{wjp.consolation_winners}}</td>
+                            <td>{{wjp.grand_prize}}</td>                    
+                            <td>{{wjp.consolation_prize}}</td>
+                            <td>{{wjp.created_on}}</td>
+                            <td>      
+                                {% if wjp.closed %}
+                                    <i class='fa fa-lock fa-2x'></i>
+                                {% else %}
+                                    <a href = "{% url 'ynladmin:close_wjp' wjp.id %}" onclick="return confirm('Are you sure you want to ?')">
+                                        <i class='fa fa-unlock fa-2x'></i>
+                                    </a>
+                                {% endif %}
+                            </td>
+                           
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                        </table>
+
+            {% endwith %}
+                  
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock transactions %}
+
+{% block modals %}
+<div class="modal fade" id="wjpModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+		            <!-- Modal Header -->
+		            <div class="modal-header" style="background-color: azure;">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                    Start The Jackpot for this Week.
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body" style="background-color: azure;">
+		                
+		                <form name="wjpform" id="" method="POST" 
+		                    action="{% url 'ynladmin:start_wjp' %}">
+							{% csrf_token %}
+
+						  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
+                                <h4>Select a Date Range</h4>
+                                <input style="border-radius: 5px;" id="from-date" type="text" class="report" name="start_date" placeholder="From" /> &nbsp;&nbsp;
+                                <input style="border-radius: 5px;" id="to-date" type="text" class="report" name="end_date" placeholder="To" />
+                                <a href="#" id="wjp_total">Get Total Jackpot for the week</a>
+                                <br>
+                                <div id="replace" class="hidden">
+                                    
+                                    
+                                </div>
+								<!--<div class="form-group col-md-6">
+								<label class="label-controller">From</label>
+									{{event_form.title}}
+								</div>
+
+								<div class="form-group col-md-6">
+								<label class="label-controller">To</label>
+									{{event_form.category}}
+								</div>-->
+
+
+								<!-- <div class="form-group">
+									{{event_form.publish}}
+									<label>Publish</label>
+								</div> -->
+																
+						    <button type="submit" id="submitbutton" class="btn btn-success pull-right hidden">Submit</button><br />
+
+
+						</form>         
+		        	</div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer" style="background-color: azure;">
+		               
+		            </div>
+                </div>
+
+		    </div>
+</div>
+
+
+{% endblock modals %}

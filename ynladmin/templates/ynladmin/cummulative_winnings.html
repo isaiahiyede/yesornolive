@@ -1,0 +1,52 @@
+<div class="modal fade" id="winnings_cummulative" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="winnings">
+        
+    <!-- Modal Header -->
+    <div class="modal-header" style="background-color: azure;">
+        <button type="button" class="close" 
+           data-dismiss="modal">
+               <span aria-hidden="true">&times;</span>
+               <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+             Cummulative Winnings -- {{get_event.event_id}}
+        </h4>
+    </div>
+    
+    <!-- Modal Body -->
+    <div class="modal-body" style="background-color: azure;">
+        
+        <!--<form name="edit_user_obj" id="edit_user_obj">-->
+				
+				<div class="form-group">
+				<label>Total Amount Played: ₦</label>
+					{{get_event.gameplay_total_value}}
+				</div>
+
+				<div class="form-group">
+				<label>Total Amount Played(YES): ₦</label>
+					{{get_event.total_yes_choice_played}}
+				</div>
+
+				<div class="form-group">
+				<label>Total Amount Played(NO): ₦</label>
+					{{get_event.total_no_choice_played}}
+				</div>
+				
+			    <!--<button type="submit" id="submit-edit-user" class="btn btn-success pull-right">Submit</button><br />-->
+
+			<!--</form> -->        
+	</div>
+    
+    <!-- Modal Footer -->
+    <div class="modal-footer" style="background-color: azure;">
+       
+    </div>
+
+</div>
+</div>
+    </div>
+</div>
+		

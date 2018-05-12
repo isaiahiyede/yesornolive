@@ -1,0 +1,107 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+
+{% block add_event %}
+    {% if news %}
+    	{% if request.user.useraccount.special_user or request.user.useraccount.content_provider %}
+    		<h4 class="pull-right"  style="cursor: pointer; color: #449f07;" id="add_event"><i class="fa fa-plus" >&nbsp;ADD EVENT</i></h4>
+    	{% endif %}
+    {% endif %}
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+<div class="row">
+
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Clients</h4>
+            <ul class="list-inline two-part">
+            	<li><i class="fa fa-users text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter">{{allVendorClients}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Balance in wallet</h4>
+            <ul class="list-inline two-part">
+                <li><i class="ti-wallet text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter">₦ {{balance}}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-6 col-xs-12">
+        <div class="white-box">
+            <h4 class="box-title">Total Played Events</h4>
+            <ul class="list-inline two-part">
+                <li><i class="icon-game-controller text-purple"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;" class="counter">{{game_count}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <!--<h3 style="margin:15px 0px 5px 0px;">
+
+                % for msg in messages %}
+                    <script>
+                        function show_alert(){
+                        var alert = '<p style="color:red;" class="text-{ msg.tags }} bg-{{ msg.tags }}">{{ msg }}</p>';
+                        document.write(alert);
+                        }
+                        display = window.setTimeout(show_alert(), 1000);
+                        window.clearTimeout(display);
+                    </script>
+                % endfor %}
+            </h3>-->
+            <h3 class="box-title">Event Manager</h3>
+            <div class="table-responsive">
+
+            {% with request.user.useraccount.special_user as special_user %}
+              
+
+                <table id="eventDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Event Id</th>
+                            <th>Title</th>
+                            <th>Category</th>              
+                            <th>End Date</th>
+                            <th>Play</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in all_events %}
+                        <tr>
+                            <td class="winnings" style="cursor: pointer;" event_id="{{event.pk}}"><a>{{event.event_id}}</a></td>
+                            <td>{{event.title|truncatechars:50}}</td>
+                            <td>{{event.category}}</td>
+                            <td style="width:100px;">{{event.end_date}}</td>
+                            <td>
+                                <a style="cursor: pointer;" class="play_game" event_id="{{event.pk}}"><i class="fa fa-play" aria-hidden="true">&nbsp;Play</i></a>                              
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                </table>
+
+                    
+             
+           {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock transactions %}

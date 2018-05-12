@@ -1,0 +1,374 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block trending %}
+<br><br><br>	
+<div class="container">
+
+  <div class="row">
+
+  	
+  	<h3>Frequently Asked Questions</h3>
+    <!-- column that will hold row containing grid of events -->
+    <div class=" col-12 col-md-12">
+      <!-- this is the row block actually holding each item -->
+      <div class="row">
+        <!-- each grid item begins here -->
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingOne">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		          <h6>What is YESORNOLIVE.COM?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+
+		    <style>
+		    	
+		    </style>
+
+		    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+		      <div class="card-block col-md-12">
+		        <a href="/">YesorNoLive.com</a> (or YESorNolive or YESorNo) is a <a href="/">news</a> prediction portal. Predictions made by registered users anticipate the outcomes of news stories in subject areas such as <a href="{% url 'general:getCategory' 'Entertainment-LifeStyle' %}">Entertainment & Lifestyle</a> , <a href="{% url 'general:getCategory' 'Sports' %}">Sports</a>, <a href="{% url 'general:getCategory' 'Politics' %}">Politics</a>, <a href="{% url 'general:getCategory' 'Business-Economy' %}">Business & Economy</a> and <a href="{% url 'general:getCategory' 'General' %}">General</a> topics.  In other words, a registered user predicts YES or NO on the outcome (in the near future) of a specific event and could either win or lose on the side of such prediction, based on eventual outcome of a news story. Essentially, therefore, all games or events on yesornolive.com are based on media/news reports. All games or events have been ‘pulled’ from the News. .
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingTwo">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+		          <h6>Does YESORNOLIVE.COM have an operating licence?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+		      <div class="card-block col-md-12">
+		        Yes. <a href="/">YesorNoLive.COM</a> is a trademark registered in Nigeria and owned by Inventrica Multimedia Limited. Inventrica Multimedia Limited (owners of YesOrNoLive) is incorporated with the Corporate Affairs Commission (CAC) in Nigeria, as a Limited Liability company and is a sister company to Inventrica Multimedia LLC  in the State of Texas, United States. YesOrNoLive is licensed by the National Lottery Regulatory Commission (NLRC) of Nigeria as a Gaming entity. The activities and operations are therefore regulated by law.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingThree">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+		          <h6>What are the guiding principles of YESORNOLIVE.COM?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+		      <div class="card-block col-md-12">
+		        All predictions at <a href="/">YesorNoLive.COM</a> are ‘winner-takes-all’ games. This means you either WIN or LOSE. Simplicity, Transparency and Trust remain the foundational principles on which YesOrNoLive was established. Predictors can see how many other players have participated in an event and how much is in the pot for sharing, based on total number of stakes. 
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingFour">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+		          <h6>Can anybody predict on YESORNOLIVE.COM?</h6>	
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+		      <div class="card-block col-md-12">
+		        Yes, anybody who has reached the age of 18 years and above can predict on <a href="/">YesorNoLive.COM</a>. First off, an intending user must <a href="{% url 'general:register' %}">sign up</a>sign up and update their profile and account details in Account Settings. Afterwards, they can make either YES or NO predictions on any event across the five categories on the site.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingFive">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+		          <h6> I have seen an event i want to predict. How do i predict?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
+		      <div class="card-block col-md-12">
+		        The question is in the title or headline. It may be a declarative statement 
+		        (e.g ‘BUDGET Presentation: Education will get a bigger allocation than Health’), in which case you are expected to choose YES or NO. Sometimes, though, it may come in the form of a question (such as ‘ATLETICO MADRID VS QARABAG FK: Will Qarabag score at least a goal?’). Third, you should read content underneath the headline, in order to be properly guided in your choice of YES or NO. You may also click on any or all of the external links under ‘More Information’, to help determine your choice. Fourth, you need to type the amount you wish to stake and then, click on either YES or NO (depending on which side you choose). Lastly, click the PLAY button to finalize your prediction. A message comes up to let you know your prediction has been successfully made. This message is the confirmation that you have finalized all necessary steps to making your prediction. If this message does not display, then you have NOT finalized your prediction and may need to refresh the page and start all over.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingSix">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+		        <h6>How are outcomes determined?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseSix" class="collapse" role="tabpanel" aria-labelledby="headingSix">
+		      <div class="card-block col-md-12">
+		        While each event has a deadline (or end date) for predictions to end, this does not mean the outcome of that event or prediction will be known on that day. The date mentioned on the event only serves to let predictors know when the doors are closed for predictions on that event.<br/>
+
+				Usually, the eventual outcome of a predicted event is based on its outcome as published or broadcast by the mass media. Outcomes are always available in the public domain and immediately they are made available, our validators ensure such outcomes are also decided at YesOrNoLive. In the real sense, outcomes are not determined by the operators of YesOrNoLive, who only validate such outcomes. Outcomes are determined in the public domain. See our Terms of Use, to learn more.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingSeven">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+		          <h6>Can a published event be cancelled?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseSeven" class="collapse" role="tabpanel" aria-labelledby="headingSeven">
+		      <div class="card-block col-md-12">
+		        Yes, an event may be cancelled. If the outcome of an event which has been published and is open for prediction on YesOrNoLive is eventually postponed or the event is deemed to not take place as previously planned, due to publishing errors, or circumstances, or the action or inaction of (one, some, or all of) the key public players involved, or legal action or force majeure, the event may be cancelled on <a href="">YesOrNoLive.com</a> and the stakes (“amount which predictors have paid to back their positions of YES or NO”) of users are refunded into the users’ wallets. Users are notified of the cancellation. For more details, see the <a href="{% static 'ynl/terms-of-use.pdf' %}">Terms of Use</a>.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingEight">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+		        	<h6>When and how are winners paid?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseEight" class="collapse" role="tabpanel" aria-labelledby="headingEight">
+		      <div class="card-block col-md-12">
+		        Winners get paid into their wallets within 24 to 48 hours after outcomes have been decided. Winners and losers get notified of their status, after the outcome of each prediction has been decided at YesOrNoLive.com (based on publicly available and trusted information).
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingNine">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+		        	<h6>How can i access my wallet?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseNine" class="collapse" role="tabpanel" aria-labelledby="headingNine">
+		      <div class="card-block col-md-12">
+		        To access your wallet, log in and click on the blue TOP-UP button which appears to the right side of the page. Now, you can see your Wallet. It contains information about your balance; a blue button to top-up the wallet; a red button to transfer funds/winnings to your bank account and details of fund movement to and from your wallet.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingTen">
+		      <h5 class="mb-0">
+		        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTen" aria-expanded="true" aria-controls="collapseTen">
+		        	<h6>How can i deposit funds in my wallet?</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div id="collapseTen" class="collapse" role="tabpanel" aria-labelledby="headingTen">
+		      <div class="card-block col-md-12">
+		        At registration, you must have entered your bank/debit card details in the spaces provided in ACCOUNT SETTINGS. If so, you can easily top-up your wallet, by transferring funds from your bank to your wallet. You can do this, by either clicking on the blue TOP UP button at the top (after you have logged in) OR the white link at the top of the page (beside the blue TOP UP button). The TOP UP button takes you directly to your wallet, while the white link takes you to your dashboard (You can click on MY WALLET on the left side of your dashboard).<br/>
+
+				You can now see a rectangular TOP UP button at the left side of that page. Click on the button, type the amount you want to top up and click on the PAY NOW button. Fill in your bank/card details to transfer funds.
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingEleven">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+		          <h6>When can i transfer funds from my wallet to my bank account?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapseEleven" class="collapse" role="tabpanel" aria-labelledby="headingEleven">
+		      <div class="card-block col-md-12">
+		        You can withdraw funds from your wallet to your bank account, at any time, if you have a cash balance of up to 1,100 Naira and above in your wallet. You may not be able to transfer/withdraw funds, if wallet balance is below 1,100 naira. Please note that fees which accrue to third party payment services are applied and deducted during funds withdrawal/transfer.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingTwelve">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+		        	<h6>Do fees apply, when i withdraw/transfer funds from my wallet?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapseTwelve" class="collapse" role="tabpanel" aria-labelledby="headingTwelve">
+		      <div class="card-block col-md-12">
+		        Yes. All financial transactions on YesOrNoLive, including the funding of users’ wallets, withdrawal of funds and payment of winnings are done through <a href="https://paystack.com/">Paystack</a>, a payment processor (or ‘’third party payment service”). All payments through third party payment service providers are subject to deduction of fees. At YesOrNoLive, we have decided to apply such fees only when users need to cash out from their wallets.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading13">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse13" aria-expanded="false" aria-controls="collapse13">
+		        	<h6>Can i see a list of all predictions i have won or lost?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse13" class="collapse" role="tabpanel" aria-labelledby="heading13">
+		      <div class="card-block col-md-12">
+		        Yes, you can access all predictions in which you have participated. Log in and go to your dashboard by clicking on the white link at the top of the page (beside the blue TOP UP button). Your dashboard shows a summary of events won, events played and even more details at the bottom of the page (such as event number; event title; prediction date; amount placed; choice; status and amount won). Clicking on the event number (e.g #EN02109) to the left of each item in the PREDICTION HISTORY opens the event page
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading14">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse14" aria-expanded="false" aria-controls="collapse14">
+		        	<h6>Can i refer a friend and get some reward?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse14" class="collapse" role="tabpanel" aria-labelledby="heading14">
+		      <div class="card-block col-md-12">
+		        Yes, you may refer friends and get a reward. You can find your referral link at the top of your dashboard. Copy the link and send to friends. You earn 1 point per each friend referred, if your referral registers at <a href="">YesOrNoLive.com</a>. One point is also awarded to you, each time your referral makes a prediction. Each point accumulates towards your entry into the the weekly jackpot. It also counts as part of total points. To know which referrals have signed-on through your referral link, go to your dashboard and click on REFERRALS.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading15">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse15" aria-expanded="false" aria-controls="collapse15">
+		        	<h6>Does YESORNOLIVE.COM have a jackpot?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse15" class="collapse" role="tabpanel" aria-labelledby="heading15">
+		      <div class="card-block col-md-12">
+		        Yes, <a href="">YesOrNoLive.com</a> has two types of jackpot. First is the <a href="{% url 'gameplay:dailyjackpot' %}">Daily</a> Jackpot which features one QUESTION OF THE DAY. Predictors stake a minimum of 25 Naira on a YES or NO position and can stake as many entries as possible (on either or both YES or NO positions), to increase their chances of winning. Three winners are selected by raffle, everyday, for a total prize of 25,000 naira (10,000 x 1 person AND 5,000 naira x 3 persons). Second is the Weekly Jackpot. The <a href="{% url 'gameplay:weeklyjackpot' %}">Weekly Jackpot</a> is based on a points system and everybody is qualified to participate, if they have accumulated 20 points during the week. Points can be earned, if a user updates their profile; makes a prediction during that week (whether the prediction is right or wrong); refers someone who registers as a new user on the site; someone they referred has made a prediction. Eleven (11) winners are selected at random for the Weekly Jackpot. While one (1) winner goes home with 50% of total winnings for that week, ten others share the remaining 50%. Total jackpot cash shareable per week varies and is a percentage of total amount staked by all predictors during the week.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading16">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse16" aria-expanded="false" aria-controls="collapse16">
+		          <h6>How are jackpot winners selected and paid?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse16" class="collapse" role="tabpanel" aria-labelledby="heading16">
+		      <div class="card-block col-md-12">
+		        Daily Jackpot and Weekly Jackpot winners are selected at random, through aggregated computation (similar to raffle methods), by YesOrNoLive’s software. The first step to entering into the Daily Jackpot is predicting the right answers, after staking 25 naira for 1 position (users may stake as many positions as they like).  To participate in the Weekly Jackpot, users must have accumulated  20 points during the week. Winners are announced on Jackpot pages, social media, etc..<br/>
+
+				Jackpot winnings are credited into winners’ wallets at the end of each round.
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading17">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse17" aria-expanded="false" aria-controls="collapse17">
+		        	<h6>How does the points system work?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse17" class="collapse" role="tabpanel" aria-labelledby="heading17">
+		      <div class="card-block col-md-12">
+		        To qualify for the week’s jackpot, a user must have accumulated at least 20 points, during that week. The following points are awarded to qualified users:<br/>
+				-Make one prediction during the week = 5 points<br/>
+				-Refer a friend who signs up = 1 point<br/>
+				-Referral (the person referred by an existing user) makes a prediction = 1 point
+				Users who have qualified for Weekly Jackpot are automatically enrolled, once they have accumulated 20 points during the week.<br/>
+				Points accumulated over time and during the week are displayed differently on the dashboard<br/> 
+				To know how many points you have earned over time, take a look at GAME POINTS ACCUMULATED on your dashboard.
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading18">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse18" aria-expanded="false" aria-controls="collapse18">
+		        	<h6>How are jackpot winners selected and paid?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse18" class="collapse" role="tabpanel" aria-labelledby="heading18">
+		      <div class="card-block col-md-12">
+		        Daily Jackpot and Weekly Jackpot winners are selected at random, through aggregated computation (similar to raffle methods), by YesOrNoLive’s software. The first step to entering into the Daily Jackpot is predicting the right answers, after staking 25 naira for 1 position (users may stake as many positions as they like).  To participate in the Weekly Jackpot, users must have accumulated  20 points during the week. Winners are announced on Jackpot pages, social media, etc.. 
+
+				Jackpot winnings are credited into winners’ wallets at the end of each round.
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading19">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse19" aria-expanded="false" aria-controls="collapse19">
+		        	<h6>Can i work with YESORNOLIVE.COM and earn some income as an independent partner?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse19" class="collapse" role="tabpanel" aria-labelledby="heading19">
+		      <div class="card-block col-md-12">
+		        Yes, you can. Outside the internal referral system which allows registered users to refer friends and earn points rewards which qualify them for jackpot, various opportunities exist for business-oriented, independent and freelance marketers to recruit new users for YesOrNoLive or help share predictions to others. These include:<br/>
+				-Affiliate Media Partnership: for Blogs and Websites; TV, Radio & Newspaper channels with engaging online presence<br/>
+				-Prediction Sponsorship: for personalities, professionals and celebrities who may wish to ‘sponsor’ certain predictions (subject to legal requirements, non-trespass and validation) related to their areas of expertise.<br/>
+				-Social Media Partnership: for social media influencers with substantial following, who may want to share predictions published by YesOrNoLive to their followers.<br/>
+				-Agents: for small and medium scale entrepreneurs who have hands-on experience in the lottery/gaming business and may want to expand, by including YesOrNoLive in their product basket. This is also suitable for young independents who have the requisite resources and acumen to succeed as YesOrNoLive agents.<br/>
+				All enquiries for independent partnership should be directed to <a href="http://marketing@yesornolive.com/">marketing@yesornolive.com</a> with the subject INDEPENDENT PARTNERSHIP.
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" role="tab" id="heading20">
+		      <h5 class="mb-0">
+		        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse20" aria-expanded="false" aria-controls="collapse20">
+		          <h6>I have a complaint/suggestion/an enquiry. Who should i speak with?</h6>
+		        </a>
+		      </h5>
+		    </div>
+		    <div id="collapse20" class="collapse" role="tabpanel" aria-labelledby="heading20">
+		      <div class="card-block col-md-12">
+		        Contact customer service via any of the following channels:<br>
+				-Email: <a href="http://customercare@yesornolive.com/">customercare@yesornolive.com</a><br>
+				-Live Chat: Use the live chat application at the bottom right of your dashboard<br>
+				-Social Media: Facebook & Twitter
+		      </div>
+		    </div>
+		  </div>
+		</div>
+        <!-- pagination component goes here -->
+      </div>
+    </div>
+
+    <!-- column for the sidebar holding filter options and ads -->
+
+
+  </div>
+</div>
+  
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+  {% include 'general/customscripts.html' %}
+{% endblock customscripts %}

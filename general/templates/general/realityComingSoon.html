@@ -1,0 +1,51 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block backgroundImage %}
+<style>
+  body{
+    background-image: url({% static "img/bbn_coming_up_2.jpg" %});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    }
+</style>
+{% endblock backgroundImage %}
+
+{% block trending %}
+  
+<div class="container">
+  <div class="row">
+
+    <div class="col-12 col-md-12">
+
+      
+    </div>
+
+  </div>
+</div>
+  
+{% endblock trending %}
+
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block footer %}
+{% endblock footer %}

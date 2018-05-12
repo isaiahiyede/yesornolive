@@ -1,0 +1,393 @@
+{% extends 'general/profile.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block title %}<title>YesorNoLIVE.com | Wallet</title>{% endblock %}
+
+{% block pg_title %}<h4 class="page-title">Wallet Balance: <span style="color: green">₦{{balance|floatformat:2|intcomma}}</span></h4> </div>{% endblock %}
+        {% block search %}
+                    <li>
+                        <form role="search" class="app-search hidden-xs" action="" method="get">
+                            <input type="text" name="q" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                    {% endblock %}
+            {% block body %}
+                
+                
+                <!--row -->
+                <div class="row">
+                    <!-- <div class="col-xs-12 col-sm-6 col-lg-6 ">
+                        <div class="white-box">
+                            <h3 class="box-title">DIRECT DEPOSIT WALLET FUNDING</h3>
+                            <p style="font-size: 0.9em;">Click "Top Up" button below</p>
+                            <p style="font-size: 0.9em;">Check the "Direct Bank Deposit" radio button</p>
+                            <p style="font-size: 0.9em;">Fill in the amount you want to pay</p>
+                            <p style="font-size: 0.9em;">Click the "pay" button</p>
+                            <p style="font-size: 0.9em;">Copy the reference number generated in the table below</p>
+                            <p style="font-size: 0.9em;">Send the actual amount you specified to the account number below.</p>
+                            <p style="font-size: 0.9em;">Use your last name + the copied reference number as the payment description</p>
+                            <p style="font-size: 0.9em;"><i>e.g CHIROMA-3xgM9pSUHBWifmWX</i></p>
+                            <p style="font-size: 0.9em;">Thank you.</p>
+                            <p><b>Wema Bank</b></p>
+                            <p>Account number: <b>0122778465</b></p>
+                            <p>Account name: <b>Inventrica Multimedia</b></p>
+                        </div>
+                    </div> -->
+                    <div class="col-xs-12 col-sm-6 col-lg-6">
+                        <div class="white-box">
+                            
+                            
+                            <p class="text-muted m-b-30">Top up your wallet</p>
+                            <div class="row">
+                                
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                    <button class="btn btn-block btn-info btn-rounded" id="paystack">Top Up</button>
+                                </div>
+                               
+                            </div>
+                            
+                        </div>
+                        <div class="white-box hidden" id = 'paydiv'>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                <!--<form method="post" action="% url 'wallet:main' %}">
+                                    % csrf_token %}
+                                    <div class="form-group">
+                                        <label for="Amount">Amount(&#8358;)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="amount" id="id_amount" required /><br><span style="color: red;">The top up limit is &#8358;9999</span>
+                                        </div>
+                                        <input type="hidden" name="bot_catcher" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Pay Now</button>
+                                    </div>                               
+                                </form>-->
+                                    <b><h5>Select a Payment Method</h5></b><br>
+                                    <p id='pcard'><input type="radio" name="paymenttype" id='cardtype'> <label for="cardtype"> Card/Online Transfer</label> </p>
+                                    <!-- <p id='pbank'><input type="radio" name="paymenttype" id='banktype'> <label for="banktype"> Direct Bank Deposit</label></p> -->
+                              </div>
+                              <div class="col-md-6 hidden" id="card">
+                                    <form method="post" action="{% url 'wallet:main' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="Amount">Amount(&#8358;)</label>
+                                            <div class="input-group">
+                                                <input style="border: 2px solid black ;" type="number" name="amount" max="20000" id="id_amount" required /><br><span style="color: red;">The top up limit is &#8358;19,999</span>
+                                            </div>
+                                            <input type="hidden" name="payment-method" value="card"/>
+                                            <input type="hidden" class="bot_catcher" name="bot_catcher" value="botty"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-block btn-info">Pay </button>
+                                        </div>                               
+                                    </form>
+                                    
+                                </div>
+                              <div class="row hidden" id="bank" style="padding-left: 50%">
+                                    <!--<form method="post" action="% url 'wallet:main' %}">-->
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <!--<p> Pls pay to <b>WEMA BANK:</b></p>
+                                            <p>Account Name: <b>YesorNoLive.com</b></p>
+                                            <p>Account Number: <b>0123456789</b></p>-->
+                                            <label for="Amount">Amount(&#8358;)</label>
+                                            <div class="input-group">
+                                                <input type="number" name="amount" id="amount" required /><br><!--<span style="color: red;">The top up limit is &#8358;9999</span>-->
+                                            </div>
+                                            <input type="hidden" id="paymet"
+                                            name="payment-method" value="bank"/>
+                                            <input type="hidden" class="bot_catcher" 
+                                            name="bot_catcher" value="botty"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" id="banksubmit" class="btn btn-block btn-info">Pay</button>
+                                        </div>                               
+                                    <!--</form>-->
+                                    
+                                </div>
+                              
+                            </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                        
+                        <div class="col-xs-12 col-sm-6 col-lg-6">
+                        <div class="white-box">
+                            <p class="text-muted m-b-30">Cash out your wallet</p>
+                            <div class="row">
+                        
+                                <div class="col-lg-6 col-sm-8 col-xs-12">
+                                    <button id="transfer" class="btn btn-block btn-danger btn-rounded">Request Withdrawal</button>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="white-box hidden" id="transferdiv">
+
+                            <div class="row">
+                                <form method="post" action="{% url 'wallet:cashout' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="Amount">Amount(&#8358;)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="amount" required /><br><span style="color: red;">Pls note there is a transaction fee of &#8358;100</span>
+                                            <input type="hidden" name="bot_catcher" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Cash out</button>
+                                    </div>                               
+                                </form>
+                                
+                            </div>
+                            
+                        </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <div class="white-box">
+                            <h1 class="box-title" style="font-size: 20px;">Wallet Transaction History</h3>
+                            <h2 class="box-title" style="font-size: 20px; color: red;">NB: Click this icon "<span"><i class="fa fa-refresh" aria-hidden="true"></i></span>" for pending transactions</h2>
+                            <div class="table-responsive">
+                                <table id="userDatatable" class="display table-striped" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr style='line-height: 50px;'>
+                                            <th>#</th>
+                                            <th>Status</th>
+                                            <th>Amount</th>
+                                            <th>Txn.Fee</th>
+                                            <th>Description</th>
+                                            
+                                            <th>Date</th>
+                                            <th>Reference No</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        {% for txn in wallet %}
+                                        <tr style='line-height: 50px;'>
+                                            <td>{{forloop.counter}}</td>
+                                            {% if txn.status == "failed" or txn.status == "abandoned" %}
+                                            <td><span class="label label-danger">{{txn.status}}</span> </td>
+                                            {% elif txn.status == "Pending Approval" %}
+                                            <td><span class="label label-warning">{{txn.status}}</span>&nbsp;{% if not txn.bank == 'BANK DEPOSIT'%}<a href="{% url 'wallet:verify_pending' txn.pk %}"><i class="fa fa-refresh" aria-hidden="true"></i></a>{% endif %} </td>
+                                            {% elif txn.status == "Successful" or txn.status == "Approved" %}
+                                            <td><span class="label label-success">{{txn.status}}</span> </td>
+                                            {% else %}
+                                            <td><span class="label label-primary">{{txn.status}}</span> </td>
+                                            {% endif %}
+                                            <td>₦{{txn.amount|floatformat:2|intcomma}}</td>
+                                            <td>₦{{txn.transaction_fee|floatformat:2|intcomma}}</td>
+                                            
+                                            {% if txn.bank == 'PAYSTACK' %}
+                                            <td>Wallet Top-up</td>
+                                            {% else %}
+                                            <td>{{txn.message }}</td>
+                                            {% endif %}
+                                            <td>{{txn.created_at}}</td>
+                                            <td>{{txn.ref_no}}</td>
+                                            
+                                        </tr>
+                                        {% empty %}
+                                            <p>No Payment Record found!!!!</p> 
+                                        {% endfor %}
+                                        <!--<tr>
+                                            <td>2</td>
+                                            <td>Paystack Deposite</td>
+                                            <td>₦2045</td>
+                                            <td>12/06/2017</td>
+                                            <td>10:34</td>
+                                            <td><span class="label label-success">successful</span> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Paystack Deposite</td>
+                                            <td>₦2045</td>
+                                            <td>12/06/2017</td>
+                                            <td>10:34</td>
+                                            <td><span class="label label-danger">failed</span> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Paystack Deposite</td>
+                                            <td>₦2045</td>
+                                            <td>12/06/2017</td>
+                                            <td>10:34</td>
+                                            <td><span class="label label-success">successful</span> </td>
+                                        </tr>-->
+                                        
+                                    </tbody>
+                                </table>
+                            
+                            </div>
+                        </div>
+                        </div>
+
+                        
+                        
+                        <!--<div class="col-lg-6">
+                        <div class="white-box">
+
+                            <div class="row">
+                        
+                                <div class="col-lg-6 col-sm-4 col-xs-12">
+                                    <button class="btn btn-block btn-primary btn-rounded">Quickteller</button>
+                                </div>
+                                
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                        <div class="white-box">
+
+                            <div class="row">
+                        
+                                <div class="col-lg-6 col-sm-4 col-xs-12">
+                                    <button class="btn btn-block btn-info btn-rounded">Interswitch</button>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        </div>-->
+                    <!--</div>-->
+                </div>
+                <!--row -->
+                <!--<div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Events Won</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="icon-trophy text-info"></i></li>
+                                <li class="text-right"><span class="counter">23</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Played Events</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="icon-game-controller text-purple"></i></li>
+                                <li class="text-right"><span class="counter">{game.count}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Wallet Balance</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="ti-wallet text-success"></i></li>
+                                <li class="text-right"><span class="counter">₦balance|floatformat:2|intcomma}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>-->
+               
+                
+                
+                
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> © 2017 Yes or No Live </footer>
+        </div>
+        <!-- /#page-wrapper -->
+        {% endblock %}
+
+        {% block modals %}
+<!-- Modal -->
+        <div id="bankinfo" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" id="banking">
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <!--<script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <!--<script src="bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <!-- Menu Plugin JavaScript -->
+    <!--<script src="js/wp-sidebar.js"></script>-->
+    <!--slimscroll JavaScript -->
+    <!--<script src="js/jquery.slimscroll.js"></script>-->
+    <!--Wave Effects -->
+    <!--<script src="js/waves.js"></script>-->
+    <!-- Custom Theme JavaScript -->
+    <!--<script src="js/custom.min.js"></script>-->
+    <!--Style Switcher -->
+<!--<script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>-->
+{% block custom_scripts %}
+<script>
+$('body').on('click','#paystack',function(){
+    $('#paydiv').toggleClass('hidden');
+    });
+</script>
+
+<script>
+$('body').on('click','#transfer',function(){
+    $('#transferdiv').toggleClass('hidden');
+    });
+</script>
+
+<script>   
+ id_amount.oninput = function () {
+     if (this.value.length > 5)
+         this.value = this.value.slice(0,4); 
+};
+
+</script>
+
+<script>
+$('body').on('click','#cardtype',function(){
+    $('#card').toggleClass('hidden');
+    $('#bank').addClass('hidden');
+    });
+</script>
+
+<script>
+$('body').on('click','#banktype',function(){
+    $('#bank').toggleClass('hidden');
+    $('#card').addClass('hidden');
+    });
+</script>
+
+<script>
+$('body').on('click','#banksubmit',function(){
+    //alert("I am here");
+    var amount = $('#amount').val();
+    var payment_method = $('#paymet').val();
+    var bot_catcher = $('.bot_catcher').val();
+    console.log(bot_catcher);
+    var csrf_token  = $('input[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+        data: {'amount':amount, 'payment-method':payment_method, 'bot_catcher':bot_catcher, 'csrfmiddlewaretoken': csrf_token},
+        url: "{% url 'wallet:main' %}",
+        type: 'POST',
+        success:function(data){
+            //location.reload();
+            //alert('page is loaded');
+            //$("#tbody").html($(data).find("#tbody"));
+                //$('#banking').replaceWith(data);
+                //$('#bankinfo').modal('show');
+                //console.log('working');
+                location.reload();
+                
+        },
+        error:function(data){
+            console.log('not working');
+        },
+    });
+    });
+</script>
+{% endblock %}
+</body>
+
+</html>

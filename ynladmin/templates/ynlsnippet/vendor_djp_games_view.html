@@ -1,0 +1,72 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+
+{% block add_event %}
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title">All Daily Jackpot Entries</h3>
+
+            <div class="table-responsive">
+                <table id="vendorgameDJPDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <th></th>
+                        <th>#</th>
+                        <th>Phone Number</th>
+                        <th>Ticket Number</th>
+                        <th>Amount(₦)</th>
+                        <th>Choice</th>
+                        <th>Won</th>
+                        <th>Date</th>
+                        <th>Ticket</th>
+                    </thead>
+
+                    <div class="hidden">
+                        <form name="myTicketForm" id="myTicketForm" action="{% url 'general:print_selected_tickets' %}" method="POST">
+                            <input type="" name="tcket_numbers" value="" id="ticket_numbers">
+                        </form>
+                    </div>
+                    
+                    <tbody>
+                    {% for djp_winners in djp_winners %}
+                    <tr>
+                        <td><input type="checkbox" name="checkbox" class="check_boxes" 
+                            value="" djp_pk="{{djp_winners.ticket_no}}"></td>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{djp_winners.telephone_no}}</td>
+                        <td>{{djp_winners.ticket_no}}</td>
+                        <td>{{djp_winners.amount}}</td>
+                        <td>{{djp_winners.choice}}</td>
+                        <td>{{djp_winners.won}}</td>
+                        <td>{{djp_winners.date}}</td>
+                        <td><a href="{% url 'general:print_djp_ticket' djp_winners.ticket_no %}"<i class="fa fa-print" aria-hidden="true"></i></td>
+                        
+                    </tr>
+                    {% empty %}
+                        <p>No Entry Found</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                </table>
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+    
+{% endblock transactions %}
+
+{% block modals %}
+{% endblock modals %}

@@ -1,0 +1,375 @@
+{% load staticfiles %}
+{% load humanize %}
+<!DOCTYPE html>  
+<html lang="en">
+
+<head>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107857777-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-107857777-1');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'user/plugins/images/favicon.png' %}">
+    <title>YesorNoLIVE.com | User Dashboard</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'user/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="{% static 'user/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="{% static 'user/plugins/bower_components/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
+    <!-- morris CSS -->
+    <link href="{% static 'user/plugins/bower_components/morrisjs/morris.css' %}" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="{% static 'user/css/animate.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="{% static 'user/css/colors/green-dark.css' %}" id="theme" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
+<![endif]-->
+
+    <!-- <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:699719,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script> -->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-19175540-9', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                <div class="top-left-part"><a class="logo" href="/"><b><!--This is dark logo icon--><img src="{% static 'user/plugins/images/eliteadmin-logo.png' %}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{% static 'user/plugins/images/eliteadmin-logo-dark.png' %}" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text--><img src="{% static 'user/plugins/images/eliteadmin-text.png' %}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{% static 'user/plugins/images/eliteadmin-text-dark.png' %}" alt="home" class="light-logo" /></span></a></div>
+                <ul class="nav navbar-top-links navbar-left hidden-xs">
+                    <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                    <li>
+                        <form role="search" class="app-search hidden-xs" action="" method="get">
+                            <input type="text" name="q" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    
+                    
+                   
+                    
+                    <!-- /.dropdown -->
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- Left navbar-header -->
+        <div class="sidebar" role="navigation">
+            <div class="wp-sidebar-nav">
+                <div class="user-profile">
+                    <div class="dropdown user-pro-body">
+                        {% if user.user_image %}
+                        <div><img src="{{ user.user_image.url }}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.first_name}} <span class="caret"></span></a>
+                        {% else %}
+                        <div><img src="{% static 'user/plugins/images/lucy-beaumont.jpg' %}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.first_name}}</a>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                <ul class="wp-side-menu">
+                    <li> <a href="{% url 'general:user_account' %}"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Dashboard</span></a> </li>
+                    <li> <a href="{% url 'wallet:wallet' %}"><i data-icon="?" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Wallet</span></a> </li>
+
+                    {% if not request.user.useraccount.trading_account %}
+                    <li> <a href="{% url 'gameplay:user_entries' %}"><i data-icon="," class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >Daily Jackpot Entries</span></a> </li>
+                    {% endif %}
+
+                    <li> <a href="{% url 'general:profile' %}"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account Settings</span></a></li>
+                    <!--<li> <a href="#"><i data-icon="," class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Message Center</span></a></li>-->
+                    <li> <a href="{% url 'general:logout' %}"><i class="fa fa-power-off"></i>
+                            <span class="hide-menu">&nbsp;&nbsp;Logout</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Left navbar-header end -->
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Welcome {{request.user.first_name}}</h4> </div>
+                    <div style="text-align: center;">
+                        <p><b>Referral Link:</b>&nbsp; <input id="ref" style="color: #449F07; font-style: italic; cursor: pointer;" value="https://www.yesornolive.com/signup/Page/?ref={{request.user.id}}"/> <button style="color: #449F07; border-radius: 10px;" id="copy-button" data-clipboard-target="#ref" data-clipboard-action="copy">Copy</button></p></div>
+                    
+                    <!-- /.col-lg-12 -->
+                </div>
+
+                <!-- .row -->
+                <div class="row">
+                    
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Events Won</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="icon-trophy text-info"></i></li>
+                                <li class="text-right"><span class="counter">{{ game_won.count}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Played Events</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="icon-game-controller text-purple"></i></li>
+                                <li class="text-right"><span class="counter">{{game_count}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Wallet Balance</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="ti-wallet text-success"></i></li>
+                                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{balance|floatformat:2|intcomma}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <a href='#' data-toggle="modal" data-target="#myModal">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Referrals</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="fa fa-users text-success"></i></li>
+                                <li class="text-right"><span style="font-size: 20px!important;"class="counter">{{referral.referrer_count}}</span></li>
+                            
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                </a>
+
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                    <div class="white-box">
+                        <h3 class="box-title">Total points</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-trophy text-success"></i></li>
+                            <li class="text-right"><span style="font-size: 20px!important;"class="counter">{{game_points}}</span></li>
+                        </ul>
+                    </div>
+                        
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="white-box">
+                        <h3 class="box-title">Points For the Week</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-trophy text-success"></i></li>
+                            <li class="text-right"><span style="font-size: 20px!important;"class="counter">{% if wgp == None %} 0 {% else %}{{wgp}}{% endif %}</span></li>
+                        </ul>
+                    </div>
+                        
+                </div>
+                <!-- /.row -->
+
+                <!-- .row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Prediction History</h3>
+                            <div class="table-responsive">
+                                <table id="userDatatable" class="display table-striped" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr style='line-height: 50px;'>
+                                            <th>Event</th>
+                                            <th>Title</th>
+                                            <th>Prediction Date</th>
+                                            <th>Amount placed</th>
+                                            <th>Choice</th>
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Amount Won</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for games in game %}
+                                        <tr style='line-height: 50px;'>
+                                            <td><a href="{% url 'general:event_details' games.event.pk %}" class="btn-link">{{games.event.event_id}}</a></td>
+                                            <td>{{games.event.title|truncatechars:30}}</td>
+                                            <td><span class="text-muted"><i class="fa fa-clock-o"></i>&nbsp;{{games.date}}</span></td>
+                                            <td>₦{{games.amount|floatformat:2|intcomma}}</td>
+                                            <td>{{games.choice}}</td>
+                                            <td class="text-center">
+                                                <div class="label label-table label-success">{{games.status}}</div>
+                                            </td>
+                                            <td class="text-center">₦{{games.amount_won|floatformat:2|intcomma}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <!-- .right-sidebar -->
+
+                <!-- /.right-sidebar -->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> © 2017 Yes or No Live </footer>
+        </div>
+
+        {% block modals %}
+
+            {% include 'general_snippets/referral_modal.html' %}
+
+        {% endblock modals %} 
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="{% static 'user/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'user/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'user/js/jquery.slimscroll.js' %}"></script>
+
+    <!--Wave Effects -->
+    <script src="{% static 'user/js/waves.js' %}"></script>
+
+    <!--Counter js -->
+    <script src="{% static 'user/plugins/bower_components/waypoints/lib/jquery.waypoints.js' %}"></script>
+    <script src="{% static 'user/plugins/bower_components/counterup/jquery.counterup.min.js' %}"></script>
+
+    <!--Morris JavaScript -->
+    <script src="{% static 'user/plugins/bower_components/raphael/raphael-min.js' %}"></script>
+    <script src="{% static 'user/plugins/bower_components/morrisjs/morris.js' %}"></script>
+
+    <!-- Sparkline chart JavaScript -->
+   
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'user/js/custom.min.js' %}"></script>
+    <script src="{% static 'user/js/widget.min.js' %}"></script>
+    <script src="{% static 'user/plugins/bower_components/toast-master/js/jquery.toast.js' %}"></script>
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+        
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+          $('#userDatatable').DataTable(); 
+      });
+    </script>
+    <!--<script type="text/javascript">
+        ₦(document).ready(function () {
+            ₦.toast({
+                heading: 'Welcome to YesorNoLIVE.com'
+                , text: 'Please complete your profile.'
+                , position: 'top-right'
+                , loaderBg: '#ff6849'
+                , icon: 'info'
+                , hideAfter: 10000
+                , stack: 6
+            })
+        });
+    </script>-->
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'user/js/wp-sidebar.js' %}"></script>
+    <!--Style Switcher -->
+    <script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{};
+
+        Tawk_API.visitor = {
+            name : '{{request.user.first_name}}',
+            email : '{{request.user.email}}'
+        };
+
+        var Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/59c22a324854b82732ff10cc/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+ <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
+   <script>
+    //$('body').on('click', '#copy-button', function(){
+        //alert("am here");
+        var clipboard = new Clipboard('#copy-button');
+            clipboard.on('success', function(e) {
+                console.info('Action:', e.action);
+                console.info('Text:', e.text);
+                console.info('Trigger:', e.trigger);
+                
+                e.clearSelection();
+                e.trigger.textContent = 'Copied';
+                window.setTimeout(function() {
+                    e.trigger.textContent = 'Copy';
+                }, 2000);
+            });
+            
+            clipboard.on('error', function(e) {
+                console.error('Action:', e.action);
+                console.error('Trigger:', e.trigger);
+                console.log(e);
+        });
+  </script>  
+</body>
+
+</html>

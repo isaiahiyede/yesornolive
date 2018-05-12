@@ -1,0 +1,60 @@
+<div class="modal fade" id="viewVendorDJPModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+		            <!-- Modal Header -->
+		            <div class="modal-header" style="background-color: azure;">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                    View The DailyJackpot Winners.
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body" style="background-color: azure;">
+		                
+		                <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Id</th>
+                                    <th>Ticket Number</th>
+                                    <th>Amount(₦)</th>
+                                    <th>Choice</th>
+                                    <th>Won</th>
+                                    <th>Date</th>
+                                    
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for djp_winners in djp_winners %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{djp_winners.telephone_no}}</td>
+                                    <td>{{djp_winners.ticket_no}}</td>
+                                    <td>{{djp_winners.amount}}</td>
+                                    <td>{{djp_winners.choice}}</td>
+                                    <td>{{djp_winners.won}}</td>
+                                    <td>{{djp_winners.date}}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+		        	</div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer" style="background-color: azure;">
+		               
+		            </div>
+                </div>
+
+		    </div>
+</div>

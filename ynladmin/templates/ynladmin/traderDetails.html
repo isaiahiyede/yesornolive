@@ -1,0 +1,106 @@
+<div class="modal fade" id="traderFormView" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="traderForm">
+        
+		    <!-- Modal Header -->
+		    <div class="modal-header" style="background-color: azure;">
+		        <button type="button" class="close" 
+		           data-dismiss="modal">
+		               <span aria-hidden="true">&times;</span>
+		               <span class="sr-only">Close</span>
+		        </button>
+		        <h4 class="modal-title" id="myModalLabel">
+		             Trading Accounts Activity
+		        </h4>
+		    </div>
+    
+		    <!-- Modal Body -->
+		    <div class="modal-body" style="background-color: azure;">
+		        
+		        <!--<form name="edit_user_obj" id="edit_user_obj">-->
+						
+						<div class="form-group">
+						<label>Total Games played:</label>
+							{{game_count}}
+						</div>
+
+						<div class="form-group">
+						<label>Total amount funded:</label>
+							₦&nbsp;{{amount_funded}}
+						</div>
+						
+						<div class="form-group">
+						<label>Total balance in wallet:</label>
+							₦&nbsp;{{balance}}
+						</div>
+
+						<div class="form-group">
+						<label>Total amount staked:</label>
+							₦&nbsp;{{total_amount_staked}}
+						</div>
+						
+						<div class="form-group">
+						<label>Total amount won:</label>
+							₦&nbsp;{{total_amount_won}}
+						</div>
+						
+						<div class="form-group">
+						<label>Total amount lost:</label>
+							₦&nbsp;{{total_amount_lost}}
+						</div>
+
+						<div class="form-group">
+						<label>Total games won:</label>
+							{{game_won}}
+						</div>
+
+						<div class="form-group">
+						<label>Total games lost:</label>
+							{{game_lost}}
+						</div>
+
+						<div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Event</th>
+                                            <th>Title</th>
+                                            <th>Prediction Date</th>
+                                            <th>Amount placed</th>
+                                            <th>Choice</th>
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Amount Won</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for game in games %}
+                                        <tr>
+                                            <td><a href="{% url 'general:event_details' game.event.pk %}" class="btn-link">{{game.event.event_id}}</a></td>
+                                            <td>{{game.event.title}}</td>
+                                            <td><span class="text-muted"><i class="fa fa-clock-o"></i>&nbsp;{{game.date}}</span></td>
+                                            <td>₦{{game.amount}}</td>
+                                            <td>{{game.choice}}</td>
+                                            <td class="text-center">
+                                                <div class="label label-table label-success">{{game.status}}</div>
+                                            </td>
+                                            <td class="text-center">₦{{game.amount_won}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        <a href="{% url 'general:tradingDetails' useracc_obj %}" class="btn btn-primary pull-right" >Export CSV</a>
+					<!--</form> -->        
+			</div>
+		    
+		    <!-- Modal Footer -->
+		    <div class="modal-footer" style="background-color: azure;">
+		       
+		    </div>
+		</div>
+	</div>
+</div>
+</div>
+		

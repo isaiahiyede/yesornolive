@@ -1,0 +1,44 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block trending %}
+	
+<div class="container">
+  
+  <div class="row">
+    <!-- column that will hold row containing grid of events -->
+
+    <div class=" col-12 col-md-12 text-center mt-5">
+      <h2>We are just a click away!</h2>
+      <p>Please contact us using the form below and we will get to you as quick as possible.</p>
+      
+      <iframe width="60%" height="350px" src="https://tawk.to/chat/59c22a324854b82732ff10cc/default/?$_tawk_popout=true"></iframe>
+
+    </div>
+
+  </div>
+</div>
+  
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+  {% include 'general/customscripts.html' %}
+{% endblock customscripts %}

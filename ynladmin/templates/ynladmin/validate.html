@@ -1,0 +1,56 @@
+<div class="modal fade" id="validateForm" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-sm">
+		        <div class="modal-content">
+
+    <!-- Modal Header -->
+    <div class="modal-header" style="background-color: azure;">
+        <button type="button" class="close" 
+           data-dismiss="modal">
+               <span aria-hidden="true">&times;</span>
+               <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+           Validate Event
+        </h4>
+    </div>
+    
+    <!-- Modal Body -->
+    <div class="modal-body" style="background-color: azure;">
+        
+        <form name="validate_event" id="validate_event" method="POST" 
+        	action="{% url 'ynladmin:validate_event' %}" enctype="multipart/form-data">
+		  {% csrf_token %}
+
+
+				<div class="form-group">
+				<label class="label-controller">Title</label>
+					{{event_form.title}}
+				</div>
+
+				<input type="hidden" name="val_event" id="val_event" value="validate">
+				<input type="hidden" name="event_track_num" id="event_track_num" value="{{event_track_num}}">
+
+				<div class="form-group">
+				<label class="label-controller">Selection</label>
+					<span><input type="radio" name="choice" value="yes">Yes</span>
+					<span><input type="radio" name="choice" value="no">No</span>
+					<span><input type="radio" name="choice" value="edit">Warning</span>
+				</div>
+				
+				<div class="form-group">
+				<label class="label-controller">Reason</label>
+					{{event_form.not_validate_reason}}
+				</div>
+
+			    <button type="submit" id="submit-validate-events" class="btn btn-success pull-right">Submit</button><br />
+
+			</form>         
+	</div>
+    
+    <!-- Modal Footer -->
+    <div class="modal-footer" style="background-color: azure;">
+       
+    </div>
+
+</div>

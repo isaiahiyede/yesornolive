@@ -1,0 +1,161 @@
+.top-nav {
+  background-color: #274a10;
+  color: white;
+  padding-top: 0px;
+  text-align: right;
+  height: 40px;
+
+}
+
+.card-hgt{
+  height: 56px;
+}
+
+.bottom-nav {
+  background-color: white;
+  color: black;
+  padding-top: 0px;
+  text-align: left;
+  box-shadow: 0px -1px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.bottom-nav a {
+  color: black;
+}
+.bottom-nav a:hover {
+  color: blue;
+}
+
+.top-nav p {
+  padding-top: 10px;
+}
+
+.top-nav div {
+  /*height: 40px;*/
+  margin-top: 0px;
+}
+
+.top-nav .input-group {
+  margin-top: 7px;
+}
+
+ .card {
+   margin-top: 10px;
+ }
+
+ .card-col {
+   padding: 10px;
+ }
+
+.link {
+  color: black;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: black;
+  text-decoration: none;
+}
+
+
+hr {
+  margin: 0;
+}
+
+div.card:hover {
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.btn-sq-lg {
+  width: 150px !important;
+  height: 150px !important;
+}
+
+.btn-sq {
+  width: 100px !important;
+  height: 100px !important;
+  font-size: 10px;
+}
+
+.btn-sq-sm {
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 10px;
+}
+
+.btn-sq-xs {
+  width: 25px !important;
+  height: 25px !important;
+  padding:2px;
+}
+
+.yes {
+  color: green;
+}
+
+.no {
+  color: red;
+}
+
+.jumbotron {
+  background-image: url(../img/intro-bg2.jpg);
+  background-size: cover;
+}
+/*
+.image_wrapper{
+    
+}*/
+
+
+.scroll-left {
+ height: 37px;  
+ overflow: hidden;
+ position: relative;
+ background-color: #c72a2a;
+}
+
+.scroll-left p {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ margin: 0;
+ line-height: 37px;
+ text-align: center;
+ /* Starting position */
+ -moz-transform:translateX(100%);
+ -webkit-transform:translateX(100%);  
+ transform:translateX(100%);
+ /* Apply animation to this element */  
+ -moz-animation: scroll-left 20s linear infinite;
+ -webkit-animation: scroll-left 20s linear infinite;
+ animation: scroll-left 20s linear infinite;
+}
+
+.scroll-left a {
+  color: white;
+}
+
+
+/* Move it (define the animation) */
+@-moz-keyframes scroll-left {
+ 0%   { -moz-transform: translateX(100%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes scroll-left {
+ 0%   { -webkit-transform: translateX(100%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes scroll-left {
+ 0%   { 
+ -moz-transform: translateX(100%); /* Browser bug fix */
+ -webkit-transform: translateX(100%); /* Browser bug fix */
+ transform: translateX(100%);     
+ }
+ 100% { 
+ -moz-transform: translateX(-100%); /* Browser bug fix */
+ -webkit-transform: translateX(-100%); /* Browser bug fix */
+ transform: translateX(-100%); 
+ }
+}

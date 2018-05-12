@@ -1,0 +1,103 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+{% block transactions %}
+
+<table id="reportsTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <style>
+            th,td{font-size: 10px; width:10px;}
+        </style>
+        <tr>
+            <th>Date</th>
+            <th>Total number of users signed up</th>
+            <th>Total number of users without active user account</th>
+            <th>Total number of users without updated profile</th>
+            <th>Total number of users with updated profile</th>
+            <th>Total number of users without wallet funded</th>
+            <th>Total number of users with wallet funded</th>
+            <th>Total number of users that funded and have not played</th>
+            <th>Total number of users that have played games</th>
+            <th>Total number of category games played</th>
+            <th>Total number of category games played by new users</th>
+            <th>Total number of category games played by old users</th>
+            <th>Total number of Daily jackpot Entries</th>
+            <th>Total number of users that played Daily jackpot</th>
+            <th>Total number of new users that played Daily jackpot</th>
+            <th>Total number of returning users that played Daily jackpot</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for users in total_users %}
+            <tr>
+                <td>{{users.dt}}</td>
+                <td>{{users.count}}</td>
+                <td>{{users.not_active}}</td>
+                <td>{{users.profile_not_updated}}</td>
+                <td>{{users.profile_updated}}</td>
+                <td>{{users.wallet_not_funded}}</td>
+                <td>{{users.wallet_funded}}</td>
+                <td>{{users.no_gameplay}}</td>
+                <td>{{users.gameplay}}</td>
+                <td><a href="#" user_date="{{users.dt}}" class="cat_details">{{users.cat_games_played}}
+                    </a></td>
+                <td><a href="#" user_date="{{users.dt}}" class="new_users_cat_games">{{users.new_users_cat_games_played}}
+                </a></td>
+                <td><a href="#" user_date="{{users.dt}}" class="old_users_cat_games">{{users.old_users_cat_games_played}}
+                </a></td>
+                <td>{{users.djp}}</td>
+                <td><a href="#" user_date="{{users.dt}}" class="unique_users">{{users.unique_djp_players}}
+                </a></td>
+                <td><a href="#" user_date="{{users.dt}}" class="new_users_djp">{{users.new_djp_players}}
+                </a></td>
+                <td><a href="#" user_date="{{users.dt}}" class="old_users_djp">{{users.old_djp_players}}
+                </a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="loader hidden"></div>
+
+<div class="modal fade" id="userCatView"  tabindex="-1" role="dialog" 
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="user_cat_view">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="userUniqueView"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="user_unique_view">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="userNewView"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="user_new_view">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="userOldView"  tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="user_old_view">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

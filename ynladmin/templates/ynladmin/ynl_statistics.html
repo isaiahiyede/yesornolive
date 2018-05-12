@@ -1,0 +1,160 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+{% block add_event %}
+    {% if news %}
+    {% if request.user.useraccount.special_user or request.user.useraccount.content_provider %}
+    <h4 class="pull-right"  style="cursor: pointer; color: #449f07;" id="add_event"><i class="fa fa-plus" >&nbsp;ADD EVENT</i></h4>
+    {% endif %}
+    {% endif %}
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+  
+<div class="row">
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total players</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-users text-info"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">{{ users }}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">All Top-Up's Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="ti-wallet text-purple"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{ users_add_funds|floatformat:2|intcomma }}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Player Winnings Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-trophy text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{total_amount_won|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Amount in wallets Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{total_amt_wallet|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Amount staked Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{total_amount_staked|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Refunds</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{users_refund|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Stakeholder's Amount</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{total_amount_stakeholder|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-sm-4 col-xs-6">
+        <div class="white-box">
+            <h3 class="box-title">Total Payouts Till Date</h3>
+            <ul class="list-inline two-part">
+                <li><i class="fa fa-money text-success"></i></li>
+                <li class="text-right"><span style="font-size: 20px!important;"class="counter">₦{{users_payouts|floatformat:2|intcomma}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+                
+ 
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            
+            <h3 class="box-title"></h3>
+            <div class="table-responsive">
+                    {% with request.user.useraccount.special_user as special_user %}
+                        <table id="traderDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Event Id</th>
+                            <th>Title</th>
+                            <th>Category</th>              
+                            <th>End Date</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in all_events %}
+                        <tr>
+                            <td>{{event.event_id}}</td>
+                            <td>{{event.title|truncatechars:50}}</td>
+                            <td>{{event.category}}</td>
+                            <td style="width:100px;">{{event.end_date}}</td>
+                           <td>
+                                <span><a class="view_event" identifier="view" event_track_num="{{event.event_id}}"><i class="fa fa-eye"  title="View"
+                                style="cursor: pointer;"></i></a>
+                                </span>
+                                &nbsp; &nbsp;
+                                <span><a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}"
+                            onclick="return confirm('Are you sure you want to CLOSE this Event?')"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a></span>  
+                                
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <p>No Event</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                        </table>
+
+            {% endwith %}
+                  
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock transactions %}

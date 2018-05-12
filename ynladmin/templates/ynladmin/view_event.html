@@ -1,0 +1,165 @@
+<div class="modal-content" id="event_view">
+
+    <!-- Modal Header -->
+    <div class="modal-header" style="background-color: azure;">
+        <button type="button" class="close" 
+           data-dismiss="modal">
+               <span aria-hidden="true">&times;</span>
+               <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+            Event {{event_form.event_id.value}}
+        </h4>
+    </div>
+    
+    <!-- Modal Body -->
+    {% with request.user.useraccount.special_user as special_user %}
+      {% with request.user.useraccount.content_provider as content_provider %}
+        {% with request.user.useraccount.accounts as accounts %}
+          {% with request.user.useraccount.validator as validator %}
+            {% with request.user.useraccount.decider as decider %}
+
+    			<div class="modal-body" style="background-color: azure;">
+        
+
+					<div class="form-group">
+					<label>Title:</label>
+						{{event_form.title.value}}
+					</div>
+
+					<input type="hidden" name="edit_event" id="edit_event" value="edit">
+					<input type="hidden" name="event_track_num" id="event_track_num" value="{{event_track_num}}">
+
+					<div class="form-group">
+					<label>Category:</label>
+						{{event_form.category.value}}
+					</div>
+
+					<div class="form-group">
+					<label >Event Question:</label>
+						{{event_form.bet_question.value}}
+					</div>
+
+					<div class="form-group">
+					<label >End Date:</label>
+						{{event_form.end_date.value}}
+					</div>
+					
+					<div class="form-group">
+					<label>End Time:</label>
+						{{event_form.end_time.value}}
+					</div>
+
+					{% if content_provider or special_user %}
+					<div class="form-group">
+					<label>Estimated Winning:</label>
+						{{event_form.estimated_wining.value}}
+					</div>
+
+
+					<div class="form-group">
+					<label>Game Ratio:</label>
+						{{event_form.game_ratio.value}}
+					</div>
+					{% endif %}
+
+					{% if event_form.publish %}
+					<div class="form-group">
+						<label>Published: </label>
+						{{event_form.publish.value}}
+					</div>
+					{% endif %}
+
+					{% if event_validated %}
+					<div class="form-group">
+						<label>Validated:</label>
+							True	
+					</div>
+					{% endif %}
+
+					<!--% autoescape off %}-->
+					<div class="form-group">
+					<label>Description:</label><br/>
+						{{event_form.event_msg_body.value|safe}}
+					</div>
+					<!--% endautoescape %}-->
+					
+					{% if event_form.decided %}
+					<div class="form-group">
+					<label >Event Decision:</label>
+						{{event_form.event_decision.value}}
+					</div>
+					{% endif %}
+
+				
+					{% if not event_validated %}
+						{% if event_form.not_validated_reason %}
+						<div class="form-group">
+						<label>Not Validated Reason:</label>
+							{{event_form.not_validated_reason.value|safe}}
+						</div>
+						{% endif %}
+					{% endif %}
+
+					{% if validator or special_user %}
+						{% if not event_validated %}
+
+							<div class="form-group">
+								<label>Select validation option</label><br/>
+
+								<span style="color:green;"><input type="radio" name="choice" 
+								class="rdgrp" value="yes">&nbsp;Yes</span>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+
+								<span style="color:red;"><input type="radio" name="choice" 
+								 class="rdgrp" value="no">&nbsp; No</span>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+
+								<span style="color:orange;"><input type="radio" 
+								 class="rdgrp" name="choice" value="edit">&nbsp;Warning</span>
+							</div>
+
+							<div class="myValidateReason hidden">
+								<form name="validate_event" id="validate_event" method="POST" 
+	        						action="{% url 'ynladmin:validate_event' %}" enctype="multipart/form-data">
+			  						{% csrf_token %}
+									
+									<input type="hidden" name="reason_value" id="reason_value" value="">
+
+									<input type="hidden" name="event_num" id="event_num" value="{{event_track_num}}">
+								
+									<div class="form-group">
+										<label>Enter Reason</label>
+										{{event_form.not_validated_reason}}
+									</div>
+
+									<button type="submit" onclick="return checkTinymce2()" id="submit-validated-events" class="btn btn-success pull-right">Submit</button><br/>
+								</form>
+							</div><br/>
+
+						{% endif %}
+					{% endif %}
+
+					{% if event_form.instance.event_image %}
+					<div class="form-group">
+					<label>Event Image:</label><br/>
+						
+						<img style="max-width:50%;max-height:50%;" id="myImg" src="{{event_form.instance.event_image.url}}" alt="{{event_form.title.value}}">
+						<!--{event_form.event_image}}-->
+					</div>
+					{% endif %}
+      
+				</div>
+
+			{% endwith %}
+          {% endwith %}
+       {% endwith %}
+     {% endwith %}
+   {% endwith %}
+    
+    <!-- Modal Footer -->
+    <div class="modal-footer" style="background-color: azure;">
+    </div>
+
+</div>
+

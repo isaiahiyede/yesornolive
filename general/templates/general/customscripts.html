@@ -1,0 +1,953 @@
+<script>
+
+   $('body').on('click', '#add_event', function(e){
+		$.ajax({
+   			data: {'create_event':'create_event'},
+   			type: 'GET',
+   			url: "{% url 'ynladmin:view_edit_event' %}",
+				beforeSend: function(){
+					
+					tinymce.remove();
+				},
+   			success:function(data){
+   				$('#eventForm').replaceWith(data);
+   				$('#eventForm').modal('show');
+   				console.log('working');
+					tinymce.init({selector:'textarea',
+									 height: 300,
+									 plugins: [
+                          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                          'searchreplace wordcount visualblocks visualchars code fullscreen',
+                          'insertdatetime media nonbreaking save table contextmenu directionality',
+                          'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                        ],
+									toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+									toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+									image_advtab: true,
+									templates: [
+												{ title: 'Test template 1', content: 'Test 1' },
+												{ title: 'Test template 2', content: 'Test 2' }
+											  ],
+									content_css: [
+												  '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+												  '//www.tinymce.com/css/codepen.min.css'
+												]
+									
+                });
+				
+			
+				
+			   $('.id_time').timepicker({
+					'timeFormat': 'h:i A',
+					'scrollDefault': 'now'
+				  });
+			   
+			    tinymce.init({selector:'textarea',height: 300});
+										
+						$('.id_date').datepicker({
+								changeMonth: true,
+								changeYear: true,
+								dateFormat: "yy-mm-dd",
+								minDate:     0
+						});
+						  
+						$('.id_time').timepicker({
+							'timeFormat': 'h:i A',
+							'scrollDefault': 'now'
+						});
+
+				  },
+
+   			error:function(data){
+   				console.log('not working');
+   			}
+
+
+   		})
+	});
+
+	
+	function checkTinymce(){
+		var text = tinyMCE.activeEditor.getContent();
+		if (text == "") {
+			alert("The Description Field is Required");
+			return false;
+			} 
+	};
+    
+	
+	
+   $('body').on('click', '.edit_event', function(e){
+   		   var event_track_num = $(this).attr('event_track_num');
+		   var identifier = $(this).attr('identifier');
+   		$.ajax({
+   			data: {'event_track_num':event_track_num,'edit':identifier},
+   			type: 'GET',
+   			url: "{% url 'ynladmin:view_edit_event' %}",
+				beforeSend: function(){
+					
+					tinymce.remove();
+					
+				},
+   			success:function(data){
+   				$('#eventForm').replaceWith(data);
+   				$('#eventForm').modal('show');
+   				console.log('working');
+					tinymce.init({selector:'textarea',
+									 height: 300,
+									 plugins: [
+                          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                          'searchreplace wordcount visualblocks visualchars code fullscreen',
+                          'insertdatetime media nonbreaking save table contextmenu directionality',
+                          'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                        ],
+									toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+									toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+									image_advtab: true,
+									templates: [
+												{ title: 'Test template 1', content: 'Test 1' },
+												{ title: 'Test template 2', content: 'Test 2' }
+											  ],
+									content_css: [
+												  '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+												  '//www.tinymce.com/css/codepen.min.css'
+												]
+									
+                });
+				
+			   $('.id_time').timepicker({
+					'timeFormat': 'h:i A',
+					'scrollDefault': 'now'
+				  });
+			   
+			    tinymce.init({selector:'textarea',height: 300});
+										
+						$('.id_date').datepicker({
+								changeMonth: true,
+								changeYear: true,
+								dateFormat: "yy-mm-dd",
+								minDate:     0
+						});
+						//
+						//$( ".datepicker" ).datepicker({
+						//	changeMonth: true,
+						//	changeYear: true
+						//});
+						  
+						$('.id_time').timepicker({
+							'timeFormat': 'h:i A',
+							'scrollDefault': 'now'
+						});
+
+				  },
+
+   			error:function(data){
+   				console.log('not working');
+   			}
+
+
+   		})
+	});
+
+
+
+   $('body').on('click', '.view_event', function(e){
+            var event_track_num = $(this).attr('event_track_num');
+            var identifier = $(this).attr('identifier');
+
+            $.ajax({
+               data: {'event_track_num':event_track_num,'view':identifier},
+               type: 'GET',
+               url: "{% url 'ynladmin:view_edit_event' %}",
+               beforeSend: function(){
+                  
+                  tinymce.remove();
+               },
+               success:function(data){
+                  $('#event_view').replaceWith(data);
+                  $('#viewFormEdit').modal('handleUpdate').modal('show');
+                  console.log('working');
+                  tinymce.init({selector:'textarea',height: 300});
+				  
+               },
+
+               error:function(data){
+                  console.log('not working');
+               }
+            })
+      });
+
+
+   $('body').on('click', '.update_user', function(e){
+
+         var user_id = $(this).attr('user_id');
+			//alert(user_id);
+
+         $.ajax({
+            data: {'user_id':user_id},
+            type: 'GET',
+            url: "{% url 'ynladmin:edit_user' %}",
+            
+            success:function(data){
+					console.log(data);
+               $('#userFormEdit').replaceWith(data);
+               $('#userFormEdit').modal('handleUpdate').modal('show');
+               console.log('working');
+               
+            },
+
+            error:function(data){
+               console.log('not working');
+            }
+         })
+   });
+
+
+   $('body').on('click', '.trader_user', function(e){
+
+         var user_id = $(this).attr('user_id');
+			//alert(user_id);
+
+         $.ajax({
+            data: {'user_id':user_id},
+            type: 'GET',
+            url: "{% url 'ynladmin:get_user_activity' %}",
+            
+            success:function(data){
+               $('#traderFormView').replaceWith(data);
+               $('#traderFormView').modal('handleUpdate').modal('show');
+               console.log('working');
+               
+            },
+
+            error:function(data){
+               console.log('not working');
+            }
+         })
+   });
+
+
+$('body').on('click', '.eventId', function(e){
+
+         var event_id = $(this).attr('event_id');
+			//alert(user_id);
+
+         $.ajax({
+            data: {'event_id':event_id},
+            type: 'GET',
+            url: "{% url 'ynladmin:event_players' %}",
+            
+            success:function(data){
+					console.log(data);
+               $('#eventPlayers').replaceWith(data);
+               $('#eventPlayers').modal('handleUpdate').modal('show');
+               console.log('working');
+               
+            },
+
+            error:function(data){
+               console.log('not working');
+            }
+         })
+   });
+
+
+   //$('body').on('click','#search',function(e){
+   //   var query = $('#search_for').val();
+   //   if (query == ""){
+   //      alert("Please enter a search value");
+   //      return false
+   //   }else{
+   //      $('#search_form').submit();
+   //   }
+   //})
+
+
+   $('body').on('click','.admin_msg', function(e){
+         var message_id = $(this).attr('msg_id');
+         var identifier = $(this).attr('identifier');
+
+         $.ajax({
+             data: {'message_id':message_id, 'identifier':identifier},
+             url: "{% url 'ynladmin:admin_messages' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#adminmessageView").replaceWith(data);
+                 $('#adminviewMessage').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+     })
+
+
+
+   $('body').on('click','.cat_details', function(e){
+         var date = $(this).attr('user_date');
+          $('.loader').removeClass('hidden');
+
+         $.ajax({
+             data: {'date':date, 'all_cat_games':'all_cat_games'},
+             url: "{% url 'ynladmin:daily_cat_games_count' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $('.loader').addClass('hidden');
+                 $("#user_cat_view").replaceWith(data);
+                 $('#userCatView').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 $('.loader').addClass('hidden');
+                 console.log('not working');
+             }
+         })
+     })
+
+
+     $('body').on('click','.old_users_cat_games', function(e){
+         var date = $(this).attr('user_date');
+         $('.loader').removeClass('hidden');
+
+         $.ajax({
+             data: {'date':date,'old_users_cat_games':'old_users_cat_games'},
+             url: "{% url 'ynladmin:daily_cat_games_count' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $('.loader').addClass('hidden');
+                 $("#user_cat_view").replaceWith(data);
+                 $('#userCatView').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 $('.loader').addClass('hidden');
+                 console.log('not working');
+             }
+         })
+     })
+
+
+     $('body').on('click','.new_users_cat_games', function(e){
+         var date = $(this).attr('user_date');
+         $('.loader').removeClass('hidden');
+
+         $.ajax({
+             data: {'date':date,'new_users_cat_games':'new_users_cat_games'},
+             url: "{% url 'ynladmin:daily_cat_games_count'  %}",
+             type: 'GET',
+
+             success:function(data){
+                 $('.loader').addClass('hidden');
+                 $("#user_cat_view").replaceWith(data);
+                 $('#userCatView').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 $('.loader').addClass('hidden');
+                 console.log('not working');
+             }
+         })
+     })
+
+
+    $('body').on('click','.unique_users', function(e){
+         var date = $(this).attr('user_date');
+         $('.loader').removeClass('hidden');
+
+         $.ajax({
+             data: {'date':date,'unique_users':'unique_users'},
+             url: "{% url 'ynladmin:users_count' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $('.loader').addClass('hidden');
+                 $("#user_unique_view").replaceWith(data);
+                 $('#userUniqueView').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 $('.loader').addClass('hidden');
+                 console.log('not working');
+             }
+         })
+     })
+
+
+     $('body').on('click','.new_users_djp', function(e){
+         var date = $(this).attr('user_date');
+         $('.loader').removeClass('hidden');
+
+         $.ajax({
+             data: {'date':date, 'new_users':'new_users'},
+             url: "{% url 'ynladmin:users_count' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $('.loader').addClass('hidden');
+                 $("#user_new_view").replaceWith(data);
+                 $('#userNewView').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 $('.loader').addClass('hidden');
+                 console.log('not working');
+             }
+         })
+     })
+
+     $('body').on('click','.old_users_djp', function(e){
+         var date = $(this).attr('user_date');
+         $('.loader').removeClass('hidden');
+
+         $.ajax({
+             data: {'date':date, 'old_users':'old_users'},
+             url: "{% url 'ynladmin:users_count' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $('.loader').addClass('hidden');
+                 $("#user_old_view").replaceWith(data);
+                 $('#userOldView').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 $('.loader').addClass('hidden');
+                 console.log('not working');
+             }
+         })
+     })
+
+   $('body').on('click','.admin_cmt', function(e){
+         var message_id = $(this).attr('msg_id');
+         var identifier = $(this).attr('identifier');
+
+         $.ajax({
+             data: {'message_id':message_id, 'identifier':identifier},
+             url: "{% url 'ynladmin:admin_messages' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#adminmessageComment").replaceWith(data);
+                 $('#adminmessageToComment').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+     });
+   
+		 $('.bet_yes').click(function(){
+	 
+			 $('.bet_no').removeClass('active'); // remove the class from the currently selected
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice').val(choice);
+	 
+		 });
+		 
+		 
+		 $('.bet_no').click(function(){
+	 
+			 $('.bet_yes').removeClass('active'); // remove the class from the currently selected		 
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice').val(choice);
+			 
+		 });
+	 
+   
+		 $('.bet_yes2').click(function(){
+	 
+			 $('.bet_no2').removeClass('active'); // remove the class from the currently selected
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice2').val(choice);
+	 
+		 });
+		 
+		 
+		 $('.bet_no2').click(function(){
+	 
+			 $('.bet_yes2').removeClass('active'); // remove the class from the currently selected		 
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice2').val(choice);
+			 
+		 });
+
+
+		 $('.bet_yes3').click(function(){
+	 
+			 $('.bet_no3').removeClass('active'); // remove the class from the currently selected
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice3').val(choice);
+	 
+		 });
+		 
+		 
+		 $('.bet_no3').click(function(){
+	 
+			 $('.bet_yes3').removeClass('active'); // remove the class from the currently selected		 
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice3').val(choice);
+			 
+		 });
+   
+   
+   function checkUserValues() {
+	  
+	  var choice = $('#choice').val();
+	  var bet_amount = $('#bet_amount').val();
+	  
+	  if ((bet_amount == "") && (choice == "")) {
+		  swal({
+				title: "That's Bad!",
+				text: "Amount field cannot be empty and you must select a choice",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+	  }else if ((bet_amount < 200 ) && (choice != "")) {
+		  swal({
+				title: "Oops!",
+				text: "You have to enter the minimum value or more",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else if ((bet_amount > 200 ) && (choice == "")) {
+		  swal({
+				title: "Decision Time",
+				text: "YES or NO",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else if ((bet_amount < 200 ) && (choice == "")) {
+		swal({
+				title: "Hold it!",
+				text: "Amount has to be the minimum amount or more and you need to select 'Yes' or 'No'",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else{
+			var response = confirm("Please confirm that the option selected is " + choice + " and amount placed is ₦" + bet_amount)
+		 if (response) {
+			$('#user_play_choice').submit();
+		 }else{
+			return false;
+		 }
+     }
+   }
+   
+   
+   function checkUserSelect() {
+	  
+	  var choice = $('#choice2').val();
+	  var bet_amount = $('#bet_amount2').val();
+	  
+	  if ((bet_amount == "") && (choice == "")) {
+		  swal({
+				title: "That's Bad!",
+				text: "Amount field cannot be empty and you must select a choice",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+	  }else if ((bet_amount < 200 ) && (choice != "")) {
+		  swal({
+				title: "Oops!",
+				text: "You have to enter the minimum value or more",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else if ((bet_amount > 200 ) && (choice == "")) {
+		  swal({
+				title: "Decision Time",
+				text: "YES or NO",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else if ((bet_amount < 200 ) && (choice == "")) {
+			swal({
+				title: "Hold it!",
+				text: "Amount has to be the minimum amount or more and you need to select 'Yes' or 'No'",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else{
+		 var response = confirm("Please confirm that the option selected is " + choice + " and amount placed is ₦" + bet_amount)
+		 if (response) {
+			$('#user_play_choice2').submit();
+		 }else{
+			return false;
+		 }
+     }
+   }
+   
+
+   function checkUserAmount() {
+	  
+	  var choice = $('#choice3').val();
+	  var entry_amount = $('#entry_amt').val();
+	  var num_of_entries = $('#num_of_entries').val();
+	  var amount = (entry_amount * num_of_entries)
+	  
+	  if ((num_of_entries == "") && (choice == "")) {
+		  swal({
+				title: "That's Bad!",
+				text: "You must select a choice and number of tickets",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+	  }else if ((num_of_entries != "" ) && (choice == "")) {
+		  swal({
+				title: "Decision Time",
+				text: "YES or NO",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else if ((num_of_entries == "") && (choice != "")) {
+			swal({
+				title: "Hold it!",
+				text: "You must select a number of tickets",
+				icon: "error",
+				button: "Ok!",
+			 });
+		  return false;
+      }else{
+
+		 var response = confirm("Please confirm that the option selected is " + choice + " and number of tickets is/are " + num_of_entries + " amounting to ₦" + amount);
+		 if (response) {
+			$('#user_play_choice3').submit();
+		 }else{
+			return false;
+		 }
+     }
+   }
+
+
+   function searchQuery() {
+	  
+	  var amt = $('#searchQueryAmt option:selected').text();
+	  var days = $('#searchQueryDays').val();
+	  var cat = $('#searchQueryCat option:selected').text();
+	  var text = $('#searchQueryText').val();
+	  	  
+	  if ((amt == "Amount to be Shared" || amt == "") && (days == "") && (cat == "Category" || cat == "") && (text == "")){
+		  // alert('Please enter a search parameter');
+		  swal('Please enter a search parameter')
+		  return false;
+	  }else{
+		$('#userSearchForm').submit();
+	  }
+	
+   }
+   
+</script>
+
+<script>
+	$('body').on('click', '.decision', function(){
+		var event_id = $(this).attr('event_track_num')
+		$.ajax({
+             data: {'event_id':event_id,},
+             url: "{% url 'ynladmin:event_decision' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#myModal").replaceWith(data);
+                 $('#myModal').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+		})
+
+
+	$('body').on('click', '.rdgrp', function(){
+		var choice = $(this).val();
+		// alert(choice);
+		$('#reason_value').val(choice);
+		if (choice == 'yes'){
+			$('.myValidateReason').addClass('hidden');
+			var response = confirm('Please read through question again and confirm option selected')
+			if (response){
+				$('#validate_event').submit();
+				return true;
+			}else{
+				return false;
+			}
+			
+		}else{
+			// alert(choice);
+			$('.myValidateReason').removeClass('hidden');
+		}
+
+	});
+
+
+	$('body').on('click', '.winnings', function(){
+		var event_id = $(this).attr('event_id')
+		$.ajax({
+             data: {'event_id':event_id,},
+             url: "{% url 'ynladmin:cummulative_winnings' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#winnings_cummulative").replaceWith(data);
+                 $('#winnings_cummulative').modal('handleUpdate').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+		})
+
+
+	function checkTinymce2(){
+		var text = tinyMCE.activeEditor.getContent();
+		if (text == "") {
+			swal("Please enter a reason for not validating this event");
+			// alert("Please enter a reason for not validating this event");
+			return false;
+			} 
+	};
+</script>
+
+
+<script>
+	$('body').on('click', '#calc_button', function(){
+		var choice = $('input[name=choice]:checked').val();
+		var amount = $('#calc_amt').val();
+		var event_id = $('#event-id').val();
+		//alert(event_id);
+		//alert(amount);
+		//alert("I got here");
+		if (choice === undefined){
+			swal("Please ensure that you make a choice");
+			return false;
+		}
+		else if (amount === undefined){
+			swal("Please ensure that you put in an amount");
+			return false;
+		}
+		else {
+			
+			$.ajax({
+             data: {'choice':choice, 'amount':amount, 'event_id':event_id},
+             url: "{% url 'general:calculator' %}",
+             type: 'GET',
+
+             success:function(data){
+					$('#calc-result').replaceWith(data);
+                 	$("#calc-result").removeClass('d-none');
+                 console.log('working');
+					  //console.log(data);
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         });
+		
+		};
+	})
+</script>
+
+
+<script>
+	$('body').on('click', '#punters_cat', function(){
+		$('#cat').removeClass('hidden');
+	});
+</script>
+
+
+<script>
+	$('body').on('click', '.play_game', function(){
+
+		var event = $(this).attr('event_id');
+
+		$.ajax({
+         	data: {'event':event},
+         	url: "{% url 'general:get_play_event' %}",
+         	type: 'GET',
+
+        	success:function(data){
+        		$('#playVendor').replaceWith(data);
+				$('#vendorPlay').modal('handleUpdate').modal('show');
+                console.log('working');
+         		},
+         	error:function(data){
+             	console.log('not working');
+         		}
+         });
+	});
+</script>
+
+<script>
+  $('body').on('click', '.play_djp_game', function(){
+
+    var event = $(this).attr('event_id');
+
+    $.ajax({
+          data: {'event':event},
+          url: "{% url 'general:get_djp_event' %}",
+          type: 'GET',
+
+          success:function(data){
+            $('#playVendorDjp').replaceWith(data);
+            $('#vendorPlayDjp').modal('handleUpdate').modal('show');
+                console.log('working');
+            },
+          error:function(data){
+              console.log('not working');
+            }
+         });
+  });
+</script>
+
+<script>
+	$('body').on('click', '#wjp_form', function(){
+		$('#wjpModal').modal('show');
+	});
+</script>
+
+<script>
+	$('body').on('click', '#djp_form', function(){
+		$('#djpModal').modal('show');
+	});
+</script>
+
+
+<script>
+	$('body').on('click', '.div_loader', function(){
+		$('.loader').removeClass('hidden');
+	});
+</script>
+
+<script>
+	$('body').on('click', '#wjp_total', function(){
+
+		var from_date = $('#from-date').val();
+		var to_date = $('#to-date').val();
+		
+		$.ajax({
+         	data: {'from_date':from_date, 'to_date':to_date},
+         	url: "{% url 'ynladmin:wjp_amount' %}",
+         	type: 'GET',
+
+        	success:function(data){
+        		$('#replace').replaceWith(data);
+				$('#wjp_total').addClass('hidden');
+				$('#replace').removeClass('hidden');
+				$('#submitbutton').removeClass('hidden');
+                console.log(data);
+         		},
+         	error:function(data){
+             	console.log('not working');
+         		}
+         });
+	});
+
+	$('.carousel').carousel({
+  		interval: 3000
+	});
+
+
+
+</script>
+
+<script>
+	$('body').on('click', '#djp_edit', function(e){
+		var djp_id = $(this).attr('djp_id');
+		$.ajax({
+			data: {'djp_id':djp_id},
+			type: 'GET',
+			url: "{% url 'ynladmin:edit_djp' %}",
+		success:function(data){
+			$('#djp_editModal').replaceWith(data);
+			$('#djp_editModal').modal('show');
+			console.log('working');
+		},
+		error:function(data){
+			console.log('not working');
+		}
+		});
+	});
+
+</script>
+
+<script>
+	$('body').on('click', '.view_djp', function(e){
+		var djp_id = $(this).attr('djp_id');
+		$.ajax({
+			data: {'djp_id':djp_id},
+			type: 'GET',
+			url: "{% url 'ynladmin:view_djp' %}",
+		success:function(data){
+			$('#djp_viewModal').replaceWith(data);
+			$('#djp_viewModal').modal('show');
+			console.log('working');
+		},
+		error:function(data){
+			console.log('not working');
+		}
+		});
+	});
+
+
+  $('body').on('click', '.vendor_djp_view', function(e){
+    var djp_id = $(this).attr('djp_id');
+    $.ajax({
+      data: {'djp_id':djp_id,"vendorPlayDjp":"vendorPlayDjp"},
+      type: 'GET',
+      url: "{% url 'ynladmin:view_djp' %}",
+    success:function(data){
+      $('#viewVendorDJPModal').replaceWith(data);
+      $('#viewVendorDJPModal').modal('show');
+      console.log('working');
+    },
+    error:function(data){
+      console.log('not working');
+    }
+    });
+  });
+</script> 
+
+<script>
+  $('body').on('click','.print_tkt', function(e){
+      var chkArray = [];
+      
+      /* look for all checkboes that have a class 'check_boxes' attached to it and check if it was checked */
+      $(".check_boxes:checked").each(function() {
+        chkArray.push($(this).attr('djp_pk'));
+      });
+      
+      /* we join the array separated by the comma */
+    
+      /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+      if(chkArray.length > 0){
+        $('#ticket_numbers').val(chkArray);
+        document.getElementById("myTicketForm").submit(); 
+      }else{
+        alert("Please at least check one of the checkbox"); 
+        return false;
+      }
+    });
+
+</script>

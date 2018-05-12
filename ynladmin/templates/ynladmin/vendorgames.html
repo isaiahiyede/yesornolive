@@ -1,0 +1,60 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+	
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title">Prediction History</h3>
+            <div class="table-responsive">
+                <table id="vendorgameDatatable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Title</th>
+                            <th>Prediction Date</th>
+                            <th>Amount placed</th>
+                            <th>Choice</th>
+                            <th>Client Ref No</th>
+                            <th>Telephone</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Amount Won</th>
+                            <th class="text-center">Ticket</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for games in game %}
+                        <tr>
+                            <td><a href="{% url 'general:event_details' games.event.pk %}" class="btn-link">{{games.event.event_id}}</a></td>
+                            <td>{{games.event.title}}</td>
+                            <td><span class="text-muted"><i class="fa fa-clock-o"></i>&nbsp;{{games.date}}</span></td>
+                            <td>₦{{games.amount|floatformat:2|intcomma}}</td>
+                            <td>{{games.choice}}</td>
+                            <td>{{games.vendorClientCode}}</td>
+                            <td>{{games.tel_no}}</td>
+                            <td class="text-center">
+                                <div class="label label-table label-success">{{games.status}}</div>
+                            </td>
+                            <td class="text-center">₦{{games.amount_won|floatformat:2|intcomma}}</td>
+                            <td class="text-center"><a href="{% url 'general:print_ticket' games.pk %}" style="cursor: pointer;" game_id="{{games.pk}}"><i class="fa fa-print" aria-hidden="true">&nbsp;</i></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+	
+{% endblock transactions %}
+
+{% block modals %}
+{% endblock modals %}

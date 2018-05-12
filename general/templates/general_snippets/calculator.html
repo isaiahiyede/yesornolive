@@ -1,0 +1,14 @@
+            <div id="calc-result" class="d-none my-3">
+                
+                {% if data %}
+                <p  class="hidden-calc lead text-success" style="font-size: smaller;">
+            		₦{{data}}
+            	</p>
+            	{% else %}
+            	<p  class="hidden-calc lead text-danger" style="font-size: smaller;">
+            		{{message}}
+            	</p>
+            	{% endif %}
+        	
+                <p style="font-size: smaller; color: red; font-style: italic;">*THIS IS ONLY AN ESTIMATE, WHICH COULD BECOME REAL AT THE END OF THE GAME</p>
+            </div>

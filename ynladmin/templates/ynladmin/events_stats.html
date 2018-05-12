@@ -1,0 +1,88 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+	
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <!--<h3 style="margin:15px 0px 5px 0px;">
+
+                % for msg in messages %}
+                    <script>
+                        function show_alert(){
+                        var alert = '<p style="color:red;" class="text-{ msg.tags }} bg-{{ msg.tags }}">{{ msg }}</p>';
+                        document.write(alert);
+                        }
+                        display = window.setTimeout(show_alert(), 1000);
+                        window.clearTimeout(display);
+                    </script>
+                % endfor %}
+            </h3>-->
+            <h3 class="box-title">Event Monetary Details</h3>
+            <div class="table-responsive">
+                <table id="eventStatsDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Event ID</th>
+                            <!--<th>Start</th>-->
+							<th>Total Players</th>
+                            <th>Total Amount</th>
+							<th>Profit</th>
+                            <th>Stakeholder</th>
+							<th>Vendor</th>
+							<th>WJP</th>
+                            <th>Users</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td><a href='#' class="eventId" event_id="{{event.event_id}}">{{event.event_id}}</a></td>
+                            <!--<td>{event.start_time|date:"SHORT_DATE_FORMAT"}}</td>-->
+                            <td>{{event.event_total_players}}</td>
+                            <td>₦{{event.event_total_value}}</td>
+							<td>₦{{event.event_total_profit}}</td>
+							<td>₦{{event.event_total_stakeholder_amount}}</td>
+							<td>₦{{event.event_total_vendor_amount|floatformat:2|intcomma}}</td>
+							<td>₦{{event.event_total_jackpot_amount|floatformat:2|intcomma}}</td>
+                            <td>{{event.event_total_users_amount }}</td>
+	                    </tr>
+                    {% empty %}
+                        <p>No Event Monetary Details!!!!</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+	
+{% endblock transactions %}
+
+{% block modals %}
+
+    
+    
+    
+    <!--<div id="editModal" class="modal fade" role="dialog">
+    </div>-->
+    
+    <div class="modal fade" id="eventPlayers" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="event_players">
+        </div>
+    </div>
+</div>
+
+{% endblock modals %}

@@ -1,0 +1,60 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block add_event %}
+
+{% endblock add_event %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title">Payment Manager</h3>
+            <div class="table-responsive">
+                <table id="gamepaymentDatatable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <!--<th>User ID</th>-->
+                            <th>S/N</th>
+							<th>Date</th>
+							<th>First Name</th>
+                            <th>Last Name</th>
+                            <th>E-mail</th>
+                            <th>Amount</th>
+                            <th>Event Played</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for payment in payments %}
+                        <tr>
+                            <!--<td>{user.pk}}</td>-->
+                            <td>{{forloop.counter}}</td>
+							<td>{{payment.date|date:"SHORT_DATE_FORMAT"}}</td>
+                            <td>{{payment.user__first_name}}</td>
+							<td>{{payment.user__last_name}}</td>
+                            <td>{{payment.user__email}}</td>
+                            <td>₦{{payment.amount|floatformat:2|intcomma}}</td>
+                            <td>
+                            {{payment.game__event__event_id}}</td>
+                            
+                        </tr>
+                    {% empty %}
+                        <p>No Payment Record found!!!!</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+	<!--<div class="loader hidden"></div>-->
+{% endblock transactions %}

@@ -1,0 +1,65 @@
+<div class="modal-content" id="adminmessageComment">
+{% include 'general/special_styles.html' %}
+
+    <!-- Modal Header -->
+    <div class="modal-header"  style="background-color: azure;">
+        <button type="button" class="close" 
+           data-dismiss="modal">
+               <span aria-hidden="true">&times;</span>
+               <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+            Respond to complaints
+        </h4>
+        <p> <b>NOTE:</b> The use of <span style="color:red;">foul languauge and abuse speech</span> is highly prohibited and will lead to blocking of account if investigated by admin and establisehd to be true</p>
+    </div>
+    
+
+    <!-- Modal Body -->
+    <div class="modal-body" id="support_all_messages" style="background-color: azure;">
+        <div class="all_comms" style="overflow: scroll; margin-bottom: 10px;  height: 250px;" >
+
+            {% for message in all_comments %}
+                <div class="the_message">
+                {% if message.user.is_staff %}
+                    <span class="shape_oval_orange" style="position: relative; top: 15px;"></span>
+                    <span style="position: relative; left: 20px;">Admin</span><br/>
+                {% else %}
+                    <span class="shape_oval_green" style="position: relative; top: 15px;"></span>
+                    <span style="position: relative; left: 20px;">{{message.user}}</span><br/>
+                {% endif %}
+                    <span>{{message.message}}</span><br/>
+                    <span>{{message.date}}</span><br/>
+                    {% if message.image_obj %}
+                    <span><a href="{{message.image_obj.url}}">image</a></span>
+                    {% endif %}
+                </div><hr>
+            {% endfor %}
+        </div>
+
+        <div class="comms_all">
+            <div class="the_values">
+                <form method="POST" id="post-forms" class="post-forms"  method="POST" action="{% url 'ynladmin:admin_messages' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="fieldWrapper">
+                        <label class="label-controller">Message</label><br/>
+                        {{ comment_form.message }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <label>Upload image</label><br/>
+                        {{ comment_form.image_obj }}
+                    </div>
+                    <input type="hidden" name="msg_id" id="msg_id" value="{{message_id}}">
+                    <input class="pull-right btn2" type="submit" value="Submit" class="tiny button">
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Footer -->
+    <div class="modal-footer"  style="background-color: azure;">
+       
+    </div>
+
+</div>

@@ -1,0 +1,19 @@
+{% load humanize %}
+
+
+<div>
+<h4>Prediction has ended on an event and is awaiting a decision to be made on it</h4>
+<br>
+<p>Kindly Log in to your dashboard on yesornolive.com and decide the outcome of the event(s)</p>
+
+<p>Find below the details of the event(s)</p>
+
+{% for item in pkg %}
+	<p>{{item.event_id}} -- {{item.bet_question}} -- {{item.end_date}} {{item.end_time}}</p>
+{% endfor %}   
+    
+    <br>
+    <br>
+    
+    
+</div>

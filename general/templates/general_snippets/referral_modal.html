@@ -1,0 +1,44 @@
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Referrals</h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>Username</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>E-mail</th>
+                      <th>Phone</th>
+                      <th>points</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for user in referral.all_users %}
+                <tr>
+                  <td>{{ user.user.username }}</td>
+                  <td>{{user.user.first_name}}</td>
+                 <td>{{user.user.last_name}}</td>
+                 <td>{{user.user.email}}</td>
+                 <td>{{user.phone_number}}</td>
+                 <td>{{user.referrer_points}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

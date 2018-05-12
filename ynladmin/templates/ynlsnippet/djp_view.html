@@ -1,0 +1,82 @@
+<div class="modal fade" id="djp_viewModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+		            <!-- Modal Header -->
+		            <div class="modal-header" style="background-color: azure;">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                    View The DailyJackpot Winners.
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body" style="background-color: azure;">
+		                
+		                <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Lastname</th>
+                                    <th>Firstname</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Ticket No.</th>
+                                    <th>Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for djp_winners in djp_winners %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+
+                                    {% if not djp_winners.true_value %}
+                                    <td>{{djp_winners.user_obj__user__last_name}}</td>
+                                    {% else %}
+                                    <td>{{djp_winners.user_last_name}}</td>
+                                    {% endif %}
+
+
+                                    {% if not djp_winners.true_value %}
+                                        <td>{{djp_winners.user_obj__user__first_name}}</td>
+                                    {% else %}
+                                        <td>{{djp_winners.user_first_name}}</td>
+                                    {% endif %}
+
+                                    {% if not djp_winners.true_value %}
+                                        <td>{{djp_winners.user_obj__user__email}}</td>
+                                    {% else %}
+                                        <td>{{djp_winners.user_email}}</td>
+                                    {% endif %}
+
+
+                                    {% if not djp_winners.true_value %}
+                                        <td>{{djp_winners.user_obj__phone_number}}</td>
+                                    {% else %}
+                                        <td>{{djp_winners.telephone_no}}</td>
+                                    {% endif %}
+
+                                    <td>{{djp_winners.ticket_no}}</td>
+                                    <td>₦{{djp_winners.amount}}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+		        	</div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer" style="background-color: azure;">
+		               
+		            </div>
+                </div>
+
+		    </div>
+</div>

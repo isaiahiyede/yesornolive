@@ -1,0 +1,25 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+
+{% block transactions %}
+<form action="{% url 'ynladmin:crte_djp_wner' %}" method="post">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+        	<label class="control-label">Usernames</label>
+             <input class="form-control" type="text" name="usernames" value="">
+        </div>
+        <div class="form-group">
+             <label class="control-label">Start Number</label>
+             <input class="form-control" type="number" name="start" value="">
+        </div>
+        <div class="form-group">
+             <label class="control-label">Stop Number</label>
+             <input class="form-control" type="number" name="stop" value="">
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Update</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

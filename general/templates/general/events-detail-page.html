@@ -1,0 +1,659 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+{% block creatives %}
+
+<meta property="og:title" content="{{event.title}}" />
+<meta property="og:description" content="{{event.bet_question}}" />
+<meta property="og:url" content="https://www.yesornolive.com/event/details/{{event.pk}}/" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_GB" />
+
+{% if event.event_image %}
+	<meta property="og:image" content="{{event.event_image.url}}"/>
+{% else %}
+	<meta property="og:image" content="{% static 'user/plugins/images/defaulteventimage.jpeg' %}"/>
+{% endif %}
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="YesOrNoLive" />
+<meta name="twitter:title" content="{{event.title}}" />
+<meta name="twitter:description" content="{{event.title}}" />
+
+{% if event.event_image %}
+	<meta name="twitter:image" content="{{event.event_image.url}}" />
+{% else %}
+	<meta name="twitter:image" content="{% static 'user/plugins/images/defaulteventimage.jpeg' %}" />
+{% endif %}
+
+<meta name="twitter:site" content="https://www.yesornolive.com/" />
+<meta property="fb:app_id" content="2352656298293778" />
+{% endblock creatives %}
+
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block title %}
+    <title> {{event.bet_question}} - YesOrNoLive.com - Make Money Online Reading The News</title>
+	<meta name="description" content="{{event.event_msg_body|truncatechars:160}}">
+{% endblock title %}
+
+{% block trending %}
+	<!-- form with html validation from bootstrap  -->
+	 <div class="container">
+    <br><br><br>
+    <div class="row">
+      <!-- column that will hold row containing grid of events -->
+
+      <div class="col-12 col-md-9">
+        <!-- this is the row block actually holding the detail item -->
+        <div class="row">
+
+          <div class="col-12 col-md-12 card-col">
+			{% for message in messages %}
+			  {% if message.tags == 'error' %}
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% elif message.tags == 'success' %}
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% else %}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% endif %}	
+			{% endfor %}
+            <div class="media d-flex flex-column flex-lg-row">
+              <img class="align-self-start mr-3 img-fluid" style="width:320px;height:320px;" {% if event.event_image %} src="{{event.event_image.url}}"{% else %} src="{% static 'user/plugins/images/defaulteventimage.jpeg' %}"{% endif %} alt="Generic placeholder image">
+              <div class="media-body">
+            </button><h5 class="mt-2">{{event.bet_question}}</h5>
+            <p class="mb-0"><small class="text-muted ">Prediction starts on <span class="font-weight-bold yes">{{event.published_date|date:"d M Y" }} {{ event.published_date|time:"h:i:A" }}</span></small> <small class="text-muted">and ends on <span class="font-weight-bold no">{{event.end_date|date:"d M Y"}} {{event.end_time|time:"h:i:A"}}</span></small></p>
+            <p class="font-weight-bold">
+               {% if event.end_date > today %}
+	               	{% if event.gameplay_total_value >= event.estimated_wining %}
+	               		₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+	               	{% else %}
+	               		₦{{event.estimated_wining|floatformat:2|intcomma}}
+	               	{% endif %}
+               {% elif event.end_date == today %}
+			  	 	{% if event.end_time|is_past %}
+				  	 	₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+		            {% else %}
+		               	{% if event.gameplay_total_value >= event.estimated_wining %}
+	               			₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+		               	{% else %}
+		               		₦{{event.estimated_wining|floatformat:2|intcomma}}
+		               	{% endif %}
+		            {% endif %}
+		        {% else %}
+             		₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+             	{% endif %}
+
+			  <small class="text-muted">
+
+			  	 {% if event.end_date > today %}
+			  		{% if event.gameplay_total_value >= event.estimated_wining %}
+			  	  		to be shared
+			    	{% else %} 
+			      		Est. total stakes 
+			    	{% endif %}
+			  	  {% elif event.end_date == today %}
+			  	 	{% if event.end_time|is_past %}
+			  	 		to be shared
+			  	 	{% else %}
+				  		{% if event.gameplay_total_value >= event.estimated_wining %}
+				  	  		to be shared
+				    	{% else %} 
+				      		Est. total stakes 
+				    	{% endif %}
+				    {% endif %}
+				  {% else %}
+			  	  		to be shared					    	
+				  {% endif %}
+
+			 </small>
+			</p>
+            <div class="row">
+			  	<div class="col-11" style="top: 15px;">
+				  <div class="row">
+					<div class="col">
+					  <p class="text-left">Yes</p>
+					</div>
+					<div class="col">
+					  <p class="text-right">No</p>
+					</div>
+				  </div>
+				</div>
+              <div class="col-11">
+                <div class="progress">
+				  {% if event.gameplay_total_value == None %}
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% else %}	
+					<div class="progress-bar bg-success" role="progressbar" style="width: {% getPercent event.total_yes_choice event.pk %}%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {% getPercent event.total_no_choice event.pk %}%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% endif %}	
+                </div>
+              </div>
+				<div class="col-11">
+				  <div class="row">
+					<div class="col">
+					  <p class="text-left">{% getPercent event.total_yes_choice event.pk %}%</p>
+					</div>
+					<div class="col">
+					  <p class="text-right">{% getPercent event.total_no_choice event.pk %}%</p>
+					</div>
+				  </div>
+				</div>
+                </div>
+
+                <!-- this row handles the illustrations and form submition to place predictions -->
+                <div class="row">
+                  <div class="col-11">
+                    <div class="row">
+                      <div class="col-12">
+                        <p>
+                          <button class="btn btn-sq btn-light rounded-0">
+                              <i class="text-success fa fa-money fa-3x"></i><br/><br/>
+                              {% if event.end_date > today %}
+					               	{% if event.gameplay_total_value >= event.estimated_wining %}
+					               		₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+					               	{% else %}
+					               		₦{{event.estimated_wining|floatformat:2|intcomma}}
+					               	{% endif %}
+				               {% elif event.end_date == today %}
+							  	 	{% if event.end_time|is_past %}
+								  	 	₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+						            {% else %}
+						               	{% if event.gameplay_total_value >= event.estimated_wining %}
+					               			₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+						               	{% else %}
+						               		₦{{event.estimated_wining|floatformat:2|intcomma}}
+						               	{% endif %}
+						            {% endif %}
+						        {% else %}
+				             		₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+				             	{% endif %}
+
+                              <br/>
+
+                               {% if event.end_date > today %}
+						  		{% if event.gameplay_total_value >= event.estimated_wining %}
+						  	  		to be shared
+						    	{% else %} 
+						      		Est. total stakes 
+						    	{% endif %}
+						  	  {% elif event.end_date == today %}
+						  	 	{% if event.end_time|is_past %}
+						  	 		to be shared
+						  	 	{% else %}
+							  		{% if event.gameplay_total_value >= event.estimated_wining %}
+							  	  		to be shared
+							    	{% else %} 
+							      		Est. total stakes 
+							    	{% endif %}
+							    {% endif %}
+							  {% else %}
+						  	  		to be shared					    	
+							  {% endif %}
+
+                          </button>
+                          <button class="btn btn-sq btn-light rounded-0">
+                            <i class="text-warning fa fa-users fa-3x" ></i><br/><br/>
+                            {{event.total_players}}<br/>Players
+                          </button>
+                          <button class="btn btn-sq btn-light rounded-0">
+                            <i class="text-success fa fa-calendar fa-3x"></i><br/><br/>
+                            START DATE: <br>{{event.start_date}}
+                          </button>
+                          <button class="btn btn-sq btn-light rounded-0">
+                            <i class="text-danger fa fa-calendar-times-o fa-3x"></i><br/><br/>
+                            END DATE: <br>{{event.end_date}}
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                {% if not request.user.is_staff %}
+				  {% if not event.closed %}
+					{% if event.end_date >= today %}
+					  {% if event.end_date == today %}
+								{% if not event.end_time|time_past %}
+										<div class="col-11"><p style="text-align: center; font-style: italic;">Predictions for this event have ended.</p></div>
+								
+								{% else %}
+										<div class="col-11">
+											<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice">
+												{% csrf_token %}
+											<div class="form-group">
+													<input type="hidden" id="event-id" value="{{event.id}}" name="event">
+													<input type="hidden" id="choice" name="user-choice" value = "">
+													<input type="number" class="form-control rounded-0 bet_amount" min="200" required id="bet_amount" name="amount" placeholder="Min Amount ₦200" value="">
+													<a class="btn btn-outline-success rounded-0 bet bet_yes"  play_type="YES" role="button" aria-pressed="true">YES</a>
+													<a class="btn btn-outline-danger rounded-0 bet bet_no"  play_type="NO" role="button" aria-pressed="true">NO</a>
+													<input type="hidden" name="bot_catcher" id="bot_catcher" value="">
+													<button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserValues()" type="submit" role="button" aria-pressed="true">PLAY</button>
+											</div>
+										</form>
+									</div>
+								{% endif %}
+						{% else %}
+									<div class="col-11">
+										<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice">
+											 {% csrf_token %}
+											 <div class="form-group">
+													<input type="hidden" value="{{event.id}}" name="event">
+													<input type="hidden" id="choice" name="user-choice" value = "">
+													<input type="number" class="form-control rounded-0 bet_amount" min="200" required id="bet_amount" name="amount" placeholder="Min Amount ₦200" value="">
+													<a class="btn btn-outline-success rounded-0 bet bet_yes"  play_type="YES" role="button" aria-pressed="true">YES</a>
+													<a class="btn btn-outline-danger rounded-0 bet bet_no"  play_type="NO" role="button" aria-pressed="true">NO</a>
+													<input type="hidden" name="bot_catcher" id="bot_catcher" value="">
+													<button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserValues()" type="submit" role="button" aria-pressed="true">PLAY</button>
+											 </div>
+										</form>
+									</div>
+						{% endif %}
+					{% else %}
+						<div class="col-11"><p style="text-align: center; font-style: italic;">Predictions for this event have ended.</p></div>
+					{% endif %}
+				{% else %}
+						<div class="col-11"><p style="text-align: center font-style: italic;">This event is closed.</p></div>
+				{% endif %}
+			{% endif %}
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank">
+			<i class="fa fa-facebook-square fa-2x" style="color:#3b5998;"></i>
+		</a>
+
+		<a href="https://plus.google.com/share?url={{request.build_absolute_uri}}" target="_blank">
+			<i class="fa fa-google-plus-square fa-2x" style="color:#d34836;"></i>
+		</a>
+
+		<a href="https://twitter.com/home?status={{request.build_absolute_uri}}" target="_blank">
+			<i class="fa fa-twitter-square fa-2x" style="color:#4099ff;"></i>
+		</a>
+		
+		<a href="https://www.linkedin.com/shareArticle?mini=true&url={{request.build_absolute_uri}}" target="_blank">
+			<i class="fa fa-linkedin-square fa-2x" style="color:#007bb6;"></i>
+		</a>
+			
+		
+        <!-- this row holds the news content for the above question -->
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <br>
+            {% autoescape off %}
+            <h3>{{event.title}}</h3>
+				
+            <p>
+              {{event.event_msg_body}}
+            </p>
+			{% endautoescape %}
+          </div>
+
+          <!-- prediction components at the bottom of the contents -->
+          <div class="col-12"><br>
+            <div class="row">
+              <div class="col-11">
+                <div class="row">
+                  <div class="col-12">
+                    <h5 class="mt-2">{{event.bet_question}}</h5>
+                    <p>
+                      <button class="btn btn-sq btn-light rounded-0">
+                          <i class="text-success fa fa-money fa-3x"></i><br/><br/>
+                          {% if event.end_date > today %}
+				               	{% if event.gameplay_total_value >= event.estimated_wining %}
+				               		₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+				               	{% else %}
+				               		₦{{event.estimated_wining|floatformat:2|intcomma}}
+				               	{% endif %}
+			               {% elif event.end_date == today %}
+						  	 	{% if event.end_time|is_past %}
+							  	 	₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+					            {% else %}
+					               	{% if event.gameplay_total_value >= event.estimated_wining %}
+				               			₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+					               	{% else %}
+					               		₦{{event.estimated_wining|floatformat:2|intcomma}}
+					               	{% endif %}
+					            {% endif %}
+					        {% else %}
+			             		₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+			             	{% endif %}
+
+					  <br/>
+
+						  {% if event.end_date > today %}
+					  		{% if event.gameplay_total_value >= event.estimated_wining %}
+					  	  		to be shared
+					    	{% else %} 
+					      		Est. total stakes 
+					    	{% endif %}
+					  	  {% elif event.end_date == today %}
+					  	 	{% if event.end_time|is_past %}
+					  	 		to be shared
+					  	 	{% else %}
+						  		{% if event.gameplay_total_value >= event.estimated_wining %}
+						  	  		to be shared
+						    	{% else %} 
+						      		Est. total stakes 
+						    	{% endif %}
+						    {% endif %}
+						  {% else %}
+					  	  		to be shared					    	
+						  {% endif %}
+
+                      </button>
+                      <button class="btn btn-sq btn-light rounded-0">
+                        <i class="text-warning fa fa-users fa-3x"></i><br/><br/>
+                        {{event.total_players}}<br/>Players
+                      </button>
+                      <button class="btn btn-sq btn-light rounded-0">
+                        <i class="text-success fa fa-calendar fa-3x"></i><br/><br/>
+                        START DATE: <br>{{event.start_date}}
+                      </button>
+                      <button class="btn btn-sq btn-light rounded-0">
+                        <i class="text-danger fa fa-calendar-times-o fa-3x"></i><br/><br/>
+                        END DATE: <br>{{event.end_date}}
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              
+             {% if not request.user.is_staff %}
+			  {% if not event.closed %}
+				{% if event.end_date >= today %}
+				 {% if event.end_date == today %}
+							{% if not event.end_time|time_past %}
+									<div class="col-11"><p style="text-align: center; font-style: italic;">Predictions for this event have ended.</p></div>
+							
+							{% else %}
+									<div class="col-11">
+										<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice2">
+											{% csrf_token %}
+										<div class="form-group">
+												<input type="hidden" value="{{event.id}}" name="event">
+												<input type="hidden" id="choice2" name="user-choice" value = "">
+												<input type="hidden" name="bot_catcher" id="bot_catcher" value="">
+												<input type="number" class="form-control rounded-0 bet_amount2" min="200" required id="bet_amount2" name="amount" placeholder="Min Amount ₦200" value="">
+												<a class="btn btn-outline-success rounded-0 bet bet_yes2"  play_type="YES" role="button" aria-pressed="true">YES</a>
+												<a class="btn btn-outline-danger rounded-0 bet bet_no2"  play_type="NO" role="button" aria-pressed="true">NO</a>
+												<button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserSelect()" type="submit" role="button" aria-pressed="true">PLAY</button>
+										</div>
+									</form>
+								</div>
+							{% endif %}
+					{% else %}
+								<div class="col-11">
+									<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice2">
+										 {% csrf_token %}
+										 <div class="form-group">
+												<input type="hidden" value="{{event.id}}" name="event">
+												<input type="hidden" id="choice2" name="user-choice" value = "">
+												<input type="hidden" name="bot_catcher" id="bot_catcher" value="">
+												<input type="number" class="form-control rounded-0 bet_amount2" min="200" required id="bet_amount2" name="amount" placeholder="Min Amount ₦200" value="">
+												<a class="btn btn-outline-success rounded-0 bet bet_yes2"  play_type="YES" role="button" aria-pressed="true">YES</a>
+												<a class="btn btn-outline-danger rounded-0 bet bet_no2"  play_type="NO" role="button" aria-pressed="true">NO</a>
+												<button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserSelect()" type="submit" role="button" aria-pressed="true">PLAY</button>
+										 </div>
+									</form>
+								</div>
+					{% endif %}
+				{% else %}
+							<div class="col-11"><p style="text-align: center; font-style: italic;">Predictions for this event have ended.</p></div>
+				{% endif %}
+			{% else %}
+							<div class="col-11"><p style="text-align: center; font-style: italic;">This event is closed.</p></div>   
+			{% endif %}
+		{% endif %}
+            </div>
+
+          </div>
+
+          <!-- comment section -->
+          <div class="col-12">
+            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+              <div class="entry-comments mt-20 hidden" style="overflow-y: scroll;" id="comments_view">
+                					
+			  </div>
+          
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+      <!-- column for the sidebar holding filter options and ads -->
+      <div class="col-12 col-md-3">
+        <!-- row for filter components. will be developed later since it wasnt in the mvp -->
+        <!-- <div class="row">
+
+        </div> -->
+
+        <!-- row holding categories and their counts -->
+        <div class="row">
+          <div class="col-12">
+            <div class="list-group">
+              <a href="#" class=" disabled"><b>CATEGORIES</b></a>
+			  {% for category in categories %}
+			  <li class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+			  	{{category}}&nbsp;<a href="{% url 'general:getPassedCategory' category %}" ><span class="badge badge-danger">{% getCategoryCount category %}</span></a>&nbsp;<a href="{% url 'general:getLiveCategory' category %}" ><span class="badge badge-success">
+			  	{% getLiveCategoryCount category %}</span></a>
+			  </li>
+
+              
+
+			  {% empty %}
+				<h3>No Category</h3>
+			  {% endfor %}
+              </div>
+          </div>
+        </div>
+
+        <br><br><br>
+        <!-- row holding ad barner -->
+        {% if event.end_date > today %}
+        	<div class="row">
+						<input type="hidden" id='event-id'value="{{event.id}}" name="event">
+
+			          <div class="col-12 border border-secondary rounded-0 py-2" style="background-color: #dbddda">
+									<p class="lead text-center font-weight-bold">POSSIBLE WINNING CALCULATOR</p>
+									<p class="lead text-center"style="font-size: smaller;">Calculate your potential win.</p>
+									<table>
+										<tr>
+											{% if event.end_date > today %}
+												{% if event.gameplay_total_value >= event.estimated_wining %}
+													<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared: </td>
+													<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+												{% else %}
+													<td class="text-muted" style="font-size: smaller;font-style: italic;  color: black !important;">Est. total stakes: </td>
+													<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.estimated_wining|floatformat:2|intcomma}}</td>
+												{% endif %}
+											{% elif event.end_date == today %}
+												{% if event.end_time|is_past %}
+													<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared: </td>
+													<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+												{% else %}
+													{% if event.gameplay_total_value >= event.estimated_wining %}
+														<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared:</td>
+														<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+													{% else %}
+														<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">Est. total stakes: </td>
+														<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.estimated_wining|floatformat:2|intcomma}}</td>
+													{% endif %}
+												{% endif %}
+											{% else %}
+												<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared: </td>
+												<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+											{% endif %}
+
+										</tr>
+					
+										<tr>
+											<td class="text-muted" style="font-style: italic; color: black !important;">Your Choice:</td>
+											
+										</tr>
+										<tr>
+											<td>
+												<label class="text-success">
+													<input type="radio" name="choice" value="YES" class="btn btn-outline-success rounded-0"> YES
+												</label>
+											</td>
+											<td>
+												<label class="text-danger">
+													<input type="radio" name="choice" value="NO" class="btn btn-outline-danger rounded-0 bet bet_yes"> NO
+												</label>
+											</td>
+						
+										</tr>
+										<tr>
+											<td>
+												<input type="number" id="calc_amt" class="form-control rounded-0" min="200" placeholder="Min Amount ₦200" value="">
+											</td>
+											<td><button id="calc_button" class="btn btn-outline-success rounded-0 bet_info" type="submit" role="button" aria-pressed="true">GO</button></td>
+										</tr>
+										
+									</table>
+									
+									<div id="calc-result" class="d-none">
+										<p  class="hidden-calc" style="font-size: smaller;"></p>
+										<p style="font-size: smaller; color: red; font-style: italic;">*THIS IS ONLY AN ESTIMATE, WHICH COULD BECOME REAL AT THE END OF THE GAME</p>
+									</div>
+			          </div> 
+			</div>
+        {% elif event.end_date == today %}
+        	{% if not event.end_time|is_past %}
+			    <div class="row">
+					  <input type="hidden" id='event-id'value="{{event.id}}" name="event">
+
+			          <div class="col-12 border border-secondary rounded-0 py-2" style="background-color: #dbddda">
+									<p class="lead text-center font-weight-bold">POSSIBLE WINNING CALCULATOR</p>
+									<p class="lead text-center"style="font-size: smaller;">Calculate your potential win.</p>
+									<table>
+										<tr>
+											{% if event.end_date > today %}
+												{% if event.gameplay_total_value >= event.estimated_wining %}
+													<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared: </td>
+													<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+												{% else %}
+													<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">Est. total stakes: </td>
+													<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.estimated_wining|floatformat:2|intcomma}}</td>
+												{% endif %}
+											{% elif event.end_date == today %}
+												{% if event.end_time|is_past %}
+													<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared: </td>
+													<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+												{% else %}
+													{% if event.gameplay_total_value >= event.estimated_wining %}
+														<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared:</td>
+														<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+													{% else %}
+														<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">Est. total stakes: </td>
+														<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.estimated_wining|floatformat:2|intcomma}}</td>
+													{% endif %}
+												{% endif %}
+											{% else %}
+												<td class="text-muted" style="font-size: smaller;font-style: italic; color: black !important;">total to be shared: </td>
+												<td class="text-danger" style="font-size: smaller;font-weight: bold;">₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+											{% endif %}
+
+										</tr>
+					
+										<tr>
+											<td class="text-muted" style="font-style: italic; color: black !important;">Your Choice:</td>
+											
+										</tr>
+										<tr>
+											<td>
+												<label class="text-success">
+													<input type="radio" name="choice"value="YES" class="btn btn-outline-success rounded-0"> YES
+												</label>
+											</td>
+											<td>
+												<label class="text-danger">
+													<input type="radio" name="choice"value="NO" class="btn btn-outline-danger rounded-0 bet bet_yes"> NO
+												</label>
+											</td>
+						
+										</tr>
+										<tr>
+											<td>
+												<input type="number" id="calc_amt" class="form-control rounded-0" min="200" placeholder="Min Amount ₦200" value="">
+											</td>
+											<td><button id="calc_button" class="btn btn-outline-success rounded-0 bet_info" type="submit" role="button" aria-pressed="true">GO</button></td>
+										</tr>
+										
+									</table>
+									
+									<div id="calc-result" class="d-none">
+										<p  class="hidden-calc" style="font-size: smaller;"></p>
+										<p style="font-size: smaller; color: red; font-style: italic;">*THIS IS ONLY AN ESTIMATE, WHICH COULD BECOME REAL AT THE END OF THE GAME</p>
+									</div>
+			          </div> 
+			    </div>
+			{% endif %}
+	    {% endif %}
+
+
+        <br>
+        <div class="row">
+          <div class="col-12">
+          	<a href="#" class="disabled"><b>Social Media Feeds</b></a>
+            <script src="//assets.juicer.io/embed.js" type="text/javascript"></script>
+				<link href="//assets.juicer.io/embed.css" media="all" rel="stylesheet" type="text/css" />
+				<ul class="juicer-feed" data-feed-id="yesornolive"><h1 class="referral"></h1></ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+	  {% include 'general/customscripts.html' %}
+{% endblock customscripts %}
+
+
+

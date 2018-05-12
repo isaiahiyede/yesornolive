@@ -1,0 +1,98 @@
+{% extends 'general/profile.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block title %}<title>YesorNoLIVE.com | Daily Jackpot Entries</title>{% endblock %}
+
+{% block pg_title %}<h4 class="page-title">Daily Jackpot Entries</h4> </div>{% endblock %}
+        
+
+                <!--row -->
+                {% block body %}
+                <div class="row">
+                        
+                      
+                    <div class="col-lg-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Daily Jackpot Entries</h3>
+                            <div class="table-responsive">
+                                <table id="userDailyjackpot" class="display table-striped" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr style='line-height: 50px;'>
+                                            <th>#</th>
+                                            <th>Date</th>
+                                            <th>Ticket Number</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for entry in dailyjackpot %}
+                                        <tr style='line-height: 50px;'>
+                                           <td>{{forloop.counter }}</td>
+                                           <td>{{entry.created_on}}</td> 
+                                           <td>{{entry.ticket_no}}</td>
+                                           {% if entry.date == event.created_on_date %}
+                                               {% if not event.closed %}
+                                                     <td>Awaiting Todays' draw</td>   
+                                               {% else %}
+                                                    {% if entry.won %}
+                                                       <td>{{entry.amount}}</td>
+                                                    {% else %}
+                                                       <td>Sorry...Try Again</td>
+                                                    {% endif %}
+                                               {% endif %}
+                                           {% else %}
+                                                {% if entry.won %}
+                                                   <td>{{entry.amount}}</td>
+                                                {% else %}
+                                                   <td>N/A</td>
+                                                {% endif %}
+                                           {% endif %}
+                                        </tr>
+                                        {% empty %}
+                                            <p>No entry found!!!!</p> 
+                                        {% endfor %}
+                                       
+                                        
+                                    </tbody>
+                                </table>
+                            
+                            </div>
+                        </div>
+                        </div>   
+                	</div>
+               
+               
+                
+                
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> © 2017 Yes or No Live </footer>
+        </div>
+        <!-- /#page-wrapper -->
+        {% endblock %}
+
+        {% block modals %}
+
+            {% include 'general_snippets/general_modals.html' %}
+
+        {% endblock modals %} 
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="js/wp-sidebar.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="js/waves.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/custom.min.js"></script>
+    <!--Style Switcher -->
+</body>
+
+</html>

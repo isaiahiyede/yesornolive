@@ -1,0 +1,35 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block trending %}
+	
+<div class="container-fluid text-center">
+  <a href="/"><img src="{% static 'img/404.png' %}" class="img-fluid "></a>
+  <br><br>
+  <h1>Oops something has gone wrong and our engineers have been alerted!!!</h1>
+</div>
+  
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+{% endblock customscripts %}
+
+{% block footer %}
+{% endblock footer %}

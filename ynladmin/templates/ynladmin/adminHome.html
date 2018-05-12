@@ -1,0 +1,613 @@
+{% load staticfiles %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% block header %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'user/plugins/images/favicon.png' %}">
+
+    <title>YesorNoLIVE.com | Admin</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'user/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- animation CSS -->
+    <link href="{% static 'user/css/animate.css' %}" rel="stylesheet">
+
+    <!-- Menu CSS -->
+    <link href="{% static 'user/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" 
+    rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'user/plugins/bower_components/dropify/dist/css/dropify.min.css' %}">
+    
+    <!-- Custom CSS -->
+    <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom_style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'awesomplete/awesomplete.css' %}" >
+  
+    <!-- color CSS -->
+    <link href="{% static 'user/css/colors/green-dark.css' %}" id="theme" rel="stylesheet">
+    <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'jquery.timepicker.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'jquery.timepicker.css' %}" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+
+    {% block tinymce %}
+    <script>
+    tinymce.init({ selector:'#id_event_msg_body',
+                 height: 300,
+                 plugins: [
+                          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                          'searchreplace wordcount visualblocks visualchars code fullscreen',
+                          'insertdatetime media nonbreaking save table contextmenu directionality',
+                          'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                        ],
+                 toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                 toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                 image_advtab: true,
+                 templates: [
+                          { title: 'Test template 1', content: 'Test 1' },
+                          { title: 'Test template 2', content: 'Test 2' }
+                         ],
+                 content_css: [
+                            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                            '//www.tinymce.com/css/codepen.min.css'
+                          ]
+
+                });
+    </script>
+    {% endblock tinymce %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o)
+                , m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-19175540-9', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <style>
+        .loader {
+             position: absolute;
+             left: 50%;
+             top: 50%;
+             z-index: 1;
+             width: 15px;
+             height: 150px;
+             margin: -75px 0 0 -75px;
+             border: 16px solid #f3f3f3;
+             border-radius: 50%;
+             border-top: 16px solid #449f07;
+             width: 120px;
+             height: 120px;
+             -webkit-animation: spin 5s linear infinite;
+             animation: spin 1s linear infinite;
+           }
+           
+           @-webkit-keyframes spin {
+             0% { -webkit-transform: rotate(0deg); }
+             100% { -webkit-transform: rotate(360deg); }
+           }
+           
+           @keyframes spin {
+             0% { transform: rotate(0deg); }
+             100% { transform: rotate(360deg); }
+           }
+    </style>
+    
+    <script>
+        $(document).ready(function() {
+        $('.id_date').datepicker({
+             changeMonth: true,
+             changeYear: true,
+             dateFormat: "yy-mm-dd",
+             minDate:     0
+        });
+        $('.report').datepicker({
+             changeMonth: true,
+             changeYear: true
+        });
+        $('.id_time').timepicker({
+             'timeFormat': 'h:i A',
+             'scrollDefault': 'now'
+             
+        });
+        //$('#id_end_time').timepicker({
+        //     'timeFormat': 'h:i A',
+        //     'scrollDefault': 'now'
+        //});
+        });
+   </script>
+ 
+  <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+        
+  <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+
+          $('#userDatatable').DataTable();
+          $('#eventDatatable').DataTable();
+          $('#paymentDatatable').DataTable();
+          $('#gameplayDatatable').DataTable();
+          $('#gamepaymentDatatable').DataTable();
+          $('#statDatatable').DataTable();
+          $('#traderDatatable').DataTable();
+          $('#eventStatsDatatable').DataTable();
+          $('#vendorpaymentDatatable').DataTable();
+
+          $('#vendorgameDatatable').DataTable();
+          $('#wjpDatatable').DataTable();
+          $('#activeusersDatatable').DataTable();
+          $('#djpDatatable').DataTable();
+
+          $('#vendorgameDJPDatatable').DataTable();
+              
+
+          $('#reportsTable').DataTable({
+              "order": [[ 0, "desc" ]]
+          }); 
+
+      });
+  </script>
+
+  <script src="{% static 'awesomplete/awesomplete.js' %}" async></script>
+
+</head>
+{% endblock header %}
+
+
+<body>
+
+{% block sidebar %}
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div id="wrapper">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                <div class="top-left-part"><a class="logo" href="{% url 'general:homepage' %}"><b><!--This is dark logo icon--><img src="{% static 'user/plugins/images/eliteadmin-logo.png' %}" alt="home" class="dark-logo" /><!--This is light logo icon-->
+                <img src="{% static 'user/plugins/images/eliteadmin-logo-dark.png' %}" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text-->
+                <img src="{% static 'user/plugins/images/eliteadmin-text.png' %}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{% static 'user/plugins/images/eliteadmin-text-dark.png' %}" alt="home" class="light-logo" /></span></a></div>
+                <ul class="nav navbar-top-links navbar-left hidden-xs">
+                    <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                    <li>
+                        <!--% if 'events' in request.path %}-->
+                       <!--  <form role="search" id="search_form" class="app-search hidden-xs" action="" method='GET'>
+                           <!- % csrf_token %} -->
+                            <!-- <input type="text" id="search" name="q" placeholder="Search..." class="form-control" required> -->
+                            <!--<input type="hidden"  name="q" id="events" value="events">-->
+                            <!-- <a style="cursor:pointer;" onclick="document.getElementById('search_form').submit()"><i class="fa fa-search"></i></a> 
+                        </form> -->
+                        <!--% elif 'users' in request.path %}
+                        <form role="search" id="search_form" class="app-search hidden-xs" action="{% url 'ynladmin:admin_pages' 'users' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="text" id="search_for" name="search_for" value="" placeholder="Search..." class="form-control">
+                            <input type="hidden"  name="users" id="users" value="users">
+                            <a style="cursor:pointer;" id="search"><i class="fa fa-search"></i></a> 
+                        </form>
+                        % elif 'messages' in request.path %}
+                        <form role="search" id="search_form" class="app-search hidden-xs" action="{% url 'ynladmin:admin_pages' 'messages' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="text" id="search_for" name="search_for" value="" placeholder="Search..." class="form-control">
+                            <input type="hidden"  name="messages_search" id="messages_search" value="messages_search">
+                            <a style="cursor:pointer;" id="search"><i class="fa fa-search"></i></a> 
+                        </form>
+                        % endif %}-->
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    
+                    
+                   
+                    
+                    <!-- /.dropdown -->
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+
+
+        <!-- Left navbar-header -->
+        {% with request.user.useraccount.special_user as special_user %}
+          {% with request.user.useraccount.content_provider as content_provider %}
+            {% with request.user.useraccount.accounts as accounts %}
+              {% with request.user.useraccount.validator as validator %}
+                {% with request.user.useraccount.decider as decider %}
+                  {% with request.user.useraccount.data_analyst as data_analyst %}
+                    {% with request.user.useraccount.trader as trader %}
+                      {% with request.user.useraccount.vendor as vendor %}
+                        {% with request.user.useraccount.special_user_test_2 as special_user_test_2 %}
+                          {% with request.user.useraccount.adminRealityTV as adminRealityTV %}
+
+                        <div class="sidebar" role="navigation">
+                          <div class="wp-sidebar-nav">
+                        <div class="user-profile">
+                            <div class="dropdown user-pro-body">
+                                <div>
+                                {% if user_acc_obj.user_image %}
+                                <img src="{{user_acc_obj.user_image.url}}" alt="user-img" class="img-circle">
+                                {% else %}
+                                <img src="{% static 'user/plugins/images/lucy-beaumont.jpg' %}" alt="user-img" class="img-circle">
+                                {% endif %}
+                                </div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.first_name}}</a>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <ul class="wp-side-menu">
+
+                                {% if special_user %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'statistics' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Dashboard</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'users' %}"><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >User Manager</span></a> </li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'game' %}"><i data-icon="C" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Gameplay</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'settings' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Settings</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'event_stats' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">EventStats</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'wjp' %}"><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >Weekly Jackpot</span></a> </li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'djp' %}"><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >Daily Jackpot</span></a> </li>
+                                {% endif %}
+
+                                {% if special_user or content_provider %}
+                                    <li class=""> <a href="{% url 'ynladmin:admin_pages' 'events' %}"><i data-icon="T" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Event Manager</span></a> </li>
+                                {% endif %}
+
+                                {% if special_user or accounts %}
+                                <style>
+                                  
+                                    .dropdown-content {
+                                        display: none;
+                                        position: absolute;
+                                        background-color: grey;
+                                        min-width: 220px;
+                                        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                        z-index: 1;
+                                    }
+
+                                    .dropdown-content a {
+                                        color: black;
+                                        padding: 12px 16px;
+                                        text-decoration: none;
+                                        display: block;
+
+                                    }
+
+                                    .dropdown-content a:hover {background-color: #ddd}
+
+                                    .dropdown:hover .dropdown-content {
+                                        display: block;
+                                    }
+
+                                    .dropdown:hover {
+                                        background-color: #3e8e41;
+                                    }
+                                </style>
+
+                                <li class="dropdown div_loader">
+                                  <a><i data-icon="m" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu"> Payments</span></a>
+                                  <div class="dropdown-content">
+                                    <a href="{% url 'ynladmin:admin_pages' 'game_payments' %}"><span class="hide-menu">Game Payments</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-Transfer' %}"><span class="hide-menu">Transfer Requests</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-Successful' %}"><span class="hide-menu">Sucessful payments</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-Pending Approval' %}"><span class="hide-menu">Pending payments</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-failed' %}"><span class="hide-menu">Failed payments</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-abandoned' %}"><span class="hide-menu">Abandoned</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-Approved' %}"><span class="hide-menu">Approved</span></a>
+                                    <a href="{% url 'ynladmin:admin_pages' 'payment-ongoing' %}"><span class="hide-menu">Ongoing</span></a>
+                                  </div>
+                                </li>
+
+                                {% endif %}
+
+                                {% if special_user or adminRealityTV %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'adminRealityTV' %}"><i data-icon="T" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Admin Reality TV
+                                    </span></a> </li>
+                                {% endif %}
+
+                                {% if special_user or data_analyst %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'reports' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Reports</span></a></li>
+                                {% endif %}
+
+                                {% if special_user or validator %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'to_validate' %}"><i data-icon="T" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Validation Manager</span></a> </li>
+                                {% endif %}
+
+                                {% if special_user or decider %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'to_decide' %}"><i data-icon="T" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Decision Manager</span></a> </li>
+                                {% endif %}
+
+                                {% if trader %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'trading' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Trader</span></a></li>
+                                {% endif %}
+
+                                {% if vendor %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'vendor' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Play Category Games</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'djpVendor' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Play Daily Jackpot</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'gamesVendor' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">C.A.T Games Played</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'viewDjpGames' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">DJP Games Played</span></a></li>
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'paymentsVendor' %}"><i data-icon="\" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Payments</span></a></li>
+                                {% endif %}
+
+                                {% if special_user_test_2 %}
+                                    <li class="div_loader"> <a href="{% url 'ynladmin:admin_pages' 'active_users' %}"><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >Active Users</span></a> </li>
+
+                                    <li class="div_loader">
+                                      <a href="{% url 'ynladmin:data_update' %}"><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu">Data Update</span></a>
+                                    </li>
+
+                                    <li class="div_loader">
+                                      <a href="{% url 'ynladmin:crte_djp_wner' %}"><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu">Help</span></a>
+                                    </li>
+
+                                {% endif %}
+
+                                <li class="div_loader"> <a href="{% url 'general:logout' %}"><i class="fa fa-power-off"></i>
+                                <span class="hide-menu">&nbsp;&nbsp;Logout</span></a></li>
+
+                        </ul>
+                          </div>
+                        </div>
+
+
+                          {% endwith %}
+                        {% endwith %}
+                      {% endwith %}
+                    {% endwith %}
+                  {% endwith %}
+                {% endwith %}
+              {% endwith %}
+            {% endwith %}
+          {% endwith %}
+        {% endwith%}
+
+        <!-- Left navbar-header end -->
+        <!-- Page Content -->
+                <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        
+                        <h4 class="page-title">Hi {{request.user.first_name}},<br/></h4> 
+
+                    </div>
+
+                       {% if 'viewDjpGames' in request.path %}
+                          <a class="print_tkt pull-right" style="cursor: pointer;"><i class="fa fa-print fa-2x"></i></a>
+                        {% endif %}
+
+                        <h5>
+
+                            {% for msg in messages %}
+                                <script>
+                                    function show_alert(){
+                                    var alert = '<p class="text-{{ msg.tags }}">{{ msg }}</p>';
+                                    document.write(alert);
+                                    }
+                                    display = window.setTimeout(show_alert(), 1000);
+                                    window.clearTimeout(display);
+                                </script>
+                            {% endfor %}
+                            
+                        </h5>
+                        
+
+                        {% block add_event %}
+
+                        {% endblock add_event %}
+                    <!-- /.col-lg-12 -->
+                </div>
+{% endblock sidebar %}
+
+{% block events_won %}
+
+{% endblock events_won %}
+<div class="loader hidden"></div>
+{% block transactions %}
+
+{% endblock transactions %}
+
+
+{% block footer %}
+ <footer class="footer text-center"> © 2017 Yes or No Live </footer>
+{% endblock footer %}
+
+
+{% block modals %}
+
+    {% include 'general/modals.html' %}
+    
+    
+    <!--<div id="editModal" class="modal fade" role="dialog">
+    </div>-->
+    
+    <div id="myModal" class="modal fade" role="dialog">
+    </div>
+
+{% endblock modals %}
+
+      <script type="text/javascript">
+            // For demo to fit into DataTables site builder...
+          $('#userDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#eventDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#paymentDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#gameplayDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+          
+          $('#gamepaymentDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+              
+          $('#statDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered'); 
+
+          $('#traderDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#eventStatsDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+              
+          $('#vendorpaymentDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#vendorgameDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+              
+          $('#wjpDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+              
+          $('#djpDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#reportsTable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+          $('#activeusersDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');
+
+
+           $('#vendorgameDJPDatatable')
+              .removeClass( 'display' )
+              .addClass('table table-striped table-bordered');  
+
+      </script>
+
+{% block scripts %}
+<!-- /#wrapper -->
+    <!-- jQuery -->
+
+    <!-- <script src="{% static 'user/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script> -->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'user/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'user/js/wp-sidebar.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'user/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'user/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'user/js/custom.min.js' %}"></script>
+    
+    <script src="{% static 'user/js/jasny-bootstrap.js' %}"></script>
+    <!-- jQuery file upload -->
+
+    <script src="{% static 'user/plugins/bower_components/dropify/dist/js/dropify.min.js' %}">
+    </script>
+
+
+    <script>
+
+        // $(document).ready(function(){
+        //     $('#myTable').DataTable();
+        // });
+
+        $(document).ready(function () {
+            // Basic
+            $('.dropify').dropify();
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez'
+                    , replace: 'Glissez-déposez un fichier ou cliquez pour remplacer'
+                    , remove: 'Supprimer'
+                    , error: 'Désolé, le fichier trop volumineux'
+                }
+            });
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+            drEvent.on('dropify.beforeClear', function (event, element) {
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+            drEvent.on('dropify.afterClear', function (event, element) {
+                alert('File deleted');
+            });
+            drEvent.on('dropify.errors', function (event, element) {
+                console.log('Has Errors');
+            });
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function (e) {
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                }
+                else {
+                    drDestroy.init();
+                }
+            })
+        });
+
+    </script>
+    <!--Style Switcher -->
+    <script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>-->
+    <script type="text/javascript" src="{% static 'jquery.timepicker.js' %}"></script>
+    
+    <script>
+             $(document).on('focusin', function(e) {
+                if ($(e.target).closest(".mce-window").length) {
+                 e.stopImmediatePropagation();
+    }
+  });
+
+    </script>
+    
+{% endblock scripts %}
+
+{% block customscripts %}
+
+    {% include 'general/customscripts.html' %}
+
+{% endblock customscripts %}                    
+
+
+ </body>
+
+</html>

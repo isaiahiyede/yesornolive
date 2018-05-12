@@ -1,0 +1,12 @@
+<div>
+<h4>Game Details for Daily Jackpot {{djp.pk}}</h4>
+<br>
+	{% for package in pkg %}
+	    <p>Ticket Number : <span>{{package.ticket_no}}</span></p>
+	    <p>Amount : <span>₦ 25</span></p>
+	    <p>Date : <span>{{package.date}}</span></p>
+	    <p>Your Play Choice : <span>{{package.choice}}</span></p>
+	    <p>======================================================</p>
+	{% endfor %}
+
+</div>

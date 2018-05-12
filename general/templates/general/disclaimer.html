@@ -1,0 +1,75 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block trending %}
+<br><br><br>	
+<div class="container">
+
+  <div class="row">
+
+  	
+  	<h3>Disclaimer</h3>
+    <!-- column that will hold row containing grid of events -->
+    <div class=" col-12 col-md-12">
+      <!-- this is the row block actually holding each item -->
+      <div class="row">
+        <!-- each grid item begins here -->
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+		  
+		  </div>
+		  
+		  <div class="card">
+		    <div class="card-header" role="tab" id="headingThree">
+		      <h5 class="mb-0">
+		        <a>
+		          <h6>NB:</h6>
+		        </a>
+		      </h5>
+		    </div>
+
+		    <div>
+		      <div class="card-block col-md-12">
+		        BBN3 events on <a href="/">YesorNoLive.com</a> are published in conjuction with
+		        Payporte(sponsors of Big Brother Naija 2018 and owners of BBN Trivia). They are not
+		        in anyway endorsed or affiliated with the owners/creators of Big Brother Naija 2018.
+		        Any prediction on these events takes cognisanse of the notice.
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+        <!-- pagination component goes here -->
+      </div>
+    </div>
+
+    <!-- column for the sidebar holding filter options and ads -->
+
+
+  </div>
+</div>
+  
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+  {% include 'general/customscripts.html' %}
+{% endblock customscripts %}

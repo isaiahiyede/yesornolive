@@ -1,0 +1,68 @@
+{% load custom_filters %}
+
+
+<!-- Modal content-->
+    <div class="modal-content" id="user_cat_view">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{title}} for {{date}}</h4>
+      </div>
+
+
+
+      <div class="modal-body">
+
+          S - SPORTS: {{sports}}<br>
+          P - POLITICS: {{politics}}<br>
+          B - BUSINESS & ECONOMY: {{business}}<br>
+          E - ENTERTAINMENT & LIFESTYLE: {{ent}}<br>
+          G - GENERAL: {{general}}<br>
+          R - REALITYTV: {{realityTV}}<br>
+
+          <b>Total Count: {{total}}</b><br>
+          <b>Total Amount Staked: ₦ {{amount}}</b>
+
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+              <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>Firstname</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>S</th>
+                  <th>P</th>
+                  <th>B</th>
+                  <th>E</th>
+                  <th>G</th>
+                  <th>R</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for user in gameplays %}
+              <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{user.user.username}}</td>
+                  <td>{{user.user.first_name}}</td>
+                  <td>{{user.user.email}}</td>
+                  <td>{{user.phone_number}}</td>
+                  <td>{% getCATCount user date 'Sports' %}</td>
+                  <td>{% getCATCount user date 'Politics' %}</td>
+                  <td>{% getCATCount user date 'Business-Economy' %}</td>
+                  <td>{% getCATCount user date 'Entertainment-LifeStyle' %}</td>
+                  <td>{% getCATCount user date 'General' %}</td>
+                  <td>{% getCATCount user date 'realityTV' %}</td>
+              </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+ 

@@ -1,0 +1,81 @@
+<div class="modal fade" id="djp_editModal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+
+		            <!-- Modal Header -->
+		            <div class="modal-header" style="background-color: azure;">
+		                <button type="button" class="close" 
+		                   data-dismiss="modal">
+		                       <span aria-hidden="true">&times;</span>
+		                       <span class="sr-only">Close</span>
+		                </button>
+		                <h4 class="modal-title" id="myModalLabel">
+		                    Edit The DailyJackpot.
+		                </h4>
+		            </div>
+		            
+		            <!-- Modal Body -->
+		            <div class="modal-body" style="background-color: azure;">
+		                
+		                <form name="wjpform" id="" method="POST" 
+		                    action="{% url 'ynladmin:edit_djp' %}">
+							{% csrf_token %}
+
+						  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
+                                <!--<h4>Select a Date Range</h4>-->
+                                <!--<input style="border-radius: 5px;" id="from-date" type="text" class="report" name="start_date" placeholder="From" /> &nbsp;&nbsp;-->
+                                <input class="hidden" name="djp_id" value="{{djp.id}}"/>
+                                
+                                <br>
+                                
+								<div class="form-group">
+								<label class="label-controller">Question of the Day</label><br>
+									{{form.question}}
+								</div>
+
+                                <div class="form-group">
+								<label class="label-controller">Total Jackpot Amount</label><br>
+									{{form.amount}}
+								</div>
+                                
+								<div class="form-group">
+								<label class="label-controller">Number of Winner(s)</label><br>
+									{{form.top_winner}}
+								</div>
+                                
+                                <div class="form-group">
+								<label class="label-controller">Winner's Prize</label><br>
+									{{form.grand_prize}}
+								</div>
+
+								<div class="form-group">
+								<label class="label-controller">Consolation Prize</label><br>
+									{{form.consolation_prize}}
+								</div>
+                                
+                                <div class="form-group">
+								<label class="label-controller">Number of Consolation Winners</label><br>
+									{{form.consolation_winners}}
+								</div>
+
+
+								<div class="form-group">
+                                <label class="label-controller">Make A Decision</label><br>
+									{{form.decision}}
+								</div>
+																
+						    <button type="submit" id="djp_submit" class="btn btn-success pull-right">Submit</button><br />
+
+
+						</form>         
+		        	</div>
+		            
+		            <!-- Modal Footer -->
+		            <div class="modal-footer" style="background-color: azure;">
+		               
+		            </div>
+                </div>
+
+		    </div>
+</div>

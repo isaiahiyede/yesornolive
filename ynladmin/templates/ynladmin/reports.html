@@ -1,0 +1,57 @@
+{% extends 'ynladmin/adminHome.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+
+{% block transactions %}
+{% if request.user.useraccount.special_user %}
+<form action="{% url 'general:export_csv' %}" method="GET">
+<div>
+    <h4>Select a Date Range</h4>
+    <input style="border-radius: 5px;" id="from-date" type="text" class="report" name="from-date" placeholder="From" /> &nbsp;&nbsp;
+    <input style="border-radius: 5px;" id="to-date" type="text" class="report" name="to-date" placeholder="To" />
+</div>
+<br>
+<p><input type="radio" name="query" value="export_users_csv" >Export Registered Users that Profile is not updated</p>
+<p><input type="radio" name="query" value="export_fund">Export Registered Users that have updated Profiles but not funded wallet</p>
+<p><input type="radio" name="query" value="export_game">Export Users that have funded wallet but not played</p>
+<p><input type="radio" name="query" value="export_punters">Export Users that have funded wallet and played</p>
+<p><input type="radio" name="query" value="won_djp">Export all Daily Jackpot Winners</p>
+
+<p><input type="radio" name="query" value="export_punters_category" id="punters_cat">Export Users for a particular category
+&nbsp;<span id="cat" class="hidden">
+        <select name="category">
+            <option value="">Select a Category</option>
+            <option value="Sports">Sports</option>
+            <option value="General">General</option>
+            <option value="Politics">Politics</option>
+            <option value="Business-Economy">Business & Economy</option>
+            <option value="Entertainment-LifeStyle">Entertainment & LifeStyle</option>
+        </select>
+    </span>
+</p>
+
+<button type="submit">Export</button>
+</form>
+{% endif %}
+<br><br>
+
+
+<form action="{% url 'ynladmin:dailyreports' %}" method="GET">
+
+    <div>
+        <h4>Daily Report: Select Date Range</h4>
+        
+        <input required style="border-radius: 5px;" id="from-date-daily" type="text" class="report" name="from-date-daily" placeholder="From" /> &nbsp;&nbsp;
+        <input required style="border-radius: 5px;" id="to-date-daily" type="text" class="report" name="to-date-daily" placeholder="To" /> &nbsp;&nbsp;
+                
+    </div><br>
+
+    <button type="submit" id="getReport" onclick="return confirm('Are you sure?)">Submit</button>
+
+</form>
+
+
+{% endblock %}
+

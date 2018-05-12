@@ -1,0 +1,82 @@
+<div class="modal fade" id="userFormEdit" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="user_edit">
+        
+		    <!-- Modal Header -->
+		    <div class="modal-header" style="background-color: azure;">
+		        <button type="button" class="close" 
+		           data-dismiss="modal">
+		               <span aria-hidden="true">&times;</span>
+		               <span class="sr-only">Close</span>
+		        </button>
+		        <h4 class="modal-title" id="myModalLabel">
+		             User details
+		        </h4>
+		    </div>
+		    
+		    <!-- Modal Body -->
+		    <div class="modal-body" style="background-color: azure;">
+		        
+		        <!--<form name="edit_user_obj" id="edit_user_obj">-->
+						
+						<div class="form-group">
+						<label>First Name:</label>
+							{{useraccount_form.user.first_name}}
+						</div>
+						
+						<div class="form-group">
+						<label>Last Name:</label>
+							{{useraccount_form.user.last_name}}
+						</div>
+						
+						<div class="form-group">
+						<label>E-mail:</label>
+							{{useraccount_form.user.email}}
+						</div>
+						
+						<div class="form-group">
+						<label>Bank:</label>
+							{{useraccount_form.bank}}
+						</div>
+
+						<div class="form-group">
+						<label>Account Number:</label>
+							{{useraccount_form.account_number}}
+						</div>
+
+						<div class="form-group">
+						<label>Date of Birth:</label>
+							{{useraccount_form.dob}}
+						</div>
+
+						<div class="form-group">
+							<label>Phone Number:</label>
+							{{useraccount_form.phone_number}}
+						</div>
+
+						<div class="form-group">
+						<label>Gender:</label>
+							{{useraccount_form.gender}}
+						</div>
+						
+						{% if useraccount_form.user_image %}
+						<div class="form-group">
+						<label>User Profile Image:</label><br/>
+							<img style="max-width:50%;max-height:50%;" id="myImg" src="{{useraccount_form.user_image.url}}" alt="{{useraccount_form.user.first_name.value}}">
+						</div>
+						{% endif %}
+					    <!--<button type="submit" id="submit-edit-user" class="btn btn-success pull-right">Submit</button><br />-->
+
+					<!--</form> -->        
+			</div>
+		    
+		    <!-- Modal Footer -->
+		    <div class="modal-footer" style="background-color: azure;">
+		       
+		    </div>
+		</div>
+	</div>
+</div>
+</div>
+		

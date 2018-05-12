@@ -1,0 +1,73 @@
+<div class="modal fade" id="userMessagesForm" tabindex="-1" role="dialog" 
+	aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <!-- Modal Header -->
+            <div class="modal-header" style="background-color: azure;">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Send Message
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body" style="background-color: azure;">
+                
+                <form name="create_event" id="create_event" method="POST" action="{% url 'general:messages' %}" 
+				  enctype="multipart/form-data">
+				  {% csrf_token %}
+
+				  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
+
+				  		<div class="form-group">
+			  			<label class="label-controller">Subject</label><br/>
+			  			<input type="text" class=" form-control" name="subject" required id="subject" value="">
+				  		</div>
+
+						<div class="form-group">
+						<label class="label-controller">Message</label><br/>
+						{{comment_form.message}}
+						</div><br/>
+
+						<div class="form-group">
+						<label>Upload Image</label>
+						{{comment_form.image_obj}}
+						</div>
+
+					    <button type="submit" id="userMessage" class="btn btn-success pull-right">Submit</button><br/>
+
+					</form>         
+        	</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="messageToComment" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="messageComment">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="viewMessage" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="messageView">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bankinfo" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="banking">
+        </div>
+    </div>
+</div>

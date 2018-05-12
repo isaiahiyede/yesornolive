@@ -1,0 +1,26 @@
+<div class="" id="otp">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <br>
+            <img src="https://cdn2.iconfinder.com/data/icons/luchesa-part-3/128/SMS-512.png" class="img-responsive" style="width:50px; height:50px;margin:0 auto;"><br>
+            
+            <h1 class="text-center">Finalize your transfer</h1><br>
+            <p class="lead" style="align:center"></p><p> An OTP has been sent to your Mobile Number. Please enter the OTP below for Successful Payment</p>  <p></p>
+        <br>
+       
+            <form method="post" id="veryfyotp" action="{% url 'wallet:finalize_transfer' %}">
+                {% csrf_token %}
+                <div class="row">                    
+                <div class="form-group col-sm-8">
+                	 <span style="color:red;"></span><input type="text" class="form-control" id="otp_code"name="otp" placeholder="Enter your OTP number" required="">
+                     <input type="hidden" id="transfer_code" name="transfer_code" value="{{transfer_code}}"/>
+                     <input type="hidden" name="ref" value="{{ref}}"/>
+                </div>
+                <button type="submit" class="btn btn-primary  pull-right col-sm-3">Verify</button>
+                </div>
+                <span><a href='#' id ="resend_otp"><i class="fa fa-repeat" aria-hidden="true"></i>&nbsp;&nbsp; Resend OTP</a></span>
+            </form>
+        <br><br>
+        </div>
+    </div>        
+</div>

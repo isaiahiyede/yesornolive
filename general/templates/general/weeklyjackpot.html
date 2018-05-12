@@ -1,0 +1,240 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+
+
+{% block creatives %}
+
+<meta property="og:title" content="Weekly Jackpot/₦200,000 up for grabs" />
+<meta property="og:description" content="Weekly Jackpot" />
+<meta property="og:url" content="https://www.yesornolive.com/game/weeklyjkp" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_GB" />
+
+<meta property="og:image" content="{% static 'img/weeklyjackpotbanner.jpg' %}"/>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="YesOrNoLive" />
+<meta name="twitter:title" content="Weekly Jackpot/₦200,000 up for grabs" />
+<meta name="twitter:desciption" content="Weekly Jackpot" />
+
+<meta name="twitter:image" content="{% static 'img/weeklyjackpotbanner.jpg' %}" />
+<meta name="twitter:site" content="https://www.yesornolive.com" />
+
+{% endblock creatives %}
+
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block title %}
+{% endblock title %}
+
+{% block trending %}
+	<!-- form with html validation from bootstrap  -->
+	<div class="container-fluid" style="padding: 0; height: 250px; background-image: url({% static 'img/weeklyjackpotbanner.jpg' %}); background-position: center;"></div>
+	 <div class="container">
+    <br><br>
+    <div class="row justify-content-center">
+      <!-- column that will hold row containing grid of events -->
+
+      
+
+      <!-- column for the sidebar holding filter options and ads -->
+      <div class="col-9 col-md-9">
+        <!-- row for filter components. will be developed later since it wasnt in the mvp -->
+        <!-- <div class="row">
+
+        </div> -->
+
+        <!-- row holding categories and their counts -->
+        <div class="row" style="max-height: 800px; overflow: scroll;">
+          <div class="col-12">
+							<p class="text-center">Room for Marketing speak</p>
+							<h2 style="font-style: italic; padding-bottom: 10px;" class="text-center"><b>WEEKLY LEADERBOARD</b></h2>
+            <ul class="list-group">
+              
+			  			<!-- {% for jackpot in jackpots %}
+							<li style="font-size:24px;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+								<b>{{jackpot.created_on_date}}</b><br>
+								<table>
+									<tr>
+										<th>Ticket Number</th>
+										<th>Amount (₦)</th>
+									</tr>
+									{% for winners in jackpot.get_winners %}
+										<tr>
+											<td>{{winners.ticket_no}}</td>
+											<td class="text-right">{{winners.amount}}</td>
+										</tr>
+									{% endfor %}
+								</table>
+							</li> -->
+
+							<!-- {% empty %} -->
+							<li style="font-size:18px; padding: 10px; color:red;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+								<p style="margin: 0; text-align: center; color: green">
+									<i class="fa fa-trophy fa-3x" style="color: gold;" aria-hidden="true"></i> <b style="font-size:24px;  text-align: center;">Winners Name </b>
+								</p>
+								<p style="text-align: center; color: red">
+									<b>₦50,000.00 <span>240pts</span> 12:35 pm</b>
+								</p>
+							</li>
+							<li style="font-size:18px; padding: 10px; color:red;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+								<p style="margin: 0; text-align: center; color: green">
+									<i class="fa fa-trophy fa-3x" style="color: silver;" aria-hidden="true"></i> <b style="font-size:24px;  text-align: center;">Winners Name </b>
+								</p>
+								<p style="text-align: center; color: red">
+									<b>₦25,000.00 <span>240pts</span> 12:35 pm</b>
+								</p>
+							</li>
+							<li style="font-size:18px; padding: 10px; color:red;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+								<p style="margin: 0; text-align: center; color: green">
+									<i class="fa fa-trophy fa-3x" style="color: #8C7853;" aria-hidden="true"></i> <b style="font-size:24px;  text-align: center;">Winners Name </b>
+								</p>
+								<p style="text-align: center; color: red">
+									<b>₦15,000.00 <span>240pts</span> 12:35 pm</b>
+								</p>
+							</li>
+							<li style="font-size:18px; padding: 10px; color:red;" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">
+								<p style="margin: 0; text-align: center; color: green">
+									<i class="fa fa-trophy fa-3x" style="color: #B87333;" aria-hidden="true"></i> <b style="font-size:24px;  text-align: center;">Winners Name </b>
+								</p>
+								<p style="text-align: center; color: red">
+									<b>₦5,000.00 <span>240pts</span> 12:35 pm</b>
+								</p>
+							</li>
+							<!-- {% endfor %} -->
+						</ul>
+          </div>
+        </div>
+
+        <br>
+        <!-- row holding ad barner -->
+
+
+        <div class="row">
+          <div class="col-12">
+            <div class="">
+
+              <a href="#" class=" disabled" style="font-style: italic;"><b></b></a><br>
+              <br>
+              </div>
+          </div>
+        </div>
+
+
+
+			</div>
+			
+
+			<div class="col-12 col-md-12">
+      	{% for message in messages %}
+			  {% if message.tags == 'error' %}
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% elif message.tags == 'success' %}
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% else %}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% endif %}
+			{% endfor %}
+      	<!-- <img src="{% static 'img/weeklyjackpotbanner.jpg' %}" height="50" class="img-fluid" 
+      	alt="Weekly Jackpot"> -->
+        <!-- this is the row block actually holding the detail item -->
+
+
+
+
+
+
+        <!-- this row holds the news content for the above question -->
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+	<script>
+
+
+		  var event_date = $('#date').val();
+		  var event_time = $('#time').val();
+		  var new_date = event_date.replace('.','');
+		  if (event_time.indexOf(' a.m.') >= 0) {
+		    new_time = event_time.replace(' a.m.',':00');
+		  }else{
+		  	new_time = (parseInt(event_time.replace(' p.m.','')) + 12).toString() + ":00";
+		  }
+		  // alert(new_date + " " + new_time);
+
+		  // Set the date we're counting down to
+		  var countDownDate = new Date(new_date + " " +  new_time).getTime();
+		  // var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
+
+		  // Update the count down every 1 second
+		  var x = setInterval(function() {
+
+		  // Get todays date and time
+		  var now = new Date().getTime();
+
+		  // Find the distance between now an the count down date
+		  var distance = countDownDate - now;
+
+		  // Time calculations for days, hours, minutes and seconds
+		  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		  // Display the result in the element with id="demo"
+		  document.getElementById("hours").innerHTML = hours + "h"
+		  document.getElementById("minutes").innerHTML = minutes + "m"
+		  document.getElementById("seconds").innerHTML = seconds + "s"
+
+		  // If the count down is finished, write some text
+		  if (distance < 0) {
+		    clearInterval(x);
+		    document.getElementById("demo").innerHTML = "JACKPOT HAS ENDED";
+		  }
+		}, 1000);
+
+	</script>
+
+	{% include 'general/customscripts.html' %}
+
+{% endblock customscripts %}
+
+
+

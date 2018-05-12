@@ -1,0 +1,178 @@
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block home_page_messages %}
+{% endblock home_page_messages %}
+
+{% block homepage_djp %}
+{% endblock homepage_djp %}
+
+{% block trending %}
+	
+<div class="container-fluid text-center">
+  <br><br>
+  <p style="margin-bottom: 0rem;">Register with social media accounts</p>
+
+  <div class="row">
+    <div class="col-12">
+        <a href="{% url 'social:begin' 'facebook' %}"><button type="button" class="btn btn-primary rounded-0"><i class="fa fa-facebook-official" aria-hidden="true"></i>
+          Facebook</button></a>
+        <a href="{% url 'social:begin' 'twitter' %}"><button type="button" class="btn btn-info rounded-0"><i class="fa fa-twitter" aria-hidden="true"></i>
+          Twitter</button></a>
+        <a href="{% url 'social:begin' 'google-plus' %}"><button type="button" class="btn btn-danger rounded-0"><i class="fa fa-google" aria-hidden="true"></i>
+          Google</button></a>
+    </div>
+    <br><br>
+  </div>
+  <h5>OR</h5>
+  <div class="form-row justify-content-center">
+    <div class="col-12 col-md-5">
+      <form action="{% url 'general:register' %}" method="POST">
+      {% csrf_token %}
+      
+		
+        <div class="form-group">
+			 <input type="text"  name="first_name" value="" required class="form-control" id="first_name" placeholder="First Name">
+        </div>
+
+        <div class="form-group">
+			 <input type="text"  name="last_name" value="" required class="form-control" id="last_name" placeholder="Last Name">
+        </div>
+		
+		<div class="form-group">
+			{% if not username_is_taken %}
+				<input type="text" name="username" value="" required class="form-control" id="username" placeholder="Username">
+			{% else %}
+				<input type="text" name="username" value="{{form.username.value}}" required class="form-control" id="username" placeholder="Username">
+				<span style="color:red; position:relative; left:6px; bottom: 0px;">This username is already attached to an account </span>
+		    {% endif %}
+		</div>
+
+		<div class="form-group">
+		  {% if not email_taken %}
+			 <input type="text"  name="email" value="" required class="form-control" id="email" placeholder="E-mail">
+		  {% else %}
+			<input type="email" name="email" value="{{form.email.value}}" required class="form-control" id="email" placeholder="E-mail">
+			<span style="color:red; position:relative; left:6px; bottom: 0px;">This email address is already attached to an account </span>
+		  {% endif %}	
+        </div>
+		
+        <input type="hidden" name="bot_catcher" id="bot_catcher" value="">
+
+        <div class="form-group">
+            {{ form2.gender }}
+            <!--<select class="form-control" name="gender" required>-->
+                
+                <!--<option value="">Male</option>
+                <option value="">Female</option>
+            </select> -->
+            {% if form2.gender.errors %}<span style= 'color: red;'>{{ form2.gender.errors }}</span>{%endif%}  
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                {{ form2.dob }}
+                <!--<input type="date" name="dob" class="form-control" id="exampleInputpwd2" placeholder="dd/mm/yyyy" required>-->
+                <div class="input-group-addon"></div>
+                {% if form2.dob.errors %}<span style= 'color: red;'>{{ form2.dob.errors }}</span>{%endif%}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form2.form2 }}
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+              {{ form2.bank }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="input-group">
+                <input type="number" id="acc_number" name="account_number" maxlength="10" placeholder="Account Number" class="form-control" id="acc_number" required>                                    
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                {{ form2.phone_number }}<!--&nbsp;<span id="errmsg"></span>-->
+                <!--<input type="number" name="phone_number" class="form-control" id="exampleInputpwd1" placeholder="Phone Number" required>-->
+                <div class="input-group-addon"><span id="phone_errmsg"></span></div>
+                {% if form2.phone_number.errors %}<span style= 'color: red;'>{{ form2.phone_number.errors }}</span>{%endif%}
+            </div>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" required id="password" type="password" placeholder="Password">
+          {% if password_mismatch %}
+            <span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+          {% elif password_too_short %}
+            <span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+          {% endif %}
+        </div>
+        
+        <div class="form-group">
+          <input name="password1" class="form-control" id="password1" required type="password" placeholder="Confirm Password">
+          {% if password_mismatch %}
+                <span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+                    {% elif password_too_short %}
+                <span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+                    {% elif password_should_be_alphanumeric %}
+                <span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+		  {% endif %}
+        </div>
+
+
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" id="#checkbox1" type="checkbox"> By clicking on 'Register', you agree to our <a href="{% static 'ynl/termsANDConditions.pdf' %}" target="_blank">terms and conditons.</a>
+            </label>
+          </div>
+        </div>
+		
+		    <div class="form-group">
+          <button type="submit" id="submit-button" onclick="return checkTandC()" class="btn btn-success rounded-0">Register</button>
+          <a href="{% url 'general:login' %}" class="btn btn-outline-secondary rounded-0" role="button" aria-pressed="true">Login Instead</a>
+        </div>
+        
+        
+      </form>
+    </div>
+  </div>
+</div>
+  
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+	<script>
+		  
+		function checkTandC(){
+		  var ckbox = $('.form-check-input');  
+			  if (ckbox.is(':checked')) {
+				  return true;
+			  } else {
+          swal('Please agree to our Terms and Conditions before proceeding');
+				  // alert('Please agree to our Terms and Conditions before proceeding');
+				  return false;
+				  
+			  }
+		}  
+		
+	</script>
+{% endblock customscripts %}
